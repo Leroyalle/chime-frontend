@@ -1,9 +1,9 @@
-import { FeedWrapper } from '@/components/shared/feed';
+import { FriendsWrapper } from '@/components/shared/friends';
 
 export default function Friends() {
   return (
-    <main className="flex-1 flex flex-col items-center">
-      <FeedWrapper />
-    </main>
+    <div className="flex flex-col items-center">
+      <FriendsWrapper />
+    </div>
   );
 }

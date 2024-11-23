@@ -31,7 +31,7 @@ export const ProfileButton: React.FC = () => {
         <DropdownItem
           key="logout"
           color="danger"
-          className="text-red-500"
+          className="text-danger"
           startContent={<LogOut size={20} />}>
           Выйти
         </DropdownItem>

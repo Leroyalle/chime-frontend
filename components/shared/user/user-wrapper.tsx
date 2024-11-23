@@ -1,7 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Avatar, Button } from '@nextui-org/react';
-import { MessageCircleMore } from 'lucide-react';
+import { Avatar } from '@nextui-org/react';
 import { DarkLightBlock } from '../dark-light-block';
 import { UserActions, UserInfo } from './profile';
 
