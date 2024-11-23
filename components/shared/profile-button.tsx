@@ -15,7 +15,8 @@ export const ProfileButton: React.FC = () => {
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem href="/settings" key="settings" startContent={<User size={20} />}>
+        {/* FIXME: <Link> вместо <a> */}
+        <DropdownItem href="/user/1" key="user" startContent={<User size={20} />}>
           Профиль
         </DropdownItem>
         <DropdownItem href="/settings" key="settings" startContent={<Settings size={20} />}>

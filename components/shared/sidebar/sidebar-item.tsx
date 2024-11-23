@@ -10,7 +10,7 @@ interface Props {
 export const SidebarItem: FC<Props> = ({ icon, href, children }) => {
   return (
     <Link
-      className="flex gap-x-2 justify-start text-md w-full p-2 bg-transparent hover:bg-white rounded-xl transition"
+      className="flex gap-x-2 justify-start text-md w-[200px] p-2 bg-transparent hover:bg-white rounded-xl transition"
       href={href}>
       {icon} {children}
     </Link>

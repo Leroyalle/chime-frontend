@@ -1,5 +1,4 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 import { PostsList } from './posts';
 import { WritePost } from '../write-post';
 
@@ -9,7 +8,7 @@ interface Props {
 
 export const FeedWrapper: React.FC<Props> = ({ className }) => {
   return (
-    <div className={cn('max-w-[600px]', className)}>
+    <div className={className}>
       <WritePost className="mb-10" />
       <PostsList />
     </div>

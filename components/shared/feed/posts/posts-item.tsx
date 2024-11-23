@@ -11,7 +11,7 @@ interface Props {
 
 export const PostsItem: React.FC<Props> = ({ className }) => {
   return (
-    <DarkLightBlock className={cn('p-4 max-w-[600px] mb-10', className)}>
+    <DarkLightBlock className={cn('p-4 max-w-[640px] mb-10', className)}>
       <div>
         <header className="flex justify-between items-center mb-2">
           <User

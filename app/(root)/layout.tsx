@@ -1,4 +1,5 @@
 import { Container, Header, Sidebar } from '@/components/shared';
+import { AdvtWrapper } from '@/components/shared/advt';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -14,9 +15,10 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      <Container className="flex gap-x-8 py-3">
+      <Container className="flex gap-x-4 py-3 relative">
         <Sidebar />
         {children}
+        <AdvtWrapper className="hidden lg:block max-w-[300px] max-h-[650px] sticky top-[73px] p-4" />
       </Container>
     </>
   );
