@@ -11,11 +11,18 @@ export const postApi = splitApi.injectEndpoints({
         body: content,
       }),
     }),
-    getAllPosts: builder.query<Post[], void>({
-      query: () => ({
-        url: 'posts',
+    getAllPosts: builder.query<Post[], { skip: number; take: number }>({
+      query: ({ skip, take }) => ({
+        url: `/posts?skip=${skip}&take=${take}`,
         method: 'GET',
       }),
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newPosts) => {
+        currentCache.push(...newPosts);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.skip !== previousArg?.skip;
+      },
     }),
     getPostById: builder.query<Post, string>({
       query: (id) => ({
