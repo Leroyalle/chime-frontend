@@ -4,19 +4,34 @@ import { DarkLightBlock } from '../../dark-light-block';
 import { User } from '@nextui-org/react';
 import { PostHeadActions } from './post-top-actions';
 import { PostBottomActions } from './post-bottom-actions';
+import { formatToClientDate } from '@/lib';
 
 interface Props {
+  fullName: string;
+  createdAt: Date;
+  content: string;
+  likeCount: number;
+  commentCount: number;
+  sharedCount: number;
   className?: string;
 }
 
-export const PostsItem: React.FC<Props> = ({ className }) => {
+export const PostsItem: React.FC<Props> = ({
+  fullName,
+  createdAt,
+  content,
+  likeCount,
+  commentCount,
+  sharedCount,
+  className,
+}) => {
   return (
     <DarkLightBlock className={cn('p-4 max-w-[640px] mb-10', className)}>
       <div>
         <header className="flex justify-between items-center mb-2">
           <User
-            name="Leroyalle"
-            description="Frontend Developer"
+            name={fullName}
+            description={formatToClientDate(createdAt)}
             avatarProps={{
               src: 'https://avatars.githubusercontent.com/u/158848927?v=4',
             }}
@@ -25,7 +40,7 @@ export const PostsItem: React.FC<Props> = ({ className }) => {
         </header>
         <div className="flex flex-col gap-y-2 mb-2">
           <div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, iste!</p>
+            <p>{content}</p>
           </div>
           <img
             className="w-full object-cover rounded-md"
@@ -33,7 +48,12 @@ export const PostsItem: React.FC<Props> = ({ className }) => {
             alt={'post'}
           />
         </div>
-        <PostBottomActions postId={1} likes={48} comments={0} shared={0} />
+        <PostBottomActions
+          postId={1}
+          likes={likeCount}
+          comments={commentCount}
+          shared={sharedCount}
+        />
       </div>
     </DarkLightBlock>
   );

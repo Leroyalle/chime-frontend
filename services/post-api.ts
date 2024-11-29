@@ -18,6 +18,10 @@ export const postApi = splitApi.injectEndpoints({
       }),
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCache, newPosts) => {
+        if (newPosts.length === 0) {
+          console.log(newPosts);
+          return;
+        }
         currentCache.push(...newPosts);
       },
       forceRefetch({ currentArg, previousArg }) {
