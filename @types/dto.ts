@@ -28,6 +28,7 @@ export type Follows = {
 export type Post = {
   id: string;
   content: string;
+  imageUrl?: string;
   author: User;
   authorId: string;
   likes: Like[];

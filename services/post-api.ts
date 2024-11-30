@@ -4,23 +4,22 @@ import { splitApi } from './api';
 export const postApi = splitApi.injectEndpoints({
   endpoints: (builder) => ({
     // TODO: добавить фото
-    createPost: builder.mutation<Post, { content: string }>({
-      query: (content) => ({
+    createPost: builder.mutation<Post, { postData: FormData }>({
+      query: ({ postData }) => ({
         url: '/posts',
         method: 'POST',
-        body: content,
+        body: postData,
       }),
     }),
-    getAllPosts: builder.query<Post[], { skip: number; take: number }>({
+    getAllPosts: builder.query<Post[], { skip: number; take: number; replace?: boolean }>({
       query: ({ skip, take }) => ({
         url: `/posts?skip=${skip}&take=${take}`,
         method: 'GET',
       }),
       serializeQueryArgs: ({ endpointName }) => endpointName,
-      merge: (currentCache, newPosts) => {
-        if (newPosts.length === 0) {
-          console.log(newPosts);
-          return;
+      merge: (currentCache, newPosts, { arg }) => {
+        if (arg.replace) {
+          return newPosts;
         }
         currentCache.push(...newPosts);
       },

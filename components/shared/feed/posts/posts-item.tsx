@@ -10,6 +10,7 @@ interface Props {
   fullName: string;
   createdAt: Date;
   content: string;
+  imageUrl?: string;
   likeCount: number;
   commentCount: number;
   sharedCount: number;
@@ -20,6 +21,7 @@ export const PostsItem: React.FC<Props> = ({
   fullName,
   createdAt,
   content,
+  imageUrl,
   likeCount,
   commentCount,
   sharedCount,
@@ -42,11 +44,9 @@ export const PostsItem: React.FC<Props> = ({
           <div>
             <p>{content}</p>
           </div>
-          <img
-            className="w-full object-cover rounded-md"
-            src={'https://avatars.githubusercontent.com/u/158848927?v=4'}
-            alt={'post'}
-          />
+          {imageUrl && (
+            <img className="w-full object-cover rounded-md" src={imageUrl} alt={'Post image'} />
+          )}
         </div>
         <PostBottomActions
           postId={1}
