@@ -1,23 +1,19 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { PostItem } from '../../post-item';
+import { PostItem } from '../post-item';
 import { Post } from '@/@types/dto';
+import { CommentSection } from './comment-section';
 
 interface Props {
-  items?: Post[];
+  item: Post;
   className?: string;
 }
 
-export const PostsList: React.FC<Props> = ({ items, className }) => {
-  if (!items || items.length === 0) {
-    return null;
-  }
-
+export const PostWrapper: React.FC<Props> = ({ item, className }) => {
   return (
-    <section className={cn('', className)}>
-      {items.map((item, i) => (
+    <div className={cn('', className)}>
+      <section>
         <PostItem
-          key={item.id + i}
           postId={item.id}
           fullName={item.author.name}
           createdAt={item.createdAt}
@@ -27,9 +23,10 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
           commentCount={item.comments.length}
           sharedCount={0}
           isLiked={item.isLiked}
-          className="mb-10"
+          className="mb-3"
         />
-      ))}
-    </section>
+        <CommentSection postId={item.id} comments={item.comments} />
+      </section>
+    </div>
   );
 };

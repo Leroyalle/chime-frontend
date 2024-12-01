@@ -13,9 +13,14 @@ export const likeApi = splitApi.injectEndpoints({
 
     deleteLike: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/likes${id}`,
+        url: `/likes/${id}`,
         method: 'DELETE',
       }),
     }),
   }),
 });
+
+export const {
+  endpoints: { createLike, deleteLike },
+} = likeApi;
+export const { useCreateLikeMutation, useDeleteLikeMutation } = likeApi;

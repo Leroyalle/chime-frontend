@@ -1,3 +1,4 @@
+import { Comment } from '@/@types/dto';
 import { splitApi } from './api';
 
 export const commentApi = splitApi.injectEndpoints({

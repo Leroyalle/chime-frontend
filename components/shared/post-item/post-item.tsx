@@ -1,12 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { DarkLightBlock } from '../../dark-light-block';
+import { DarkLightBlock } from '../dark-light-block';
 import { User } from '@nextui-org/react';
 import { PostHeadActions } from './post-top-actions';
 import { PostBottomActions } from './post-bottom-actions';
 import { formatToClientDate } from '@/lib';
 
 interface Props {
+  postId: string;
   fullName: string;
   createdAt: Date;
   content: string;
@@ -14,10 +15,12 @@ interface Props {
   likeCount: number;
   commentCount: number;
   sharedCount: number;
+  isLiked: boolean;
   className?: string;
 }
 
-export const PostsItem: React.FC<Props> = ({
+export const PostItem: React.FC<Props> = ({
+  postId,
   fullName,
   createdAt,
   content,
@@ -25,10 +28,11 @@ export const PostsItem: React.FC<Props> = ({
   likeCount,
   commentCount,
   sharedCount,
+  isLiked,
   className,
 }) => {
   return (
-    <DarkLightBlock className={cn('p-4 max-w-[640px] mb-10', className)}>
+    <DarkLightBlock className={cn('p-4 max-w-[640px]', className)}>
       <div>
         <header className="flex justify-between items-center mb-2">
           <User
@@ -49,10 +53,11 @@ export const PostsItem: React.FC<Props> = ({
           )}
         </div>
         <PostBottomActions
-          postId={1}
+          postId={postId}
           likes={likeCount}
           comments={commentCount}
           shared={sharedCount}
+          isLiked={isLiked}
         />
       </div>
     </DarkLightBlock>
