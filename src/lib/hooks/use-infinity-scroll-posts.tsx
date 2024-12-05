@@ -8,15 +8,8 @@ export const useInfinityScrollPosts = ({ initialPosts }: { initialPosts: PostsDt
   const { ref, inView } = useInView();
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['posts', 'list'],
-    queryFn: (meta) => Api.posts.getAllPosts({ page: meta.pageParam, perPage: 10 }),
+    ...Api.posts.getAllPostsInfinityQueryOptions(),
     initialData: { pages: [initialPosts], pageParams: [1] },
-    initialPageParam: 1,
-    select: ({ pages }) => pages.flatMap((page) => page.data),
-    getNextPageParam(lastPage, allPages) {
-      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
-    },
-    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
