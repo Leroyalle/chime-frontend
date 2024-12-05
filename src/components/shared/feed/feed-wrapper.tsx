@@ -3,18 +3,21 @@ import React from 'react';
 import { PostsList } from './posts';
 import { WritePost } from '../write-post';
 import { useInfinityScrollPosts } from '@/lib/hooks';
+import { PostsDto } from '../../../../@types/response';
 
 interface Props {
+  initialPosts: PostsDto;
   className?: string;
 }
 
-export const FeedWrapper: React.FC<Props> = ({ className }) => {
-  const { data: posts, ref } = useInfinityScrollPosts();
+export const FeedWrapper: React.FC<Props> = ({ initialPosts, className }) => {
+  const { data: posts, cursor } = useInfinityScrollPosts({ initialPosts });
+
   return (
     <div className={className}>
       <WritePost className="mb-10" />
-      <PostsList items={posts} />
-      {posts && <div ref={ref} />}
+      {posts && <PostsList items={posts} />}
+      {cursor}
     </div>
   );
 };

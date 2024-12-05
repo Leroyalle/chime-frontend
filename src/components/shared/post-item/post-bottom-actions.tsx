@@ -4,9 +4,7 @@ import { cn } from '@/lib/utils';
 import { Heart, MessageCircle, Undo2 } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
-import { useCreateLikeMutation, useDeleteLikeMutation } from '@/services/like-api';
 import { usePathname } from 'next/navigation';
-import { updatePath } from '@/app/actions';
 
 interface Props {
   postId: string;
@@ -26,16 +24,10 @@ export const PostBottomActions: React.FC<Props> = ({
   className,
 }) => {
   const pathName = usePathname();
-  const [createLike, { isLoading }] = useCreateLikeMutation();
-  const [deleteLike, { isLoading: isLoadingDelete }] = useDeleteLikeMutation();
 
   const onClickLikePost = async () => {
     if (isLiked) {
-      await deleteLike(postId).unwrap();
-      // updatePath(`/post/${postId}`);
     } else {
-      await createLike({ postId }).unwrap();
-      // updatePath(`/post/${postId}`);
     }
   };
   return (
@@ -43,7 +35,7 @@ export const PostBottomActions: React.FC<Props> = ({
       <PostBottomActionsItem
         count={likes}
         onClick={onClickLikePost}
-        loading={isLoading || isLoadingDelete}
+        // loading={isLoading || isLoadingDelete}
         icon={<Heart size={20} className={isLiked ? 'fill-red-500 text-red-500' : 'text-black'} />}
       />
       {!pathName.startsWith('/post/') && (

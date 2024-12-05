@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 import { Button, Textarea } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
-import { useCreateCommentMutation } from '@/services/comment-api';
 import { Comment } from '../../../@types/dto';
 
 interface Props {
@@ -13,14 +12,12 @@ interface Props {
   className?: string;
 }
 
-export const WriteComment: React.FC<Props> = ({ postId, onWriteComment, className }) => {
-  const [createComment, { isLoading }] = useCreateCommentMutation();
+export const WriteComment: React.FC<Props> = ({ postId, className }) => {
+  // const [createComment, { isLoading }] = useCreateCommentMutation();
   const { handleSubmit, control, setValue } = useForm<{ comment: string }>();
 
   const onSubmit = async (data: { comment: string }) => {
     try {
-      const comment = await createComment({ content: data.comment, postId }).unwrap();
-      onWriteComment(comment);
       setValue('comment', '');
     } catch (error) {
       if (hasErrorField(error)) {
@@ -43,7 +40,7 @@ export const WriteComment: React.FC<Props> = ({ postId, onWriteComment, classNam
         variant="solid"
         color="warning"
         type="submit"
-        isLoading={isLoading}
+        // isLoading={isLoading}
         className="max-w-32">
         Отправить
       </Button>

@@ -1,22 +1,19 @@
 'use client';
-import { store } from '@/store/store';
 import { NextUIProvider } from '@nextui-org/react';
-// import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
-import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export const Providers: React.FC<Props> = ({ children }) => {
+  const queryClient = new QueryClient();
   return (
     <>
       <NextUIProvider>
-        {/* <NextThemesProvider attribute="class" defaultTheme="light"> */}
-        <Provider store={store}>{children}</Provider>
-        {/* </NextThemesProvider> */}
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
       </NextUIProvider>
       <NextTopLoader />
     </>

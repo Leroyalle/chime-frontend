@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { splitApi } from '../services/api';
+import { splitApi } from '../services/instance';
 import { useDispatch } from 'react-redux';
 import { listenerMiddleware } from './middleware/auth';
 import user from './slices/user/slice';

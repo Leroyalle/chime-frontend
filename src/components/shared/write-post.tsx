@@ -4,15 +4,12 @@ import { Button, Textarea } from '@nextui-org/react';
 import { X } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
-import { useCreatePostMutation, useLazyGetAllPostsQuery } from '@/services/post-api';
 
 interface Props {
   className?: string;
 }
 
 export const WritePost: React.FC<Props> = ({ className }) => {
-  const [createPost, { isLoading }] = useCreatePostMutation();
-  const [triggerAllPosts] = useLazyGetAllPostsQuery();
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -28,8 +25,6 @@ export const WritePost: React.FC<Props> = ({ className }) => {
       const formData = new FormData();
       formData.append('content', data.post);
       if (selectedFile) formData.append('postImage', selectedFile);
-      await createPost({ postData: formData }).unwrap();
-      await triggerAllPosts({ skip: 0, take: 10, replace: true }).unwrap();
       setSelectedFile(null);
       setValue('post', '');
       // FIXME: сервер возвращает неверный путь до фото
@@ -68,12 +63,20 @@ export const WritePost: React.FC<Props> = ({ className }) => {
         onChange={onChangeFile}
         accept=".png, .jpg, .jpeg"
       />
-      <Button className="w-full" disabled={isLoading}>
+      <Button
+        className="w-full"
+        //  disabled={isLoading}
+      >
         <label className="grid place-items-center w-full h-full" htmlFor="postImage">
           Добавить фото
         </label>
       </Button>
-      <Button variant="solid" color="warning" type="submit" isLoading={isLoading}>
+      <Button
+        variant="solid"
+        color="warning"
+        type="submit"
+        // isLoading={isLoading}
+      >
         Отправить
       </Button>
     </form>
