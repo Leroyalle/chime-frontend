@@ -5,10 +5,6 @@ import { AxiosRequestHeaders } from 'axios';
 import { PostsDto } from '../../@types/response';
 import { infiniteQueryOptions } from '@tanstack/react-query';
 
-export const createPost = async (data: { postData: FormData }): Promise<Post> => {
-  return (await instance.post<Post>(ApiRouter.POST, data)).data;
-};
-
 export const getAllPosts = async ({
   page,
   perPage,
@@ -21,6 +17,10 @@ export const getAllPosts = async ({
   return (
     await instance.get<PostsDto>(`${ApiRouter.POST}?page=${page}&perPage=${perPage}`, { headers })
   ).data;
+};
+
+export const createPost = async (data: { postData: FormData }): Promise<Post> => {
+  return (await instance.post<Post>(ApiRouter.POST, data.postData)).data;
 };
 
 export const getPostById = async (id: string): Promise<Post> => {

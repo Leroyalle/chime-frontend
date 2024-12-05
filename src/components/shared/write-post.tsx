@@ -4,6 +4,7 @@ import { Button, Textarea } from '@nextui-org/react';
 import { X } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
+import { useCreatePost } from '@/lib/hooks/use-create-post';
 
 interface Props {
   className?: string;
@@ -11,6 +12,8 @@ interface Props {
 
 export const WritePost: React.FC<Props> = ({ className }) => {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+  const { createPost, isPending } = useCreatePost();
+
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -25,9 +28,9 @@ export const WritePost: React.FC<Props> = ({ className }) => {
       const formData = new FormData();
       formData.append('content', data.post);
       if (selectedFile) formData.append('postImage', selectedFile);
+      createPost({ postData: formData });
       setSelectedFile(null);
       setValue('post', '');
-      // FIXME: сервер возвращает неверный путь до фото
     } catch (error) {
       if (hasErrorField(error)) {
         console.error(error.data.error);
@@ -63,20 +66,12 @@ export const WritePost: React.FC<Props> = ({ className }) => {
         onChange={onChangeFile}
         accept=".png, .jpg, .jpeg"
       />
-      <Button
-        className="w-full"
-        //  disabled={isLoading}
-      >
+      <Button className="w-full" disabled={isPending}>
         <label className="grid place-items-center w-full h-full" htmlFor="postImage">
           Добавить фото
         </label>
       </Button>
-      <Button
-        variant="solid"
-        color="warning"
-        type="submit"
-        // isLoading={isLoading}
-      >
+      <Button variant="solid" color="warning" type="submit" isLoading={isPending}>
         Отправить
       </Button>
     </form>
