@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Comment } from '@/@types/dto';
+import { Comment } from '../../../../@types/dto';
 import { CommentItem } from './comment-item';
 
 interface Props {

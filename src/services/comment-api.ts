@@ -1,14 +1,14 @@
-import axios from 'axios';
 import { ApiRouter } from './constants';
 import { Comment } from '../../@types/dto';
+import { instance } from './instance';
 
 export const createComment = async (data: {
   content: string;
   postId: string;
 }): Promise<Comment> => {
-  return (await axios.post<Comment>(ApiRouter.COMMENT, data)).data;
+  return (await instance.post<Comment>(ApiRouter.COMMENT, data)).data;
 };
 
 export const deleteComment = async (id: string): Promise<void> => {
-  return (await axios.delete<void>(`${ApiRouter.COMMENT}/${id}`)).data;
+  return (await instance.delete<void>(`${ApiRouter.COMMENT}/${id}`)).data;
 };

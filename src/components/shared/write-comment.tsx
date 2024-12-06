@@ -4,19 +4,20 @@ import { cn } from '@/lib/utils';
 import { Button, Textarea } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
-import { Comment } from '../../../@types/dto';
+import { useCreateComment } from '@/lib/hooks';
 
 interface Props {
   postId: string;
-  onWriteComment: (comment: Comment) => void;
   className?: string;
 }
 
 export const WriteComment: React.FC<Props> = ({ postId, className }) => {
   const { handleSubmit, control, setValue } = useForm<{ comment: string }>();
+  const { createComment, isPending: isPendingCreateComment } = useCreateComment(postId);
 
   const onSubmit = async (data: { comment: string }) => {
     try {
+      createComment({ content: data.comment, postId });
       setValue('comment', '');
     } catch (error) {
       if (hasErrorField(error)) {
@@ -39,7 +40,7 @@ export const WriteComment: React.FC<Props> = ({ postId, className }) => {
         variant="solid"
         color="warning"
         type="submit"
-        // isLoading={isLoading}
+        isLoading={isPendingCreateComment}
         className="max-w-32">
         Отправить
       </Button>

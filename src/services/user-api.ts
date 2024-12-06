@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { User } from '../../@types/dto';
 import { ApiRouter } from './constants';
+import { instance } from './instance';
 
 type TRegister = {
   email: string;
@@ -9,21 +9,21 @@ type TRegister = {
 };
 
 export const register = async (userData: TRegister): Promise<Omit<User, 'password'>> => {
-  return (await axios.post<Omit<User, 'password'>>(`/register`, userData)).data;
+  return (await instance.post<Omit<User, 'password'>>(`/register`, userData)).data;
 };
 
 export const login = async (userData: Omit<TRegister, 'name'>) => {
-  return (await axios.post<{ token: string }>(`/login`, userData)).data;
+  return (await instance.post<{ token: string }>(`/login`, userData)).data;
 };
 
 export const current = async () => {
-  return (await axios.get<Omit<User, 'password'>>(`/current`)).data;
+  return (await instance.get<Omit<User, 'password'>>(`/current`)).data;
 };
 
 export const getUserById = async (id: string) => {
-  return (await axios.get<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`)).data;
+  return (await instance.get<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`)).data;
 };
 
 export const updateUser = async ({ userData, id }: { userData: FormData; id: string }) => {
-  return (await axios.put<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`, userData)).data;
+  return (await instance.put<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`, userData)).data;
 };

@@ -47,6 +47,7 @@ export const getAllPostsInfinityQueryOptions = () => {
       return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
+    staleTime: 1 * 60 * 1000,
   });
 };
 

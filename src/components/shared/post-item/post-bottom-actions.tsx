@@ -5,8 +5,7 @@ import { Heart, MessageCircle, Undo2 } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useLikePost } from '@/lib/hooks';
-import { useUnlikePost } from '@/lib/hooks/use-unlike-post';
+import { useLikePost, useUnlikePost } from '@/lib/hooks';
 
 interface Props {
   postId: string;

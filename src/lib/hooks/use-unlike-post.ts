@@ -20,7 +20,9 @@ export const useUnlikePost = (postId: string) => {
           pages: old.pages.map((page) => ({
             ...page,
             data: page.data.map((post) =>
-              post.id === postId ? { ...post, isLiked: false } : post,
+              post.id === postId
+                ? { ...post, isLiked: false, likesCount: post.likesCount - 1 }
+                : post,
             ),
           })),
         };

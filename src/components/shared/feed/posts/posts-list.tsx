@@ -23,8 +23,8 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
           createdAt={item.createdAt}
           content={item.content}
           imageUrl={item.imageUrl}
-          likeCount={item.likes.length}
-          commentCount={item.comments.length}
+          likeCount={item.likesCount}
+          commentCount={item.commentsCount}
           sharedCount={0}
           isLiked={item.isLiked}
           className="mb-10"

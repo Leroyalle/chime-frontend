@@ -34,6 +34,8 @@ export type Post = {
   likes: Like[];
   comments: Comment[];
   isLiked: boolean;
+  likesCount: number;
+  commentsCount: number;
   createdAt: Date;
   updatedAt: Date;
 };
