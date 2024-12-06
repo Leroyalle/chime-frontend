@@ -2,33 +2,37 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { PostItem } from '../post-item';
+import { Post } from '../../../../@types/dto';
+import { useQuery } from '@tanstack/react-query';
+import { Api } from '@/services/api-client';
 import { CommentSection } from './comment-section';
-import { useGetPostByIdQuery } from '@/services/post-api';
-import { notFound } from 'next/navigation';
+
 interface Props {
-  postId: string;
+  initialData: Post;
   className?: string;
 }
 
-export const PostWrapper: React.FC<Props> = ({ postId, className }) => {
-  const { data: postItem } = useGetPostByIdQuery(postId);
-
+export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
+  const { data: postItem } = useQuery({
+    ...Api.posts.getPostByIdQueryOptions(initialData.id),
+    initialData,
+  });
   return (
     <div className={cn('', className)}>
       <section>
         <PostItem
-          postId={postItem?.id}
-          fullName={postItem?.author.name}
-          createdAt={postItem?.createdAt}
-          content={postItem?.content}
-          imageUrl={postItem?.imageUrl}
-          likeCount={postItem?.likes.length}
-          commentCount={postItem?.comments.length}
+          postId={postItem.id}
+          fullName={postItem.author.name}
+          createdAt={postItem.createdAt}
+          content={postItem.content}
+          imageUrl={postItem.imageUrl}
+          likeCount={postItem.likes.length}
+          commentCount={postItem.comments.length}
           sharedCount={0}
-          isLiked={postItem?.isLiked}
+          isLiked={postItem.isLiked}
           className="mb-3"
         />
-        {/* <CommentSection postId={postItem?.id} comments={postItem?.comments} /> */}
+        <CommentSection postId={postItem.id} comments={postItem.comments} />
       </section>
     </div>
   );

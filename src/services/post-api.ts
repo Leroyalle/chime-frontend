@@ -3,7 +3,7 @@ import { Post } from '../../@types/dto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { PostsDto } from '../../@types/response';
-import { infiniteQueryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
 export const getAllPosts = async ({
   page,
@@ -23,8 +23,14 @@ export const createPost = async (data: { postData: FormData }): Promise<Post> =>
   return (await instance.post<Post>(ApiRouter.POST, data.postData)).data;
 };
 
-export const getPostById = async (id: string): Promise<Post> => {
-  return (await instance.get<Post>(`${ApiRouter.POST}/${id}`)).data;
+export const getPostById = async ({
+  id,
+  headers,
+}: {
+  id: string;
+  headers?: AxiosRequestHeaders;
+}): Promise<Post> => {
+  return (await instance.get<Post>(`${ApiRouter.POST}/${id}`, { headers })).data;
 };
 
 export const deletePost = async (id: string): Promise<void> => {
@@ -41,5 +47,13 @@ export const getAllPostsInfinityQueryOptions = () => {
       return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
+  });
+};
+
+export const getPostByIdQueryOptions = (id: string) => {
+  return queryOptions({
+    queryKey: ['post', id],
+    queryFn: () => getPostById({ id }),
+    refetchOnWindowFocus: true,
   });
 };
