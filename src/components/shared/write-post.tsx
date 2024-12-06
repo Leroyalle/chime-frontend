@@ -4,7 +4,7 @@ import { Button, Textarea } from '@nextui-org/react';
 import { X } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
-import { useCreatePost } from '@/lib/hooks/use-create-post';
+import { useCreatePost } from '@/lib/hooks';
 
 interface Props {
   className?: string;

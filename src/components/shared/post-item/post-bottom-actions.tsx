@@ -5,6 +5,8 @@ import { Heart, MessageCircle, Undo2 } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLikePost } from '@/lib/hooks';
+import { useUnlikePost } from '@/lib/hooks/use-unlike-post';
 
 interface Props {
   postId: string;
@@ -24,10 +26,14 @@ export const PostBottomActions: React.FC<Props> = ({
   className,
 }) => {
   const pathName = usePathname();
+  const { likePost, isPending: isPendingLike } = useLikePost(postId);
+  const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId);
 
   const onClickLikePost = async () => {
     if (isLiked) {
+      unlikePost();
     } else {
+      likePost();
     }
   };
   return (
@@ -35,7 +41,7 @@ export const PostBottomActions: React.FC<Props> = ({
       <PostBottomActionsItem
         count={likes}
         onClick={onClickLikePost}
-        // loading={isLoading || isLoadingDelete}
+        loading={isPendingLike || isPendingUnlike}
         icon={<Heart size={20} className={isLiked ? 'fill-red-500 text-red-500' : 'text-black'} />}
       />
       {!pathName.startsWith('/post/') && (
