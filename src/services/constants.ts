@@ -4,4 +4,5 @@ export enum ApiRouter {
   COMMENT = '/comments',
   LIKE = '/likes',
   FOLLOW = '/follow',
+  REFRESH = '/refresh',
 }

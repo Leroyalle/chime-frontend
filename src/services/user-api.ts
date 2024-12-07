@@ -27,3 +27,11 @@ export const getUserById = async (id: string) => {
 export const updateUser = async ({ userData, id }: { userData: FormData; id: string }) => {
   return (await instance.put<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`, userData)).data;
 };
+
+export const refreshAccessToken = async (
+  refreshToken: string,
+): Promise<{ accessToken: string } | null> => {
+  return (
+    await instance.post<{ accessToken: string } | null>(`${ApiRouter.REFRESH}`, { refreshToken })
+  ).data;
+};
