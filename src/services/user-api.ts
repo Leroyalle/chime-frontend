@@ -1,3 +1,4 @@
+import { TAuthTokens } from '../../@types/auth';
 import { User } from '../../@types/dto';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
@@ -12,8 +13,8 @@ export const register = async (userData: TRegister): Promise<Omit<User, 'passwor
   return (await instance.post<Omit<User, 'password'>>(`/register`, userData)).data;
 };
 
-export const login = async (userData: Omit<TRegister, 'name'>) => {
-  return (await instance.post<{ token: string }>(`/login`, userData)).data;
+export const login = async (userData: Omit<TRegister, 'name'>): Promise<TAuthTokens> => {
+  return (await instance.post<TAuthTokens>(`/login`, userData)).data;
 };
 
 export const current = async () => {
@@ -28,10 +29,6 @@ export const updateUser = async ({ userData, id }: { userData: FormData; id: str
   return (await instance.put<Omit<User, 'password'>>(`${ApiRouter.USER}/${id}`, userData)).data;
 };
 
-export const refreshAccessToken = async (
-  refreshToken: string,
-): Promise<{ accessToken: string } | null> => {
-  return (
-    await instance.post<{ accessToken: string } | null>(`${ApiRouter.REFRESH}`, { refreshToken })
-  ).data;
+export const refreshAccessToken = async (refreshToken: string): Promise<TAuthTokens | null> => {
+  return (await instance.post<TAuthTokens | null>(`${ApiRouter.REFRESH}`, { refreshToken })).data;
 };

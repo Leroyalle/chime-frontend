@@ -12,7 +12,11 @@ interface Props {
 }
 
 export const WriteComment: React.FC<Props> = ({ postId, className }) => {
-  const { handleSubmit, control, setValue } = useForm<{ comment: string }>();
+  const { handleSubmit, control, setValue } = useForm<{ comment: string }>({
+    defaultValues: {
+      comment: '',
+    },
+  });
   const { createComment, isPending: isPendingCreateComment } = useCreateComment(postId);
 
   const onSubmit = async (data: { comment: string }) => {

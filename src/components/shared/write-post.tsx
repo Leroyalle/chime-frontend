@@ -21,7 +21,11 @@ export const WritePost: React.FC<Props> = ({ className }) => {
     }
   };
 
-  const { handleSubmit, control, setValue } = useForm<{ post: string }>();
+  const { handleSubmit, control, setValue } = useForm<{ post: string }>({
+    defaultValues: {
+      post: '',
+    },
+  });
 
   const onSubmit = async (data: { post: string }) => {
     try {

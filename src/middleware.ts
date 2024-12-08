@@ -18,10 +18,9 @@ export default async function middleware(req: NextRequest) {
 
     const response = NextResponse.next();
     response.cookies.set('accessToken', res.accessToken, {
-      httpOnly: true,
+      // httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
+      // sameSite: 'strict',
     });
     return response;
   } catch (error) {
