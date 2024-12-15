@@ -7,9 +7,9 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = Cookies.get('accessToken');
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    const token = Cookies.get('jwtToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },

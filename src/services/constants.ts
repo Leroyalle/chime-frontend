@@ -5,4 +5,6 @@ export enum ApiRouter {
   LIKE = '/likes',
   FOLLOW = '/follow',
   REFRESH = '/refresh',
+  REGISTER = '/auth/email/sendCode',
+  VERIFY = '/auth/email/verify',
 }

@@ -1,19 +1,25 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button, Input } from '@nextui-org/react';
-import { Lock, Mail, Notebook } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
 import { Api } from '@/services/api-client';
 import { TRegister } from '../../../../../@types/auth';
 
 interface Props {
-  onChangeTab: () => void;
+  onSuccess: (userId: number) => void;
+  onChangeAction: VoidFunction;
   className?: string;
 }
 
-export const RegisterForm: React.FC<Props> = ({ className, onChangeTab }) => {
-  const { control, handleSubmit, setValue } = useForm({
+export const RegisterForm: React.FC<Props> = ({ className, onSuccess, onChangeAction }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<TRegister>({
     defaultValues: {
       name: '',
       email: '',
@@ -21,13 +27,12 @@ export const RegisterForm: React.FC<Props> = ({ className, onChangeTab }) => {
     },
   });
 
-  const onSubmit = async (data: TRegister) => {
+  const onSubmit = async (data: { email: string }) => {
     try {
-      await Api.users.register(data);
-      onChangeTab();
-      setValue('name', '');
+      const res = await Api.users.register(data);
+      onSuccess(res.userId);
+      onChangeAction();
       setValue('email', '');
-      setValue('password', '');
     } catch (error) {
       if (hasErrorField(error)) {
         console.error(error.data.error);
@@ -37,26 +42,34 @@ export const RegisterForm: React.FC<Props> = ({ className, onChangeTab }) => {
 
   return (
     <form className={cn('flex flex-col gap-y-2', className)} onSubmit={handleSubmit(onSubmit)}>
-      <Controller
+      {/* <Controller
         control={control}
         name="name"
         render={({ field }) => (
           <Input endContent={<Notebook />} label="Name" placeholder="Nikolay Melonov" {...field} />
         )}
-      />
+      /> */}
       <Controller
         control={control}
         name="email"
         render={({ field }) => (
-          <Input endContent={<Mail />} label="Email" placeholder="chime@example.com" {...field} />
+          <Input
+            isInvalid={!!errors.email}
+            errorMessage={errors.email?.message}
+            endContent={<Mail />}
+            label="Email"
+            placeholder="chime@example.com"
+            {...field}
+          />
         )}
-      />
-      <Controller
-        control={control}
-        name="password"
-        render={({ field }) => (
-          <Input endContent={<Lock />} label="Password" placeholder="password" {...field} />
-        )}
+        // rules={{ required: 'Email обязателен' }}
+        rules={{
+          required: 'Email обязателен',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Введите корректный email',
+          },
+        }}
       />
       <Button type="submit" color="warning">
         Зарегистрироваться

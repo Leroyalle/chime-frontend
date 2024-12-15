@@ -1,1 +1,1 @@
-export { RegisterForm, LoginForm } from './auth-forms';
+export { RegisterForm, LoginForm, CodeForm } from './auth-forms';

@@ -16,7 +16,7 @@ interface Props {
 
 export const LoginForm: React.FC<Props> = ({ className }) => {
   const router = useRouter();
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit, setValue } = useForm<Omit<TRegister, 'name'>>({
     defaultValues: {
       email: '',
       password: '',
@@ -54,6 +54,7 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
           <Input endContent={<Lock />} label="Password" placeholder="password" {...field} />
         )}
       />
+
       <Button type="submit" color="warning">
         Войти
       </Button>
