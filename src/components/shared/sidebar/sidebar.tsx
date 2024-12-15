@@ -31,7 +31,7 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<MessageCircle size={20} />} href={'/friends'}>
+          <SidebarItem icon={<MessageCircle size={20} />} href={'/im'}>
             Сообщения
           </SidebarItem>
         </li>

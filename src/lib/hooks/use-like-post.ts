@@ -32,7 +32,7 @@ export const useLikePost = (postId: string) => {
       return { previousData };
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(['todos'], context?.previousData);
+      queryClient.setQueryData(['posts', 'post'], context?.previousData);
     },
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));

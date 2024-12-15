@@ -5,3 +5,5 @@ export { Sidebar } from './sidebar';
 export { ProfileButton } from './profile-button';
 export { DarkLightBlock } from './dark-light-block';
 export { FeedWrapper } from './feed';
+export { ImWrapper } from './im';
+export { ChatWrapper } from './chat';

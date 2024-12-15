@@ -15,7 +15,7 @@ export default function AuthLayout({
     <>
       <Header />
       <Container>
-        <main className="min-h-[100vh]">{children}</main>
+        <main>{children}</main>
       </Container>
     </>
   );
