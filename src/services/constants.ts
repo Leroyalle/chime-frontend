@@ -1,7 +1,7 @@
 export enum ApiRouter {
   USER = '/users',
   POST = '/posts',
-  COMMENT = '/comments',
+  COMMENT = '/comment',
   LIKE = '/like',
   FOLLOW = '/follow',
   REFRESH = '/refresh',

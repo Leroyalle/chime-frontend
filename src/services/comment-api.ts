@@ -1,5 +1,5 @@
 import { ApiRouter } from './constants';
-import { Comment } from '../../@types/dto';
+import { Comment } from '../../@types/newDto';
 import { instance } from './instance';
 
 export const createComment = async (data: {

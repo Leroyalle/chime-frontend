@@ -8,8 +8,9 @@ export default async function Post({ params }: { params: { id: string } }) {
   const id = (await params).id;
   const cookiesStore = await cookies();
   const headers = new AxiosHeaders({
-    Authorization: `Bearer ${cookiesStore.get('accessToken')?.value}`,
+    Authorization: `Bearer ${cookiesStore.get('jwtToken')?.value}`,
   });
+
   if (!id) {
     return notFound();
   }
