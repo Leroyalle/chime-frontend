@@ -5,10 +5,10 @@ export interface Root {
 }
 
 export interface Post {
-  id: number;
+  id: string;
   content: string;
   imageUrl: string | null;
-  authorId: number;
+  authorId: string;
   createdAt: Date;
   author: Author;
   likes: Like[];
@@ -19,7 +19,7 @@ export interface Post {
 }
 
 export interface Author {
-  id: number;
+  id: string;
   banned: boolean;
   role: string;
   createdAt: Date;
@@ -27,16 +27,16 @@ export interface Author {
 }
 
 export interface Like {
-  id: number;
+  id: string;
   userId: number;
   postId: number;
 }
 
 export interface Comment {
-  id: number;
+  id: string;
   content: string;
-  userId: number;
-  postId: number;
+  userId: string;
+  postId: string;
   createdAt: Date;
   updatedAt: Date;
 }

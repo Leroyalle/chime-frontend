@@ -15,9 +15,9 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
 
   return (
     <section className={cn('', className)}>
-      {items.map((item, i) => (
+      {items.map((item) => (
         <PostItem
-          key={item.id + i}
+          key={item.id}
           postId={item.id}
           fullName={item.author.name}
           createdAt={item.createdAt}

@@ -1,7 +1,7 @@
 export interface SendEmailResponse {
   message: string;
   verified: boolean;
-  userId: number;
+  userId: string;
   checkPassword: boolean;
 }
 
@@ -11,7 +11,7 @@ export interface UserDto {
 }
 
 export interface User {
-  id: number;
+  id: string;
   banned: boolean;
   role: string;
   createdAt: string;
@@ -22,7 +22,7 @@ export interface User {
 }
 
 export interface EmailUser {
-  id: number;
+  id: string;
   email: string;
   password: string;
   userBaseId: number;
