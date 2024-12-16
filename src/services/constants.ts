@@ -1,5 +1,5 @@
 export enum ApiRouter {
-  USER = '/users',
+  USER = '/user',
   POST = '/posts',
   COMMENT = '/comment',
   LIKE = '/like',

@@ -10,6 +10,11 @@ export interface UserDto {
   token: string;
 }
 
+export interface UserResponse {
+  user: User;
+  isOwner: boolean;
+}
+
 export interface User {
   id: string;
   banned: boolean;
