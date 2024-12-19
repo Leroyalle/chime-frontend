@@ -33,6 +33,27 @@ export const getPostById = async ({
   return (await instance.get<Post>(`${ApiRouter.POST}/${id}`, { headers })).data;
 };
 
+export const getPostsByUserId = async ({
+  userId,
+  page,
+  perPage,
+  headers,
+}: {
+  userId: string;
+  page: number;
+  perPage: number;
+  headers?: AxiosRequestHeaders;
+}): Promise<PostsDto> => {
+  return (
+    await instance.get<PostsDto>(
+      `${ApiRouter.USER_POSTS}/${userId}?page=${page}&perPage=${perPage}`,
+      {
+        headers,
+      },
+    )
+  ).data;
+};
+
 export const deletePost = async (id: string): Promise<void> => {
   return (await instance.delete<void>(`${ApiRouter.POST}/${id}`)).data;
 };
@@ -55,6 +76,20 @@ export const getPostByIdQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['post', id],
     queryFn: () => getPostById({ id }),
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const getPostsByUserIdInfinityQueryOptions = (userId: string) => {
+  return infiniteQueryOptions({
+    queryKey: ['posts', 'list'],
+    queryFn: (meta) => getPostsByUserId({ userId, page: meta.pageParam, perPage: 10 }),
+    initialPageParam: 1,
+    select: ({ pages }) => pages.flatMap((page) => page.data),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 1 * 60 * 1000,
   });
 };

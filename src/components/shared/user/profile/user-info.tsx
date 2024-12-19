@@ -5,6 +5,7 @@ import { ContentTabs } from './content-tabs';
 import { RoutesEnum } from '../../../../../@types';
 
 interface Props {
+  userId: string;
   name: string;
   date: string;
   about: string | null;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const UserInfo: React.FC<Props> = ({
+  userId,
   name,
   date,
   about,
@@ -34,7 +36,7 @@ export const UserInfo: React.FC<Props> = ({
           <span className="font-bold">{followingsCount}</span> подписки
         </Link>
       </div>
-      <ContentTabs />
+      <ContentTabs userId={userId} />
     </div>
   );
 };

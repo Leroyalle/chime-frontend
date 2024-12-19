@@ -1,10 +1,10 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { PostItem } from '../../post-item';
-import { Post } from '../../../../../@types/dto';
+import { PostItem } from './post-item';
+import { Post } from '../../../@types/dto';
 
 interface Props {
-  items?: Post[];
+  items: Post[];
   className?: string;
 }
 

@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import { PostsList } from './posts';
 import { WritePost } from '../write-post';
 import { useInfinityScrollPosts } from '@/lib/hooks';
 import { PostsDto } from '../../../../@types/response';
+import { PostsList } from '../posts-list';
 
 interface Props {
   initialPosts: PostsDto;

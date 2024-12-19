@@ -39,6 +39,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
             <UserActions isOwner={data.isOwner} />
           </div>
           <UserInfo
+            userId={data.user.id}
             name={data.user.name}
             date={''}
             about={data.user.about}

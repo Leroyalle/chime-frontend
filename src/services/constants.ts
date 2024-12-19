@@ -8,4 +8,5 @@ export enum ApiRouter {
   REGISTER = '/auth/email/sendCode',
   VERIFY = '/auth/email/verify',
   ME = '/user/me',
+  USER_POSTS = '/posts/user',
 }
