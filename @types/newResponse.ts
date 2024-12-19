@@ -19,6 +19,8 @@ export interface User {
   id: string;
   banned: boolean;
   role: string;
+  name: string;
+  about: string | null;
   createdAt: string;
   updatedAt: string;
   EmailUser: EmailUser;

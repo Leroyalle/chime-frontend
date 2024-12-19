@@ -5,12 +5,13 @@ import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react';
 import { Search } from 'lucide-react';
 import { ProfileButton } from './profile-button';
 import Link from 'next/link';
+import { RoutesEnum } from '../../../@types';
 
 export const Header: React.FC = () => {
   return (
     <Navbar isBordered maxWidth="xl" className="bg-light-green">
       <NavbarBrand className="grow-0 mr-20">
-        <Link href="/" className="font-black text-2xl uppercase">
+        <Link href={RoutesEnum.HOME} className="font-black text-2xl uppercase">
           Chime
         </Link>
       </NavbarBrand>

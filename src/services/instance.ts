@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { TokensEnum } from '../../@types';
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -7,7 +8,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get('jwtToken');
+    const token = Cookies.get(TokensEnum.JWT);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

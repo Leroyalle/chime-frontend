@@ -21,6 +21,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
 
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
+      <h2 className="sr-only">Профиль пользователя</h2>
       <img
         src="https://avatars.githubusercontent.com/u/158848927?v=4"
         alt="banner"
@@ -35,12 +36,12 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               className="w-20 h-20 text-large"
               src="https://avatars.githubusercontent.com/u/158848927?v=4"
             />
-            <UserActions />
+            <UserActions isOwner={data.isOwner} />
           </div>
           <UserInfo
-            name={`User #${data.user.id.slice(1, 5)}`}
+            name={data.user.name}
             date={''}
-            about={''}
+            about={data.user.about}
             followersCount={0}
             followingsCount={0}
           />

@@ -12,7 +12,6 @@ interface Props {
 
 export const FeedWrapper: React.FC<Props> = ({ initialPosts, className }) => {
   const { data: posts, cursor } = useInfinityScrollPosts({ initialPosts });
-
   return (
     <div className={className}>
       <WritePost className="mb-10" />

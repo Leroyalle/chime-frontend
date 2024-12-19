@@ -6,9 +6,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
 import { Api } from '@/services/api-client';
 import { TRegister } from '../../../../../@types/auth';
+import { toast } from 'react-toastify';
 
 interface Props {
-  onSuccess: (userId: number) => void;
+  onSuccess: (userId: string) => void;
   onChangeAction: VoidFunction;
   className?: string;
 }
@@ -27,17 +28,24 @@ export const RegisterForm: React.FC<Props> = ({ className, onSuccess, onChangeAc
     },
   });
 
-  const onSubmit = async (data: { email: string }) => {
-    try {
-      const res = await Api.users.register(data);
-      onSuccess(res.userId);
-      onChangeAction();
-      setValue('email', '');
-    } catch (error) {
-      if (hasErrorField(error)) {
-        console.error(error.data.error);
-      }
-    }
+  const onSubmit = (data: { email: string }) => {
+    const promise = Api.users.register(data);
+    toast
+      .promise(promise, {
+        pending: 'Подождите, идет отправка кода на почту...',
+        success: 'Письмо отправлено! Проверьте указанную почту',
+        error: 'Что-то пошло не так! Попробуйте еще раз',
+      })
+      .then((res) => {
+        onSuccess(res.userId);
+        onChangeAction();
+        setValue('email', '');
+      })
+      .catch((error) => {
+        if (hasErrorField(error)) {
+          console.error(error.data.error);
+        }
+      });
   };
 
   return (

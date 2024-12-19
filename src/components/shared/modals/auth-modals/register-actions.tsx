@@ -7,12 +7,12 @@ interface Props {
 }
 
 export const RegisterActions: React.FC<Props> = ({ onChangeTab }) => {
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<string>('');
   const [currentRegisterAction, setCurrentRegisterAction] = useState<'credentials' | 'code'>(
     'credentials',
   );
 
-  const onSuccessSendEmail = (userId: number) => {
+  const onSuccessSendEmail = (userId: string) => {
     setCurrentRegisterAction('code');
     setUserId(userId);
   };

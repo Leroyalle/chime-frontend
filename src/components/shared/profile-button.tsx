@@ -3,6 +3,7 @@ import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { CircleHelp, LogOut, Palette, Settings, User } from 'lucide-react';
 import { Avatar } from './avatar';
+import { RoutesEnum } from '../../../@types';
 
 export const ProfileButton: React.FC = () => {
   return (
@@ -18,16 +19,19 @@ export const ProfileButton: React.FC = () => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         {/* FIXME: <Link> вместо <a> */}
-        <DropdownItem href="/user/1" key="user" startContent={<User size={20} />}>
+        <DropdownItem href={`${RoutesEnum.USER}/1`} key="user" startContent={<User size={20} />}>
           Профиль
         </DropdownItem>
-        <DropdownItem href="/settings" key="settings" startContent={<Settings size={20} />}>
+        <DropdownItem
+          href={RoutesEnum.SETTINGS}
+          key="settings"
+          startContent={<Settings size={20} />}>
           Настройки
         </DropdownItem>
-        <DropdownItem href="/theme" key="theme" startContent={<Palette size={20} />}>
+        <DropdownItem href={RoutesEnum.THEME} key="theme" startContent={<Palette size={20} />}>
           Тема
         </DropdownItem>
-        <DropdownItem href="/help" key="help" startContent={<CircleHelp size={20} />}>
+        <DropdownItem href={RoutesEnum.HELP} key="help" startContent={<CircleHelp size={20} />}>
           Помощь
         </DropdownItem>
         <DropdownItem

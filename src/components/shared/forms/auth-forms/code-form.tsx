@@ -5,13 +5,16 @@ import { Button } from '@nextui-org/react';
 import { hasErrorField } from '@/lib';
 import { Api } from '@/services/api-client';
 import { saveAuthCookies } from '@/lib/save-auth-cookies';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 interface Props {
   title?: string;
-  userId: number;
+  userId: string;
   onChangeTab?: VoidFunction;
 }
 
 export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -24,15 +27,24 @@ export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
   });
 
   const onSubmit = async (data: { code: string }) => {
-    try {
-      const res = await Api.users.verifyCode({ userId, code: data.code });
-      saveAuthCookies(res.token);
-      if (onChangeTab) onChangeTab();
-    } catch (error) {
-      if (hasErrorField(error)) {
-        console.error(error.data.message);
-      }
-    }
+    const res = Api.users.verifyCode({ userId, code: data.code });
+    toast
+      .promise(res, {
+        pending: 'Подождите, идет регистрация...',
+        success: 'Успешная регистрация, удачи!',
+        error: 'Что-то пошло не так! Попробуйте отправить еще раз',
+      })
+      .then((res) => {
+        saveAuthCookies(res.token);
+        // FIXME: временно /
+        router.push('/');
+        if (onChangeTab) onChangeTab();
+      })
+      .catch((error) => {
+        if (hasErrorField(error)) {
+          console.error(error.data.message);
+        }
+      });
   };
 
   return (
