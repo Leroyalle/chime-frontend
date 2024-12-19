@@ -1,4 +1,4 @@
-import { Container, Header } from '@/components/shared';
+import { Container } from '@/components/shared';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +13,6 @@ export default function AuthLayout({
 }>) {
   return (
     <>
-      <Header />
       <Container>
         <main>{children}</main>
       </Container>

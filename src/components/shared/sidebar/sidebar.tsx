@@ -1,6 +1,7 @@
 import React from 'react';
 import { SidebarItem } from './sidebar-item';
 import { BookUser, Flame, MessageCircle, Newspaper, User } from 'lucide-react';
+import { RoutesEnum } from '../../../../@types';
 
 interface Props {
   className?: string;
@@ -11,27 +12,27 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
     <nav className={className}>
       <ul className="flex flex-col gap-1">
         <li>
-          <SidebarItem icon={<User size={20} />} href={'/user/1'}>
+          <SidebarItem icon={<User size={20} />} href={`${RoutesEnum.USER}/1`}>
             Мой профиль
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<Newspaper size={20} />} href={'/'}>
+          <SidebarItem icon={<Newspaper size={20} />} href={RoutesEnum.HOME}>
             Популярное
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<Flame size={20} />} href={'/new'}>
+          <SidebarItem icon={<Flame size={20} />} href={RoutesEnum.NEW}>
             Свежее
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<BookUser size={20} />} href={'/friends'}>
+          <SidebarItem icon={<BookUser size={20} />} href={RoutesEnum.FRIENDS}>
             Друзья
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<MessageCircle size={20} />} href={'/im'}>
+          <SidebarItem icon={<MessageCircle size={20} />} href={RoutesEnum.MESSAGES}>
             Сообщения
           </SidebarItem>
         </li>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tab, Tabs } from '@nextui-org/react';
-import { LoginForm, RegisterForm } from '../../forms';
+import { LoginForm } from '../../forms';
+import { RegisterActions } from './register-actions';
 
 export const AuthTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('login');
@@ -17,7 +18,7 @@ export const AuthTabs: React.FC = () => {
         <LoginForm />
       </Tab>
       <Tab key="register" title="Регистрация">
-        <RegisterForm onChangeTab={() => setActiveTab('login')} />
+        <RegisterActions onChangeTab={() => setActiveTab('login')} />
       </Tab>
     </Tabs>
   );

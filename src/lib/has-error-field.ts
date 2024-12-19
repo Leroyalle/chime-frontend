@@ -1,10 +1,7 @@
-export function hasErrorField(err: unknown): err is { data: { error: string } } {
+export function hasErrorField(
+  err: unknown,
+): err is { data: { error: string; message: string; statusCode: number } } {
   return (
-    typeof err === 'object' &&
-    err !== null &&
-    'data' in err &&
-    typeof err.data === 'object' &&
-    err.data !== null &&
-    'error' in err.data
+    typeof err === 'object' && err !== null && 'message' in err && typeof err.message === 'string'
   );
 }

@@ -1,16 +1,27 @@
+'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { DarkLightBlock } from '../dark-light-block';
 import { UserActions, UserInfo } from './profile';
 import { Avatar } from '../avatar';
+import { UserResponse } from '../../../../@types/newResponse';
+import { useQuery } from '@tanstack/react-query';
+import { Api } from '@/services/api-client';
 
 interface Props {
+  initialData: UserResponse;
   className?: string;
 }
 
-export const UserWrapper: React.FC<Props> = ({ className }) => {
+export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
+  const { data } = useQuery({
+    ...Api.users.getUserQueryOptions(initialData.user.id),
+    initialData,
+  });
+
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
+      <h2 className="sr-only">Профиль пользователя</h2>
       <img
         src="https://avatars.githubusercontent.com/u/158848927?v=4"
         alt="banner"
@@ -25,9 +36,15 @@ export const UserWrapper: React.FC<Props> = ({ className }) => {
               className="w-20 h-20 text-large"
               src="https://avatars.githubusercontent.com/u/158848927?v=4"
             />
-            <UserActions />
+            <UserActions isOwner={data.isOwner} />
           </div>
-          <UserInfo />
+          <UserInfo
+            name={data.user.name}
+            date={''}
+            about={data.user.about}
+            followersCount={0}
+            followingsCount={0}
+          />
         </div>
       </DarkLightBlock>
     </section>
