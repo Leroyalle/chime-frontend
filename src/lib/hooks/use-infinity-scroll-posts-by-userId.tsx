@@ -6,7 +6,7 @@ import { Api } from '@/services/api-client';
 export const useInfinityScrollPostsByUserId = ({ userId }: { userId: string }) => {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     ...Api.posts.getPostsByUserIdInfinityQueryOptions(userId),
   });
 
@@ -18,5 +18,5 @@ export const useInfinityScrollPostsByUserId = ({ userId }: { userId: string }) =
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, cursor };
+  return { data, cursor, isFetchingNextPage };
 };

@@ -7,7 +7,7 @@ import { PostsDto } from '../../../@types/response';
 export const useInfinityScrollPosts = ({ initialPosts }: { initialPosts: PostsDto }) => {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     ...Api.posts.getAllPostsInfinityQueryOptions(),
     initialData: { pages: [initialPosts], pageParams: [1] },
   });
@@ -20,5 +20,5 @@ export const useInfinityScrollPosts = ({ initialPosts }: { initialPosts: PostsDt
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, cursor };
+  return { data, cursor, isFetchingNextPage };
 };
