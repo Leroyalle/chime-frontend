@@ -15,11 +15,14 @@ export const PostsTab: React.FC<Props> = ({ userId }) => {
   } = useInfinityScrollPostsByUserId({
     userId,
   });
-  if (!posts) return null;
+
+  if (!posts) {
+    return <h3>У пользователя нет записей</h3>;
+  }
 
   return (
     <>
-      <PostsList items={posts} />
+      <PostsList items={posts} className="w-full" />
       {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </>

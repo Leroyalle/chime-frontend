@@ -15,17 +15,15 @@ export const UserActions: React.FC<Props> = ({ isOwner, className }) => {
   return (
     <div className={cn('flex items-center gap-x-2', className)}>
       {isOwner ? (
-        <Link href={RoutesEnum.EDIT}>
-          <Button color="warning">Редактировать</Button>
+        <Link href={RoutesEnum.EDIT} className="py-2 px-3 bg-warning rounded-xl">
+          Редактировать
         </Link>
       ) : (
         <Button color="danger">Подписаться</Button>
       )}
       {isOwner ? (
-        <Link href={RoutesEnum.SETTINGS}>
-          <Button color="default">
-            <Settings />
-          </Button>
+        <Link href={RoutesEnum.SETTINGS} className="py-2 px-3 bg-secondary rounded-xl">
+          <Settings />
         </Link>
       ) : (
         <Button color="default">

@@ -10,7 +10,7 @@ export const ChatActions: React.FC<Props> = ({ className }) => {
   return (
     <div className={className}>
       <Dropdown>
-        <DropdownTrigger onClick={(e) => e.stopPropagation()}>
+        <DropdownTrigger>
           <Ellipsis />
         </DropdownTrigger>
         <DropdownMenu aria-label="Chat actions" onAction={(key) => alert(key)}>

@@ -6,7 +6,7 @@
 // import { EditWrapper } from '@/components/shared';
 // import { RoutesEnum, TokensEnum } from '../../../../../@types';
 
-export default async function Edit() {
+export default async function Settings() {
   // const cookiesStore = await cookies();
   // const headers = new AxiosHeaders({
   //   Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,

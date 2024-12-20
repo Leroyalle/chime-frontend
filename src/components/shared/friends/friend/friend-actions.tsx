@@ -3,11 +3,7 @@ import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { Ellipsis } from 'lucide-react';
 
-interface Props {
-  className?: string;
-}
-
-export const FriendActions: React.FC<Props> = ({ className }) => {
+export const FriendActions: React.FC = () => {
   return (
     <Dropdown>
       <DropdownTrigger>

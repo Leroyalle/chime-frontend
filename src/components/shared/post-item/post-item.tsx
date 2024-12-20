@@ -33,7 +33,8 @@ export const PostItem: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <DarkLightBlock className={cn('p-4 max-w-[640px]', className)}>
+    // max-w-[640px]
+    <DarkLightBlock className={cn('p-4', className)}>
       <div>
         <header className="flex justify-between items-center mb-2">
           <User

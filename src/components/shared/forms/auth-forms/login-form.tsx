@@ -4,10 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button, Input } from '@nextui-org/react';
 import { Mail, Lock } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import { Api } from '@/services/api-client';
-import { hasErrorField } from '@/lib';
 import { TRegister } from '../../../../../@types/auth';
-import { saveAuthCookies } from '@/lib/save-auth-cookies';
 import { useRouter } from 'nextjs-toploader/app';
 
 interface Props {
@@ -24,17 +21,18 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
   });
 
   const onSubmit = async (data: Omit<TRegister, 'name'>) => {
-    try {
-      const tokens = await Api.users.login(data);
-      saveAuthCookies(tokens);
-      router.push('/');
-      setValue('email', '');
-      setValue('password', '');
-    } catch (error) {
-      if (hasErrorField(error)) {
-        console.error(error.data.error);
-      }
-    }
+    console.log(data);
+    // try {
+    //   const tokens = await Api.users.login(data);
+    //   saveAuthCookies(tokens);
+    router.push('/');
+    setValue('email', '');
+    setValue('password', '');
+    // } catch (error) {
+    //   if (hasErrorField(error)) {
+    //     console.error(error.data.error);
+    //   }
+    // }
   };
   return (
     <form className={cn('flex flex-col gap-y-2', className)} onSubmit={handleSubmit(onSubmit)}>

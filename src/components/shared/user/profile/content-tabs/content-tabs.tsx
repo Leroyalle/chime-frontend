@@ -1,17 +1,25 @@
 'use client';
 import React from 'react';
-import { Tab, Tabs } from '@nextui-org/react';
+// import { Tab, Tabs } from '@nextui-org/react';
 import { PostsTab } from './tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+
 interface Props {
   userId: string;
 }
+
 export const ContentTabs: React.FC<Props> = ({ userId }) => {
   return (
-    <Tabs variant={'underlined'} aria-label="Content tabs" color="primary">
-      <Tab key="posts" title="Записи" className="pl-0 text-black">
+    <Tabs defaultValue="posts" className="w-full">
+      <TabsList className="bg-transparent">
+        <TabsTrigger value="posts"> Записи</TabsTrigger>
+        <TabsTrigger value="comments">Комментарии</TabsTrigger>
+      </TabsList>
+      <hr className="mt-4" />
+      <TabsContent value="posts">
         <PostsTab userId={userId} />
-      </Tab>
-      <Tab key="comments" title="Комментарии" />
+      </TabsContent>
+      <TabsContent value="comments">Комментарии</TabsContent>
     </Tabs>
   );
 };
