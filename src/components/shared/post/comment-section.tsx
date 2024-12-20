@@ -2,7 +2,7 @@
 import React from 'react';
 import { WriteComment } from '../write-comment';
 import { CommentsList } from '../comments/comments-list';
-import { Comment } from '../../../../@types/dto';
+import { Comment } from '../../../../@types/newDto';
 
 interface Props {
   postId: string;

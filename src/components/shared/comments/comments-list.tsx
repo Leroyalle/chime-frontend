@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Comment } from '../../../../@types/dto';
+import { Comment } from '../../../../@types/newDto';
 import { CommentItem } from './comment-item';
 
 interface Props {
@@ -16,9 +16,9 @@ export const CommentsList: React.FC<Props> = ({ items, className }) => {
           key={item.id}
           className="mb-3"
           author={item.user.name}
-          avatar={item.user.avatarUrl}
+          avatar={''}
           content={item.content}
-          createdAt={new Date('2022-01-01')}
+          createdAt={item.createdAt}
         />
       ))}
     </div>

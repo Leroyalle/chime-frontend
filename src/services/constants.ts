@@ -9,4 +9,5 @@ export enum ApiRouter {
   VERIFY = '/auth/email/verify',
   ME = '/user/me',
   USER_POSTS = '/posts/user',
+  USER_COMMENTS = 'comment/user',
 }

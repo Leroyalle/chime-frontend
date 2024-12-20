@@ -31,8 +31,16 @@ export const useCreateComment = (postId: string) => {
       return { previousData };
     },
 
+    onError: (_, __, context) => {
+      queryClient.setQueryData(
+        Api.posts.getAllPostsInfinityQueryOptions().queryKey,
+        context?.previousData,
+      );
+    },
+
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
+      queryClient.resetQueries({ queryKey: ['comments', 'list'] });
     },
   });
 

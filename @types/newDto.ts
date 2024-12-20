@@ -1,3 +1,5 @@
+import { User } from './newResponse';
+
 export interface Root {
   data: Post[];
   currentPage: number;
@@ -39,4 +41,5 @@ export interface Comment {
   postId: string;
   createdAt: Date;
   updatedAt: Date;
+  user: User;
 }

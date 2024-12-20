@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 // import { Tab, Tabs } from '@nextui-org/react';
-import { PostsTab } from './tabs';
+import { CommentsTab, PostsTab } from './tabs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 
 interface Props {
@@ -19,7 +19,9 @@ export const ContentTabs: React.FC<Props> = ({ userId }) => {
       <TabsContent value="posts">
         <PostsTab userId={userId} />
       </TabsContent>
-      <TabsContent value="comments">Комментарии</TabsContent>
+      <TabsContent value="comments">
+        <CommentsTab userId={userId} />
+      </TabsContent>
     </Tabs>
   );
 };

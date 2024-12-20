@@ -34,3 +34,13 @@ export interface EmailUser {
   password: string;
   userBaseId: number;
 }
+
+export interface UserForComments {
+  id: string;
+  banned: boolean;
+  role: string;
+  about: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
