@@ -62,7 +62,7 @@ export const useCreateComment = (postId: string, userId: string) => {
 
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
-      queryClient.resetQueries({ queryKey: ['comments', 'list'] });
+      queryClient.resetQueries({ queryKey: ['comments', 'list', userId] });
     },
   });
 

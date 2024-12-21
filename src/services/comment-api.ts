@@ -32,7 +32,7 @@ export const deleteComment = async (id: string): Promise<void> => {
 
 export const getUserCommentsInfinityQueryOptions = (userId: string) => {
   return infiniteQueryOptions({
-    queryKey: ['comments', 'list'],
+    queryKey: ['comments', 'list', userId],
     queryFn: (meta) => getUserComments({ userId, page: meta.pageParam, perPage: 10 }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
