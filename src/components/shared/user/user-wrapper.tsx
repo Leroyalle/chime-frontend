@@ -36,15 +36,19 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               className="w-20 h-20 text-large"
               src="https://avatars.githubusercontent.com/u/158848927?v=4"
             />
-            <UserActions isOwner={data.isOwner} />
+            <UserActions
+              userId={data.user.id}
+              isOwner={data.isOwner}
+              isFollowing={data.user.isFollowing}
+            />
           </div>
           <UserInfo
             userId={data.user.id}
             name={data.user.name}
             date={data.user.createdAt}
             about={data.user.about}
-            followersCount={0}
-            followingsCount={0}
+            followerCount={data.user.followerCount}
+            followingCount={data.user.followingCount}
           />
         </div>
       </DarkLightBlock>

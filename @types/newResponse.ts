@@ -26,6 +26,9 @@ export interface User {
   EmailUser: EmailUser;
   TelegramUser: any | null;
   GoogleUser: any | null;
+  isFollowing: boolean;
+  followerCount: number;
+  followingCount: number;
 }
 
 export interface EmailUser {

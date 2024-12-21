@@ -9,8 +9,8 @@ interface Props {
   name: string;
   date: string;
   about: string | null;
-  followersCount: number;
-  followingsCount: number;
+  followerCount: number;
+  followingCount: number;
   className?: string;
 }
 
@@ -19,8 +19,8 @@ export const UserInfo: React.FC<Props> = ({
   name,
   date,
   about,
-  followersCount,
-  followingsCount,
+  followerCount,
+  followingCount,
   className,
 }) => {
   return (
@@ -30,10 +30,10 @@ export const UserInfo: React.FC<Props> = ({
       {about && <p>{about}</p>}
       <div className="flex flex-wrap gap-x-2">
         <Link href={RoutesEnum.FOLLOWERS}>
-          <span className="font-bold">{followersCount}</span> подписчиков
+          <span className="font-bold">{followerCount}</span> подписчиков
         </Link>
         <Link href={RoutesEnum.FOLLOWING}>
-          <span className="font-bold">{followingsCount}</span> подписки
+          <span className="font-bold">{followingCount}</span> подписки
         </Link>
       </div>
       <ContentTabs userId={userId} />

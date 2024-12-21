@@ -5,13 +5,27 @@ import { Button } from '@nextui-org/react';
 import { MessageCircleMore, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { RoutesEnum } from '../../../../../@types';
+import { useFollowUser, useUnFollowUser } from '@/lib/hooks';
 
 interface Props {
+  userId: string;
   isOwner: boolean;
+  isFollowing: boolean;
   className?: string;
 }
 
-export const UserActions: React.FC<Props> = ({ isOwner, className }) => {
+export const UserActions: React.FC<Props> = ({ userId, isOwner, isFollowing, className }) => {
+  const { followUser, isPending: isPendingFollow } = useFollowUser(userId);
+  const { unFollowUser, isPending: isPendingUnFollow } = useUnFollowUser(userId);
+
+  const onClickFollowUser = () => {
+    if (!isFollowing) {
+      followUser();
+    } else {
+      unFollowUser();
+    }
+  };
+
   return (
     <div className={cn('flex items-center gap-x-2', className)}>
       {isOwner ? (
@@ -19,7 +33,12 @@ export const UserActions: React.FC<Props> = ({ isOwner, className }) => {
           Редактировать
         </Link>
       ) : (
-        <Button color="danger">Подписаться</Button>
+        <Button
+          color={isFollowing ? 'success' : 'danger'}
+          onPress={onClickFollowUser}
+          disabled={isPendingFollow || isPendingUnFollow}>
+          {isFollowing ? 'Отписаться' : 'Подписаться'}
+        </Button>
       )}
       {isOwner ? (
         <Link href={RoutesEnum.SETTINGS} className="py-2 px-3 bg-secondary rounded-xl">
