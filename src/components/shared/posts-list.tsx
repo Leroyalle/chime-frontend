@@ -18,6 +18,7 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
       {items.map((item) => (
         <PostItem
           key={item.id}
+          userId={item.authorId}
           postId={item.id}
           fullName={item.author.name}
           createdAt={item.createdAt}

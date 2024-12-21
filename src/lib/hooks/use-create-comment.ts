@@ -1,7 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useCreateComment = (postId: string) => {
+export const useCreateComment = (postId: string, userId: string) => {
   const queryClient = useQueryClient();
   const createCommentMutation = useMutation({
     mutationFn: Api.comments.createComment,
@@ -28,12 +28,34 @@ export const useCreateComment = (postId: string) => {
         };
       });
 
+      queryClient.setQueryData(
+        Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
+        (old) => {
+          if (!old) {
+            return undefined;
+          }
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              data: page.data.map((post) =>
+                post.id === postId ? { ...post, commentsCount: post.commentsCount + 1 } : post,
+              ),
+            })),
+          };
+        },
+      );
+
       return { previousData };
     },
 
     onError: (_, __, context) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
+        context?.previousData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
         context?.previousData,
       );
     },

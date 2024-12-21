@@ -41,7 +41,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
           <UserInfo
             userId={data.user.id}
             name={data.user.name}
-            date={''}
+            date={data.user.createdAt}
             about={data.user.about}
             followersCount={0}
             followingsCount={0}

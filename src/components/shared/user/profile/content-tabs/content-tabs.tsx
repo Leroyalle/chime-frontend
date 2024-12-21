@@ -12,7 +12,7 @@ export const ContentTabs: React.FC<Props> = ({ userId }) => {
   return (
     <Tabs defaultValue="posts" className="w-full">
       <TabsList className="bg-transparent">
-        <TabsTrigger value="posts"> Записи</TabsTrigger>
+        <TabsTrigger value="posts">Записи</TabsTrigger>
         <TabsTrigger value="comments">Комментарии</TabsTrigger>
       </TabsList>
       <hr className="mt-4" />

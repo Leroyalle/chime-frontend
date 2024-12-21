@@ -1,5 +1,5 @@
 import { ApiRouter } from './constants';
-import { Post } from '../../@types/dto';
+import { Post } from '../../@types/newDto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { PostsDto } from '../../@types/response';
@@ -81,15 +81,15 @@ export const getPostByIdQueryOptions = (id: string) => {
 };
 
 export const getPostsByUserIdInfinityQueryOptions = (userId: string) => {
+  const perPage = 10;
   return infiniteQueryOptions({
-    queryKey: ['posts', 'list'],
-    queryFn: (meta) => getPostsByUserId({ userId, page: meta.pageParam, perPage: 10 }),
+    queryKey: ['posts', 'list', userId],
+    queryFn: (meta) => getPostsByUserId({ userId, page: meta.pageParam, perPage }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
     getNextPageParam(lastPage, allPages) {
-      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
+      return lastPage.data.length < perPage ? undefined : allPages.length + 1;
     },
     refetchOnWindowFocus: false,
-    staleTime: 1 * 60 * 1000,
   });
 };

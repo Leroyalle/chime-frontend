@@ -50,7 +50,6 @@ export const getUserQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['user', id],
     queryFn: () => getUserById({ id }),
-    refetchOnWindowFocus: true,
     staleTime: 1 * 60 * 1000,
   });
 };

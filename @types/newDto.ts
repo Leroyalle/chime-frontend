@@ -26,12 +26,14 @@ export interface Author {
   role: string;
   createdAt: Date;
   updatedAt: Date;
+  name: string;
+  about: string | null;
 }
 
 export interface Like {
   id: string;
-  userId: number;
-  postId: number;
+  userId: string;
+  postId: string;
 }
 
 export interface Comment {

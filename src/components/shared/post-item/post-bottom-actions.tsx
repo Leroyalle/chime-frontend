@@ -9,6 +9,7 @@ import { useLikePost, useUnlikePost } from '@/lib/hooks';
 import { RoutesEnum } from '../../../../@types';
 
 interface Props {
+  userId: string;
   postId: string;
   likes: number;
   comments: number;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export const PostBottomActions: React.FC<Props> = ({
+  userId,
   postId,
   likes,
   comments,
@@ -26,8 +28,8 @@ export const PostBottomActions: React.FC<Props> = ({
   className,
 }) => {
   const pathName = usePathname();
-  const { likePost, isPending: isPendingLike } = useLikePost(postId);
-  const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId);
+  const { likePost, isPending: isPendingLike } = useLikePost(postId, userId);
+  const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId, userId);
 
   const onClickLikePost = async () => {
     if (isLiked) {

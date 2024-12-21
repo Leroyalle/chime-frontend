@@ -7,17 +7,18 @@ import { hasErrorField } from '@/lib';
 import { useCreateComment } from '@/lib/hooks';
 
 interface Props {
+  userId: string;
   postId: string;
   className?: string;
 }
 
-export const WriteComment: React.FC<Props> = ({ postId, className }) => {
+export const WriteComment: React.FC<Props> = ({ userId, postId, className }) => {
   const { handleSubmit, control, setValue } = useForm<{ comment: string }>({
     defaultValues: {
       comment: '',
     },
   });
-  const { createComment, isPending: isPendingCreateComment } = useCreateComment(postId);
+  const { createComment, isPending: isPendingCreateComment } = useCreateComment(postId, userId);
 
   const onSubmit = async (data: { comment: string }) => {
     try {
