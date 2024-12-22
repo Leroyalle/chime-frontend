@@ -25,6 +25,17 @@ export const useFollowUser = (followingId: string) => {
 
       return { previousData };
     },
+
+    onError: (_, __, context) => {
+      queryClient.setQueryData(
+        Api.users.getUserQueryOptions(followingId).queryKey,
+        context?.previousData,
+      );
+    },
+
+    onSettled: () => {
+      queryClient.resetQueries({ queryKey: ['following', followingId] });
+    },
   });
 
   return {

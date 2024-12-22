@@ -29,10 +29,10 @@ export const UserInfo: React.FC<Props> = ({
       <p className="text-gray-500">{date}</p>
       {about && <p>{about}</p>}
       <div className="flex flex-wrap gap-x-2">
-        <Link href={RoutesEnum.FOLLOWERS}>
+        <Link href={`${RoutesEnum.USER}/${userId}${RoutesEnum.FOLLOWERS}`}>
           <span className="font-bold">{followerCount}</span> подписчиков
         </Link>
-        <Link href={RoutesEnum.FOLLOWING}>
+        <Link href={`${RoutesEnum.USER}/${userId}${RoutesEnum.FOLLOWING}`}>
           <span className="font-bold">{followingCount}</span> подписки
         </Link>
       </div>

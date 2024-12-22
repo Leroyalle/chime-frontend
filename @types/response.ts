@@ -9,6 +9,6 @@ export type PostsDto = {
 
 export type CommentsDto = {
   data: Comment[];
-  currentPage: number;
   totalPages: number;
+  currentPage: number;
 };

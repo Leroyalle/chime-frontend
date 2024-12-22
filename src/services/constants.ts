@@ -1,13 +1,15 @@
 export enum ApiRouter {
   USER = '/user',
+  ME = '/user/me',
   POST = '/posts',
+  USER_POSTS = '/posts/user',
   COMMENT = '/comment',
+  USER_COMMENTS = 'comment/user',
   LIKE = '/like',
   FOLLOW = '/follow',
+  USER_FOLLOWERS = '/follow/followers',
+  USER_FOLLOWING = '/follow/following',
   REFRESH = '/refresh',
   REGISTER = '/auth/email/sendCode',
   VERIFY = '/auth/email/verify',
-  ME = '/user/me',
-  USER_POSTS = '/posts/user',
-  USER_COMMENTS = 'comment/user',
 }

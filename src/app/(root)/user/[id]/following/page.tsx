@@ -1,11 +1,11 @@
-import { UserWrapper } from '@/components/shared';
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
+import { RoutesEnum, TokensEnum } from '../../../../../../@types';
 import { notFound, redirect } from 'next/navigation';
-import { RoutesEnum, TokensEnum } from '../../../../../@types/constants';
+import { FollowingWrapper } from '@/components/shared';
 
-export default async function User({ params }: { params: Promise<{ id: string }> }) {
+export default async function Following({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
   const cookiesStore = await cookies();
   const headers = new AxiosHeaders({
@@ -19,9 +19,16 @@ export default async function User({ params }: { params: Promise<{ id: string }>
     return notFound();
   });
 
-  return (
-    <div className="flex flex-col items-center">
-      <UserWrapper initialData={user} />
-    </div>
-  );
+  const following = await Api.follow
+    .getFollowing({ userId: user.user.id, headers })
+    .catch((error) => {
+      if (error.response?.status === 401) {
+        return redirect(RoutesEnum.AUTH);
+      }
+      return notFound();
+    });
+
+  console.log(following);
+
+  return <FollowingWrapper userId={user.user.id} initialData={following} />;
 }

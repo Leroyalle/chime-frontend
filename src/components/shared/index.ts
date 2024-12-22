@@ -9,3 +9,5 @@ export { UserWrapper } from './user';
 export { ImWrapper } from './im';
 export { ChatWrapper } from './chat';
 export { EditWrapper } from './edit';
+export { FollowersWrapper } from './follows';
+export { FollowingWrapper } from './follows';

@@ -1,21 +1,23 @@
-export interface SendEmailResponse {
+import { Follows } from './dto';
+
+export type SendEmailResponse = {
   message: string;
   verified: boolean;
   userId: string;
   checkPassword: boolean;
-}
+};
 
-export interface UserDto {
+export type UserDto = {
   user: User;
   token: string;
-}
+};
 
-export interface UserResponse {
+export type UserResponse = {
   user: User;
   isOwner: boolean;
-}
+};
 
-export interface User {
+export type User = {
   id: string;
   banned: boolean;
   role: string;
@@ -29,16 +31,16 @@ export interface User {
   isFollowing: boolean;
   followerCount: number;
   followingCount: number;
-}
+};
 
-export interface EmailUser {
+export type EmailUser = {
   id: string;
   email: string;
   password: string;
   userBaseId: number;
-}
+};
 
-export interface UserForComments {
+export type UserForComments = {
   id: string;
   banned: boolean;
   role: string;
@@ -46,4 +48,15 @@ export interface UserForComments {
   name: string;
   createdAt: string;
   updatedAt: string;
-}
+};
+
+export type FollowersWithUser = {
+  data: Omit<Follows, 'following'>[];
+  totalFollows: number;
+  totalPages: number;
+};
+export type FollowingWithUser = {
+  data: Omit<Follows, 'follower'>[];
+  totalFollows: number;
+  totalPages: number;
+};

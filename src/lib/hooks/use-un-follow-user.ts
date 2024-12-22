@@ -24,6 +24,17 @@ export const useUnFollowUser = (unFollowingId: string) => {
 
       return { previousData };
     },
+
+    onError: (_, __, context) => {
+      queryClient.setQueryData(
+        Api.users.getUserQueryOptions(unFollowingId).queryKey,
+        context?.previousData,
+      );
+    },
+
+    onSettled: () => {
+      queryClient.resetQueries({ queryKey: ['followers', unFollowingId] });
+    },
   });
 
   return {

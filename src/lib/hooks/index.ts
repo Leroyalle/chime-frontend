@@ -8,3 +8,5 @@ export { useInfinityScrollPostsByUserId } from './use-infinity-scroll-posts-by-u
 export { useInfinityScrollUserComments } from './use-infinity-scroll-user-comments';
 export { useFollowUser } from './use-follow-user';
 export { useUnFollowUser } from './use-un-follow-user';
+export { useInfinityScrollUserFollowers } from './use-infinity-scroll-user-followers';
+export { useInfinityScrollUserFollowing } from './use-infinity-scroll-user-following';
