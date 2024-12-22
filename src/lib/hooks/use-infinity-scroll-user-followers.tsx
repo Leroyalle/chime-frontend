@@ -13,7 +13,7 @@ export const useInfinityScrollUserFollowers = ({
 }) => {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, isPending, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     ...Api.follow.getFollowersInfinityQueryOptions(userId),
     initialData: { pages: [initialData], pageParams: [1] },
   });
@@ -26,5 +26,5 @@ export const useInfinityScrollUserFollowers = ({
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, cursor, isFetchingNextPage };
+  return { data, isPending, cursor, isFetchingNextPage };
 };

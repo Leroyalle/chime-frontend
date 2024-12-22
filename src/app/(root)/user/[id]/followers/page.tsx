@@ -28,7 +28,5 @@ export default async function Followers({ params }: { params: Promise<{ id: stri
       return notFound();
     });
 
-  console.log(followers);
-
   return <FollowersWrapper userId={user.user.id} initialData={followers} />;
 }

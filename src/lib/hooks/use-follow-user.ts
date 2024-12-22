@@ -1,5 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 export const useFollowUser = (followingId: string) => {
   const queryClient = useQueryClient();
@@ -7,7 +8,7 @@ export const useFollowUser = (followingId: string) => {
     mutationFn: () => Api.follow.followUser({ followingId }),
 
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['user'] });
+      await queryClient.cancelQueries({ queryKey: ['followers'] });
 
       const previousData = queryClient.getQueryData(
         Api.users.getUserQueryOptions(followingId).queryKey,
@@ -26,15 +27,19 @@ export const useFollowUser = (followingId: string) => {
       return { previousData };
     },
 
-    onError: (_, __, context) => {
+    onSettled: () => {
+      queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(followingId));
+      console.log(
+        queryClient.getQueriesData(Api.follow.getFollowersInfinityQueryOptions(followingId)),
+      );
+    },
+
+    onError: (error, __, context) => {
       queryClient.setQueryData(
         Api.users.getUserQueryOptions(followingId).queryKey,
         context?.previousData,
       );
-    },
-
-    onSettled: () => {
-      queryClient.resetQueries({ queryKey: ['following', followingId] });
+      toast.error(error.message);
     },
   });
 

@@ -50,6 +50,5 @@ export const getUserQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['user', id],
     queryFn: () => getUserById({ id }),
-    staleTime: 1 * 60 * 1000,
   });
 };

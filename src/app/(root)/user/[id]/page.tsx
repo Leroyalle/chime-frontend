@@ -19,6 +19,8 @@ export default async function User({ params }: { params: Promise<{ id: string }>
     return notFound();
   });
 
+  console.log(user);
+
   return (
     <div className="flex flex-col items-center">
       <UserWrapper initialData={user} />
