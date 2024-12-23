@@ -6,15 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 
 interface Props {
   userId: string;
-  name: string;
 }
 
-export const ContentTabs: React.FC<Props> = ({ userId, name }) => {
+export const ContentTabs: React.FC<Props> = ({ userId }) => {
   return (
     <Tabs defaultValue="posts" className="w-full">
       <TabsList className="bg-transparent">
-        <TabsTrigger value="posts">Записи {name}</TabsTrigger>
-        <TabsTrigger value="comments">Комментарии {name}</TabsTrigger>
+        <TabsTrigger value="posts">Записи</TabsTrigger>
+        <TabsTrigger value="comments">Комментарии</TabsTrigger>
       </TabsList>
       <hr className="mt-4" />
       <TabsContent value="posts">

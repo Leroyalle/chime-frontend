@@ -36,7 +36,7 @@ export const UserInfo: React.FC<Props> = ({
           <span className="font-bold">{followingCount}</span> подписки
         </Link>
       </div>
-      <ContentTabs userId={userId} name={name} />
+      <ContentTabs userId={userId} />
     </div>
   );
 };
