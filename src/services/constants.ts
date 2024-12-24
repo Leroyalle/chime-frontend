@@ -12,4 +12,5 @@ export enum ApiRouter {
   REFRESH = '/refresh',
   REGISTER = '/auth/email/sendCode',
   VERIFY = '/auth/email/verify',
+  CHAT = '/chat',
 }

@@ -5,12 +5,14 @@ import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
 import { ChatBody as Body } from './chat-body';
 import { ChatInput as Field } from './chat-fields';
+import { useReactQuerySubscription } from '@/lib/hooks';
 
 interface Props {
   className?: string;
 }
 
 export const ChatWrapper: React.FC<Props> = ({ className }) => {
+  useReactQuerySubscription();
   return (
     <DarkLightBlock
       className={cn(

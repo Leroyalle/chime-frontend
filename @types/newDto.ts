@@ -45,3 +45,12 @@ export interface Comment {
   updatedAt: Date;
   user: User;
 }
+
+export type Message = {
+  id: string;
+  body: string;
+  chatId: string;
+  userBase: User;
+  createdAt: Date;
+  updatedAt: Date;
+};
