@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { DarkLightBlock } from '../dark-light-block';
+import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import { PostHeadActions } from './post-top-actions';
 import { PostBottomActions } from './post-bottom-actions';

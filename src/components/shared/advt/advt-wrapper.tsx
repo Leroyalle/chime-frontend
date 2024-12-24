@@ -1,5 +1,5 @@
 import React from 'react';
-import { DarkLightBlock } from '../dark-light-block';
+import { DarkLightBlock } from '../../ui';
 
 interface Props {
   className?: string;

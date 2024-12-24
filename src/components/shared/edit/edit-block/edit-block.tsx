@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { DarkLightBlock } from '../../dark-light-block';
+import { DarkLightBlock } from '../../../ui';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { UpdateUserForm } from '../../forms';

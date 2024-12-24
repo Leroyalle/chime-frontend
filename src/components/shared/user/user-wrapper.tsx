@@ -1,9 +1,8 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { DarkLightBlock } from '../dark-light-block';
+import { DarkLightBlock, Avatar } from '../../ui';
 import { UserActions, UserInfo } from './profile';
-import { Avatar } from '../avatar';
 import { UserResponse } from '../../../../@types/newResponse';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Avatar } from '../../avatar';
+import { Avatar } from '../../../ui';
 import { RoutesEnum } from '../../../../../@types';
 import dayjs from 'dayjs';
 

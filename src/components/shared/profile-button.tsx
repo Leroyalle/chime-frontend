@@ -2,7 +2,7 @@
 import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { CircleHelp, LogOut, Palette, Settings, User } from 'lucide-react';
-import { Avatar } from './avatar';
+import { Avatar } from '../ui';
 import { RoutesEnum } from '../../../@types';
 
 export const ProfileButton: React.FC = () => {

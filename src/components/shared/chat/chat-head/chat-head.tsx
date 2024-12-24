@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Avatar } from '@/components/shared/avatar';
+import { Avatar } from '@/components/ui';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 

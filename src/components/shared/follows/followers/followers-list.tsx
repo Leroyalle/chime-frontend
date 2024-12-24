@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Follows } from '../../../../../@types/dto';
 import { Friend } from '../../friend';
-import { DarkLightBlock } from '../../dark-light-block';
+import { DarkLightBlock } from '../../../ui';
 
 interface Props {
   items: Omit<Follows, 'following'>[];

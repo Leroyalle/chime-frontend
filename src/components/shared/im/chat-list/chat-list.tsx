@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
-import { DarkLightBlock } from '../../dark-light-block';
+import { DarkLightBlock } from '../../../ui/dark-light-block';
 
 interface Props {
   className?: string;
