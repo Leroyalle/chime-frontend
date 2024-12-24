@@ -60,3 +60,9 @@ export type FollowingWithUser = {
   totalFollows: number;
   totalPages: number;
 };
+
+export type InfinityResponse<T> = {
+  data: T;
+  total: number;
+  totalPages: number;
+};

@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from './message';
+import { Message as TMessage } from '../../../../../@types/newDto';
+import { EmptyState } from '../../empty-state';
 
 interface Props {
+  messages?: TMessage[];
   className?: string;
 }
 
-export const ChatBody: React.FC<Props> = ({ className }) => {
+export const ChatBody: React.FC<Props> = ({ messages, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,11 +18,15 @@ export const ChatBody: React.FC<Props> = ({ className }) => {
     }
   }, []);
 
+  if (!messages || messages.length === 0) {
+    return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;
+  }
+
   return (
     <div ref={chatRef} className={cn('w-full flex flex-col gap-y-4 overflow-y-auto', className)}>
-      {[...Array(30)].map((_, index) => (
+      {messages.map((message, i) => (
         <Message
-          key={index}
+          key={i}
           userId="1"
           author="Николай Мелонов"
           content="Привет"

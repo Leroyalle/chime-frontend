@@ -3,6 +3,7 @@ import * as likes from './like-api';
 import * as comments from './comment-api';
 import * as users from './user-api';
 import * as follow from './follow-api';
+import * as chat from './chat-api';
 
 export const Api = {
   posts,
@@ -10,4 +11,5 @@ export const Api = {
   comments,
   users,
   follow,
+  chat,
 };

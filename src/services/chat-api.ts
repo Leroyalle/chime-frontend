@@ -2,6 +2,7 @@ import { infiniteQueryOptions } from '@tanstack/react-query';
 import { Message } from '../../@types/newDto';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
+import { InfinityResponse } from '../../@types/newResponse';
 
 export const getMessagesByChatId = async ({
   id,
@@ -11,9 +12,12 @@ export const getMessagesByChatId = async ({
   id: string;
   page: number;
   perPage: number;
-}): Promise<Message[]> => {
-  return (await instance.get<Message[]>(`${ApiRouter.CHAT}/${id}?page=${page}&perPage=${perPage}`))
-    .data;
+}): Promise<InfinityResponse<Message[]>> => {
+  return (
+    await instance.get<InfinityResponse<Message[]>>(
+      `${ApiRouter.CHAT}/${id}?page=${page}&perPage=${perPage}`,
+    )
+  ).data;
 };
 
 export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
@@ -22,8 +26,9 @@ export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
     queryKey: ['chat', chatId],
     queryFn: (meta) => getMessagesByChatId({ id: chatId, page: meta.pageParam, perPage }),
     initialPageParam: 1,
+    select: (data) => data.pages.flatMap((data) => data.data),
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
   });
