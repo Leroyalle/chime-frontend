@@ -27,7 +27,7 @@ export const Message: React.FC<Props> = ({
     <div className={cn('hover:bg-background p-2 duration-100 rounded-xl', className)}>
       <div className="flex justify-between mb-2">
         <div className="flex items-center gap-x-2">
-          <Avatar src="https://avatars.githubusercontent.com/u/158848927?v=4" size="md" />
+          <Avatar src={avatar} size="md" />
           <div className="flex flex-col justify-center">
             <h4 className="text-blue-700 font-semibold">
               <a href={`${RoutesEnum.USER}/${userId}`}>{author}</a>

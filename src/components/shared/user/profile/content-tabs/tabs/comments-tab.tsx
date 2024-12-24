@@ -2,6 +2,7 @@ import React from 'react';
 import { useInfinityScrollUserComments } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
 import { CommentsList } from '@/components/shared/comments/comments-list';
+import { EmptyState } from '@/components/shared/empty-state';
 
 interface Props {
   userId: string;
@@ -10,8 +11,10 @@ interface Props {
 export const CommentsTab: React.FC<Props> = ({ userId }) => {
   const { data: comments, cursor, isFetchingNextPage } = useInfinityScrollUserComments({ userId });
 
-  if (!comments) {
-    return <h3>У пользователя нет комментариев</h3>;
+  if (!comments || comments.length === 0) {
+    return (
+      <EmptyState title="У пользователя нет комментариев" text="Напишите ему, спросите почему?" />
+    );
   }
 
   return (

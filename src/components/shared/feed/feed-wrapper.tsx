@@ -5,6 +5,7 @@ import { useInfinityScrollPosts } from '@/lib/hooks';
 import { PostsDto } from '../../../../@types/response';
 import { PostsList } from '../posts-list';
 import { Spinner } from '@nextui-org/react';
+import { EmptyState } from '../empty-state';
 
 interface Props {
   initialPosts: PostsDto;
@@ -13,12 +14,19 @@ interface Props {
 
 export const FeedWrapper: React.FC<Props> = ({ initialPosts, className }) => {
   const { data: posts, cursor, isFetchingNextPage } = useInfinityScrollPosts({ initialPosts });
+
   return (
     <div className={className}>
       <WritePost className="mb-10" />
-      {posts && <PostsList items={posts} />}
-      {cursor}
-      {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
+      {posts ? (
+        <>
+          <PostsList items={posts} />
+          {cursor}
+          {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
+        </>
+      ) : (
+        <EmptyState title="Нет постов!" text="Станьте легендой, напишите что-то!" />
+      )}
     </div>
   );
 };

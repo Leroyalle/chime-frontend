@@ -5,6 +5,7 @@ import { FollowingWithUser } from '../../../../../@types/newResponse';
 import { useInfinityScrollUserFollowing } from '@/lib/hooks';
 import { FollowingList } from './following-list';
 import { Spinner } from '@nextui-org/react';
+import { EmptyState } from '../../empty-state';
 
 interface Props {
   userId: string;
@@ -21,6 +22,11 @@ export const FollowingWrapper: React.FC<Props> = ({ userId, initialData, classNa
   if (isPending) {
     return <div>Загрузка...</div>;
   }
+
+  if (data.length === 0) {
+    return <EmptyState title="Нет подписок" text="Сделайте первый шаг!" />;
+  }
+
   return (
     <section className={cn('', className)}>
       <h2 className="mb-2">Подписки</h2>
