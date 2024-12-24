@@ -10,12 +10,14 @@ interface Props {
 }
 
 export const ChatInput: React.FC<Props> = ({ className }) => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, setValue } = useForm<{ message: string }>();
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    setValue('message', '');
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="pt-5" onSubmit={handleSubmit(onSubmit)}>
       <Controller
         render={({ field }) => (
           <Input
@@ -27,7 +29,9 @@ export const ChatInput: React.FC<Props> = ({ className }) => {
                 <Send size={20} />
               </button>
             }
+            variant="faded"
             name="message"
+            autoComplete="off"
           />
         )}
         rules={{
