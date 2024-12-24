@@ -24,7 +24,9 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   EmailUser: EmailUser;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TelegramUser: any | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   GoogleUser: any | null;
   isFollowing: boolean;
   followerCount: number;
