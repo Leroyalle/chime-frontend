@@ -2,14 +2,15 @@ import { Api } from '@/services/api-client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { FollowersWithUser } from '../../../@types/newResponse';
+import { Follows } from '../../../../@types/dto';
+import { InfinityResponse } from '../../../../@types/newResponse';
 
 export const useInfinityScrollUserFollowers = ({
   userId,
   initialData,
 }: {
   userId: string;
-  initialData: FollowersWithUser;
+  initialData: InfinityResponse<Omit<Follows, 'following'>[]>;
 }) => {
   const { ref, inView } = useInView();
 

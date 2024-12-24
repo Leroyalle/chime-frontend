@@ -1,5 +1,3 @@
-import { Follows } from './dto';
-
 export type SendEmailResponse = {
   message: string;
   verified: boolean;
@@ -50,19 +48,8 @@ export type UserForComments = {
   updatedAt: string;
 };
 
-export type FollowersWithUser = {
-  data: Omit<Follows, 'following'>[];
-  totalFollows: number;
-  totalPages: number;
-};
-export type FollowingWithUser = {
-  data: Omit<Follows, 'follower'>[];
-  totalFollows: number;
-  totalPages: number;
-};
-
 export type InfinityResponse<T> = {
   data: T;
-  total: number;
+  totalItems: number;
   totalPages: number;
 };

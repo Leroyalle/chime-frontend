@@ -2,7 +2,7 @@ import { ApiRouter } from './constants';
 import { Comment } from '../../@types/newDto';
 import { instance } from './instance';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { CommentsDto } from '../../@types/response';
+import { InfinityResponse } from '../../@types/newResponse';
 
 export const createComment = async (data: {
   content: string;
@@ -18,9 +18,9 @@ export const getUserComments = async ({
   userId: string;
   page: number;
   perPage: number;
-}): Promise<CommentsDto> => {
+}): Promise<InfinityResponse<Comment[]>> => {
   return (
-    await instance.get<CommentsDto>(
+    await instance.get<InfinityResponse<Comment[]>>(
       `${ApiRouter.USER_COMMENTS}/${userId}?page=${page}&perPage=${perPage}`,
     )
   ).data;

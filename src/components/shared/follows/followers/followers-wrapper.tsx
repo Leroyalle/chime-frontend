@@ -4,12 +4,13 @@ import { cn } from '@/lib/utils';
 import { useInfinityScrollUserFollowers } from '@/lib/hooks';
 import { FollowersList } from './followers-list';
 import { Spinner } from '@nextui-org/react';
-import { FollowersWithUser } from '../../../../../@types/newResponse';
+import { InfinityResponse } from '../../../../../@types/newResponse';
 import { EmptyState } from '../../empty-state';
+import { Follows } from '../../../../../@types/dto';
 
 interface Props {
   userId: string;
-  initialData: FollowersWithUser;
+  initialData: InfinityResponse<Omit<Follows, 'following'>[]>;
   className?: string;
 }
 

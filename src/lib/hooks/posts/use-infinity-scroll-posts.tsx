@@ -2,9 +2,14 @@ import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { Api } from '@/services/api-client';
-import { PostsDto } from '../../../@types/response';
+import { InfinityResponse } from '../../../../@types/newResponse';
+import { Post } from '../../../../@types/newDto';
 
-export const useInfinityScrollPosts = ({ initialPosts }: { initialPosts: PostsDto }) => {
+export const useInfinityScrollPosts = ({
+  initialPosts,
+}: {
+  initialPosts: InfinityResponse<Post[]>;
+}) => {
   const { ref, inView } = useInView();
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({

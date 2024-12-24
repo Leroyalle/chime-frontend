@@ -2,13 +2,14 @@
 import React from 'react';
 import { WritePost } from '../write-post';
 import { useInfinityScrollPosts } from '@/lib/hooks';
-import { PostsDto } from '../../../../@types/response';
 import { PostsList } from '../posts-list';
 import { Spinner } from '@nextui-org/react';
 import { EmptyState } from '../empty-state';
+import { InfinityResponse } from '../../../../@types/newResponse';
+import { Post } from '../../../../@types/newDto';
 
 interface Props {
-  initialPosts: PostsDto;
+  initialPosts: InfinityResponse<Post[]>;
   className?: string;
 }
 

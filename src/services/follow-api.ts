@@ -3,7 +3,7 @@ import { Follows } from '../../@types/dto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { FollowersWithUser, FollowingWithUser } from '../../@types/newResponse';
+import { InfinityResponse } from '../../@types/newResponse';
 
 export const followUser = async (data: { followingId: string }): Promise<Follows> => {
   return (await instance.post<Follows>(ApiRouter.FOLLOW, data)).data;
@@ -23,9 +23,9 @@ export const getFollowers = async ({
   page?: number;
   perPage?: number;
   headers?: AxiosRequestHeaders;
-}): Promise<FollowersWithUser> => {
+}): Promise<InfinityResponse<Omit<Follows, 'following'>[]>> => {
   return (
-    await instance.get<FollowersWithUser>(
+    await instance.get<InfinityResponse<Omit<Follows, 'following'>[]>>(
       `${ApiRouter.USER_FOLLOWERS}/${userId}?page=${page}&perPage=${perPage}`,
       { headers },
     )
@@ -42,9 +42,9 @@ export const getFollowing = async ({
   page?: number;
   perPage?: number;
   headers?: AxiosRequestHeaders;
-}): Promise<FollowingWithUser> => {
+}): Promise<InfinityResponse<Omit<Follows, 'follower'>[]>> => {
   return (
-    await instance.get<FollowingWithUser>(
+    await instance.get<InfinityResponse<Omit<Follows, 'follower'>[]>>(
       `${ApiRouter.USER_FOLLOWING}/${userId}?page=${page}&perPage=${perPage}`,
       { headers },
     )

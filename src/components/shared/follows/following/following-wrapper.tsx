@@ -1,15 +1,16 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { FollowingWithUser } from '../../../../../@types/newResponse';
+import { InfinityResponse } from '../../../../../@types/newResponse';
 import { useInfinityScrollUserFollowing } from '@/lib/hooks';
 import { FollowingList } from './following-list';
 import { Spinner } from '@nextui-org/react';
 import { EmptyState } from '../../empty-state';
+import { Follows } from '../../../../../@types/dto';
 
 interface Props {
   userId: string;
-  initialData: FollowingWithUser;
+  initialData: InfinityResponse<Omit<Follows, 'follower'>[]>;
   className?: string;
 }
 

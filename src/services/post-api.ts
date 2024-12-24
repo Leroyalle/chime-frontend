@@ -2,8 +2,8 @@ import { ApiRouter } from './constants';
 import { Post } from '../../@types/newDto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
-import { PostsDto } from '../../@types/response';
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
+import { InfinityResponse } from '../../@types/newResponse';
 
 export const getAllPosts = async ({
   page,
@@ -13,9 +13,12 @@ export const getAllPosts = async ({
   page: number;
   perPage: number;
   headers?: AxiosRequestHeaders;
-}): Promise<PostsDto> => {
+}): Promise<InfinityResponse<Post[]>> => {
   return (
-    await instance.get<PostsDto>(`${ApiRouter.POST}?page=${page}&perPage=${perPage}`, { headers })
+    await instance.get<InfinityResponse<Post[]>>(
+      `${ApiRouter.POST}?page=${page}&perPage=${perPage}`,
+      { headers },
+    )
   ).data;
 };
 
@@ -43,9 +46,9 @@ export const getPostsByUserId = async ({
   page: number;
   perPage: number;
   headers?: AxiosRequestHeaders;
-}): Promise<PostsDto> => {
+}): Promise<InfinityResponse<Post[]>> => {
   return (
-    await instance.get<PostsDto>(
+    await instance.get<InfinityResponse<Post[]>>(
       `${ApiRouter.USER_POSTS}/${userId}?page=${page}&perPage=${perPage}`,
       {
         headers,
