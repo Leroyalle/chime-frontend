@@ -14,6 +14,7 @@ export const useInfinityScrollMessages = ({
 
   const { data, fetchNextPage, isPending, isFetchingNextPage } = useInfiniteQuery({
     ...Api.chat.getMessagesByChatIdInfinityQueryOptions(chatId),
+    enabled: !!chatId,
   });
 
   useEffect(() => {

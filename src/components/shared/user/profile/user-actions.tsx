@@ -11,10 +11,17 @@ interface Props {
   userId: string;
   isOwner: boolean;
   isFollowing: boolean;
+  onClickChat: (data: { recipientId: string }) => void;
   className?: string;
 }
 
-export const UserActions: React.FC<Props> = ({ userId, isOwner, isFollowing, className }) => {
+export const UserActions: React.FC<Props> = ({
+  userId,
+  isOwner,
+  isFollowing,
+  onClickChat,
+  className,
+}) => {
   const { followUser, isPending: isPendingFollow } = useFollowUser(userId);
   const { unFollowUser, isPending: isPendingUnFollow } = useUnFollowUser(userId);
 
@@ -45,7 +52,7 @@ export const UserActions: React.FC<Props> = ({ userId, isOwner, isFollowing, cla
           <Settings />
         </Link>
       ) : (
-        <Button color="default">
+        <Button color="default" onPress={() => onClickChat({ recipientId: userId })}>
           <MessageCircleMore />
         </Button>
       )}

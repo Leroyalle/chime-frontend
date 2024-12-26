@@ -6,6 +6,7 @@ import { UserActions, UserInfo } from './profile';
 import { UserResponse } from '../../../../@types/newResponse';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
+import { useReactQuerySubscription } from '@/lib/hooks';
 
 interface Props {
   initialData: UserResponse;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
+  const { createChat } = useReactQuerySubscription();
   const { data } = useQuery({
     ...Api.users.getUserQueryOptions(initialData.user.id),
     initialData,
@@ -39,6 +41,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               userId={data.user.id}
               isOwner={data.isOwner}
               isFollowing={data.user.isFollowing}
+              onClickChat={createChat}
             />
           </div>
           <UserInfo

@@ -12,6 +12,7 @@ interface Props {
 
 export const Providers: React.FC<Props> = ({ children }) => {
   const queryClient = new QueryClient();
+
   return (
     <>
       <NextUIProvider>

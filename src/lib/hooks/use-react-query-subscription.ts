@@ -3,12 +3,14 @@ import { io, Socket } from 'socket.io-client';
 import Cookies from 'js-cookie';
 import { useQueryClient } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
-import { ChatUpdate, MessageRequest } from '../../../@types/chat';
+import { ChatUpdate, MessageRequest, UserChat } from '../../../@types/chat';
+import { useRouter } from 'next/navigation';
 
 export const useReactQuerySubscription = () => {
   const queryClient = useQueryClient();
-  const token = Cookies.get('jwtToken');
+  const router = useRouter();
   const socket = useRef<Socket | null>(null);
+  const token = Cookies.get('jwtToken');
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -19,8 +21,15 @@ export const useReactQuerySubscription = () => {
       console.log('Connected to WebSocket');
     });
 
-    socket.current.on('checkData', (data) => {
+    socket.current.on('checkData', (data: UserChat[]) => {
       console.log('checkData:', data);
+
+      queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
+        if (!old) {
+          return undefined;
+        }
+        return data;
+      });
     });
 
     socket.current.on('loadMessages', (data) => {
@@ -30,6 +39,10 @@ export const useReactQuerySubscription = () => {
     socket.current.on('message', (newMessage) => {
       console.log(newMessage);
       console.log('connect message');
+    });
+
+    socket.current.on('chat:create', (data) => {
+      router.push(`/im/${data.id}`);
     });
 
     socket.current.on('unauthorized', (message) => {
@@ -81,5 +94,9 @@ export const useReactQuerySubscription = () => {
     socket.current?.emit('messages:post', message);
   };
 
-  return send;
+  const createChat = (data: { recipientId: string }) => {
+    socket.current?.emit('chat:create', data);
+  };
+
+  return { send, createChat };
 };

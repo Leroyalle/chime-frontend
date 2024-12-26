@@ -1,11 +1,18 @@
 import { Message } from './newDto';
 
-export interface ChatUpdate {
+export type ChatUpdate = {
   chatId: string;
   message: Message;
-}
+};
 
-export interface MessageRequest {
+export type MessageRequest = {
   chatId: string;
   message: string;
-}
+};
+
+export type UserChat = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  createdAt: Date;
+};

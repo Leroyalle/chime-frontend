@@ -1,8 +1,9 @@
-import { infiniteQueryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { Message } from '../../@types/newDto';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { InfinityResponse } from '../../@types/newResponse';
+import { UserChat } from '../../@types/chat';
 
 export const getMessagesByChatId = async ({
   id,
@@ -20,6 +21,10 @@ export const getMessagesByChatId = async ({
   ).data;
 };
 
+export const getUserChats = async (): Promise<UserChat[]> => {
+  return (await instance.get<UserChat[]>(ApiRouter.CHAT)).data;
+};
+
 export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
   const perPage = 20;
   return infiniteQueryOptions({
@@ -30,6 +35,15 @@ export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
     },
+    refetchOnWindowFocus: false,
+    gcTime: Infinity,
+  });
+};
+
+export const getUserChatsQueryOptions = () => {
+  return queryOptions({
+    queryKey: ['user-chats'],
+    queryFn: getUserChats,
     refetchOnWindowFocus: false,
     gcTime: Infinity,
   });

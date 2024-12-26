@@ -15,7 +15,7 @@ interface Props {
 
 export const ChatWrapper: React.FC<Props> = ({ chatId, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const send = useReactQuerySubscription();
+  const { send } = useReactQuerySubscription();
 
   const {
     data: messages,
