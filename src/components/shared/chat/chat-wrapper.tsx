@@ -5,7 +5,7 @@ import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
 import { ChatBody as Body } from './chat-body';
 import { ChatInput as Field } from './chat-fields';
-import { useInfinityScrollMessages, useReactQuerySubscription } from '@/lib/hooks';
+import { useInfinityScrollMessages, useSocket } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 export const ChatWrapper: React.FC<Props> = ({ chatId, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const { send } = useReactQuerySubscription();
+  const { send } = useSocket();
 
   const {
     data: messages,

@@ -6,7 +6,7 @@ import { UserActions, UserInfo } from './profile';
 import { UserResponse } from '../../../../@types/newResponse';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
-import { useReactQuerySubscription } from '@/lib/hooks';
+import { useSocket } from '@/lib/hooks';
 
 interface Props {
   initialData: UserResponse;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
-  const { createChat } = useReactQuerySubscription();
+  const { createChat } = useSocket();
   const { data } = useQuery({
     ...Api.users.getUserQueryOptions(initialData.user.id),
     initialData,

@@ -3,7 +3,6 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatList, SearchChat } from './chat-list';
 import { ImHead as Header } from './im-head';
-import { useReactQuerySubscription } from '@/lib/hooks';
 import { EmptyState } from '../empty-state';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const ImWrapper: React.FC<Props> = ({ className }) => {
-  useReactQuerySubscription();
   const { data, isPending } = useQuery({
     ...Api.chat.getUserChatsQueryOptions(),
   });
