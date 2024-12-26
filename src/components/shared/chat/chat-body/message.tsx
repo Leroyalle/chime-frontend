@@ -23,6 +23,7 @@ export const Message: React.FC<Props> = ({
   createdAt,
   className,
 }) => {
+  console.log(isSender);
   return (
     <div className={cn('hover:bg-background p-2 duration-100 rounded-xl', className)}>
       <div className="flex justify-between mb-2">

@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from './message';
 import { Message as TMessage } from '../../../../../@types/newDto';
 import { EmptyState } from '../../empty-state';
 
 interface Props {
+  chatRef: React.RefObject<HTMLDivElement>;
   messages?: TMessage[];
+  cursor?: JSX.Element;
+  loader?: JSX.Element;
   className?: string;
 }
 
-export const ChatBody: React.FC<Props> = ({ messages, className }) => {
-  const chatRef = useRef<HTMLDivElement>(null);
-
+export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, className }) => {
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -24,15 +25,17 @@ export const ChatBody: React.FC<Props> = ({ messages, className }) => {
 
   return (
     <div ref={chatRef} className={cn('w-full flex flex-col gap-y-4 overflow-y-auto', className)}>
+      {loader}
+      {messages && cursor}
       {messages.map((message, i) => (
         <Message
           key={i}
-          userId="1"
+          userId={'1'}
           author="Николай Мелонов"
-          content="Привет"
+          content={message.body}
           avatar="https://avatars.githubusercontent.com/u/158848927?v=4"
           isSender={true}
-          createdAt={new Date()}
+          createdAt={message.createdAt}
         />
       ))}
     </div>

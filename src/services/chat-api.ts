@@ -6,8 +6,8 @@ import { InfinityResponse } from '../../@types/newResponse';
 
 export const getMessagesByChatId = async ({
   id,
-  page,
-  perPage,
+  page = 1,
+  perPage = 20,
 }: {
   id: string;
   page: number;
@@ -26,10 +26,11 @@ export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
     queryKey: ['chat', chatId],
     queryFn: (meta) => getMessagesByChatId({ id: chatId, page: meta.pageParam, perPage }),
     initialPageParam: 1,
-    select: (data) => data.pages.flatMap((data) => data.data),
+    select: (data) => data.pages.flatMap((data) => data.data).reverse(),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
+    gcTime: Infinity,
   });
 };

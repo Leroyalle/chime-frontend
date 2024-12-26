@@ -2,13 +2,8 @@ import { useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Cookies from 'js-cookie';
 import { useQueryClient } from '@tanstack/react-query';
-import { Message } from '../../../@types/newDto';
 import { Api } from '@/services/api-client';
-
-interface ChatUpdate {
-  chatId: string;
-  message: Message;
-}
+import { ChatUpdate, MessageRequest } from '../../../@types/chat';
 
 export const useReactQuerySubscription = () => {
   const queryClient = useQueryClient();
@@ -24,8 +19,8 @@ export const useReactQuerySubscription = () => {
       console.log('Connected to WebSocket');
     });
 
-    socket.current.on('checkData', () => {
-      console.log('checked');
+    socket.current.on('checkData', (data) => {
+      console.log('checkData:', data);
     });
 
     socket.current.on('loadMessages', (data) => {
@@ -48,6 +43,7 @@ export const useReactQuerySubscription = () => {
         (old) => {
           if (!old) {
             return undefined;
+            // FIXME: инвалидировать при отсутствии
           }
 
           const updatedData = {
@@ -55,10 +51,10 @@ export const useReactQuerySubscription = () => {
             pages: old.pages.map((page) => ({ ...page })),
           };
 
-          const lastPage = updatedData.pages[updatedData.pages.length - 1];
+          const lastPage = updatedData.pages[0];
 
           if (lastPage) {
-            lastPage.data.push(data.message);
+            lastPage.data.unshift(data.message);
             lastPage.totalItems += 1;
           } else {
             updatedData.pages.push({
@@ -67,7 +63,6 @@ export const useReactQuerySubscription = () => {
               totalItems: 1,
             });
           }
-
           return updatedData;
         },
       );
@@ -82,7 +77,7 @@ export const useReactQuerySubscription = () => {
     };
   }, [queryClient]);
 
-  const send = (message: Message) => {
+  const send = (message: MessageRequest) => {
     socket.current?.emit('messages:post', message);
   };
 

@@ -3,15 +3,19 @@ import { cn } from '@/lib/utils';
 import { Input } from '@nextui-org/react';
 import { Send } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
+import { MessageRequest } from '../../../../../@types/chat';
 
 interface Props {
+  chatId: string;
+  onSendMessage: (message: MessageRequest) => void;
   className?: string;
 }
 
-export const ChatInput: React.FC<Props> = ({ className }) => {
+export const ChatInput: React.FC<Props> = ({ chatId, onSendMessage, className }) => {
   const { control, handleSubmit, setValue } = useForm<{ message: string }>();
 
-  const onSubmit = () => {
+  const onSubmit = (data: { message: string }) => {
+    onSendMessage({ message: data.message, chatId });
     setValue('message', '');
   };
 
