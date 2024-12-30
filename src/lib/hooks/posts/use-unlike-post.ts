@@ -59,6 +59,7 @@ export const useUnlikePost = (postId: string, userId: string) => {
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
         context?.previousData,
       );
+      queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
     },
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));

@@ -3,11 +3,19 @@ import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { CircleHelp, LogOut, Palette, Settings, User } from 'lucide-react';
 import { Avatar } from '../ui';
-import { RoutesEnum } from '../../../@types';
+import { RoutesEnum, TokensEnum } from '../../../@types';
 import { useGetMe } from '@/lib/hooks';
-
+import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 export const ProfileButton: React.FC = () => {
+  const router = useRouter();
   const { data } = useGetMe();
+
+  const handleLogout = () => {
+    Cookies.remove(TokensEnum.JWT);
+    router.push('/auth');
+  };
 
   return (
     <Dropdown placement="bottom-end">
@@ -21,30 +29,32 @@ export const ProfileButton: React.FC = () => {
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        {/* FIXME: <Link> вместо <a> */}
-        <DropdownItem
-          href={`${RoutesEnum.USER}/${data?.user.id}`}
-          key="user"
-          startContent={<User size={20} />}>
-          Профиль
+        <DropdownItem key="user" startContent={<User size={20} />}>
+          <Link className="w-full h-full block" href={`${RoutesEnum.USER}/${data?.user.id}`}>
+            Профиль
+          </Link>
         </DropdownItem>
-        <DropdownItem
-          href={RoutesEnum.SETTINGS}
-          key="settings"
-          startContent={<Settings size={20} />}>
-          Настройки
+        <DropdownItem key="settings" startContent={<Settings size={20} />}>
+          <Link className="w-full h-full block" href={RoutesEnum.SETTINGS}>
+            Настройки
+          </Link>
         </DropdownItem>
-        <DropdownItem href={RoutesEnum.THEME} key="theme" startContent={<Palette size={20} />}>
-          Тема
+        <DropdownItem key="theme" startContent={<Palette size={20} />}>
+          <Link className="w-full h-full block" href={RoutesEnum.THEME}>
+            Тема
+          </Link>
         </DropdownItem>
-        <DropdownItem href={RoutesEnum.HELP} key="help" startContent={<CircleHelp size={20} />}>
-          Помощь
+        <DropdownItem key="help" startContent={<CircleHelp size={20} />}>
+          <Link className="w-full h-full block" href={RoutesEnum.HELP}>
+            Помощь
+          </Link>
         </DropdownItem>
         <DropdownItem
           key="logout"
           color="danger"
           className="text-danger"
-          startContent={<LogOut size={20} />}>
+          startContent={<LogOut size={20} />}
+          onPress={handleLogout}>
           Выйти
         </DropdownItem>
       </DropdownMenu>
