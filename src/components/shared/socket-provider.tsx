@@ -28,6 +28,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       console.log('Connected to WebSocket');
     });
 
+    socket.current.on('unauthorized', (message) => {
+      console.log('Authorization error:', message);
+      alert(message);
+    });
+
     socket.current.on('checkData', (data: UserChat[]) => {
       queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
         if (!old) {
@@ -37,8 +42,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       });
     });
 
-    socket.current.on('chat:create', (data) => {
-      router.push(`/im/${data.id}`);
+    socket.current.on('chat:create', (data: { id: string }) => {
+      console.log(data);
+      if (data.id) {
+        router.push(`/im/${data.id}`);
+      }
     });
 
     socket.current.on('messages:get', (data: ChatUpdate) => {

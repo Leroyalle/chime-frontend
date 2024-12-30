@@ -19,7 +19,9 @@ export default async function User({ params }: { params: Promise<{ id: string }>
     return notFound();
   });
 
-  console.log(user);
+  if (!user.user) {
+    return notFound();
+  }
 
   return (
     <div className="flex flex-col items-center">
