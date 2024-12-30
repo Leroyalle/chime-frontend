@@ -63,7 +63,6 @@ export const useUnlikePost = (postId: string, userId: string) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
-      // queryClient.invalidateQueries({ queryKey: ['posts', 'list', userId] });
     },
   });
 

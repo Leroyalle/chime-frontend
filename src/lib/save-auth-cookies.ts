@@ -5,5 +5,6 @@ export const saveAuthCookies = async (token: string) => {
     // httpOnly: true,
     // sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
+    expires: 1,
   });
 };

@@ -12,7 +12,7 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
   const { data, isPending, isError } = useGetMe();
 
   useEffect(() => {
-    if (isError || !data) {
+    if (isError) {
       router.push('/auth');
     }
   }, [isError, data, router]);
@@ -21,7 +21,7 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
     return (
       <Spinner
         color="warning"
-        className="absolute bottom-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 "
+        className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
     );
   }

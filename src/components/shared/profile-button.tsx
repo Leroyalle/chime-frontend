@@ -25,11 +25,11 @@ export const ProfileButton: React.FC = () => {
           size="lg"
           as="button"
           className="transition-transform"
-          src="https://avatars.githubusercontent.com/u/158848927?v=4"
+          src={'https://avatars.githubusercontent.com/u/158848927?v=4'}
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem key="user" startContent={<User size={20} />}>
+        <DropdownItem key="profile" startContent={<User size={20} />}>
           <Link className="w-full h-full block" href={`${RoutesEnum.USER}/${data?.user.id}`}>
             Профиль
           </Link>
