@@ -46,6 +46,13 @@ export const refreshAccessToken = async (refreshToken: string): Promise<TAuthTok
   return (await instance.post<TAuthTokens | null>(`${ApiRouter.REFRESH}`, { refreshToken })).data;
 };
 
+export const getMeQueryOptions = () => {
+  return queryOptions({
+    queryKey: ['me'],
+    queryFn: () => current(),
+  });
+};
+
 export const getUserQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['user', id],

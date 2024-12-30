@@ -12,8 +12,8 @@ interface Props {
 export const ChatList: React.FC<Props> = ({ items, className }) => {
   return (
     <DarkLightBlock className={cn('flex flex-col gap-y-2 py-2 h-full overflow-y-auto', className)}>
-      {items?.map((item, index) => (
-        <ChatItem key={index} chatId={item.id} imageUrl={item.imageUrl} name={item.name} />
+      {items.map((item) => (
+        <ChatItem key={item.id} chatId={item.id} imageUrl={item.imageUrl} name={item.name} />
       ))}
     </DarkLightBlock>
   );

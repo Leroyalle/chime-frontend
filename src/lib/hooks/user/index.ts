@@ -3,3 +3,4 @@ export { useInfinityScrollUserFollowers } from './use-infinity-scroll-user-follo
 export { useInfinityScrollUserFollowing } from './use-infinity-scroll-user-following';
 export { useInfinityScrollUserComments } from './use-infinity-scroll-user-comments';
 export { useInfinityScrollPostsByUserId } from './use-infinity-scroll-posts-by-userId';
+export { useGetMe } from './use-get-me';
