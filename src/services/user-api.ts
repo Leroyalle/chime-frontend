@@ -50,6 +50,7 @@ export const getMeQueryOptions = () => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => current(),
+    staleTime: 1 * 60 * 1000,
   });
 };
 

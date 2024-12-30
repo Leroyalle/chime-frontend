@@ -4,8 +4,11 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-o
 import { CircleHelp, LogOut, Palette, Settings, User } from 'lucide-react';
 import { Avatar } from '../ui';
 import { RoutesEnum } from '../../../@types';
+import { useGetMe } from '@/lib/hooks';
 
 export const ProfileButton: React.FC = () => {
+  const { data } = useGetMe();
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -19,7 +22,10 @@ export const ProfileButton: React.FC = () => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         {/* FIXME: <Link> вместо <a> */}
-        <DropdownItem href={`${RoutesEnum.USER}/1`} key="user" startContent={<User size={20} />}>
+        <DropdownItem
+          href={`${RoutesEnum.USER}/${data?.user.id}`}
+          key="user"
+          startContent={<User size={20} />}>
           Профиль
         </DropdownItem>
         <DropdownItem

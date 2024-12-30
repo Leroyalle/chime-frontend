@@ -1,18 +1,22 @@
+'use client';
 import React from 'react';
 import { SidebarItem } from './sidebar-item';
 import { BookUser, Flame, MessageCircle, Newspaper, User } from 'lucide-react';
 import { RoutesEnum } from '../../../../@types';
+import { useGetMe } from '@/lib/hooks';
 
 interface Props {
   className?: string;
 }
 
 export const Sidebar: React.FC<Props> = ({ className }) => {
+  const { data } = useGetMe();
+
   return (
     <nav className={className}>
       <ul className="flex flex-col gap-1">
         <li>
-          <SidebarItem icon={<User size={20} />} href={`${RoutesEnum.USER}/1`}>
+          <SidebarItem icon={<User size={20} />} href={`${RoutesEnum.USER}/${data?.user.id}`}>
             Мой профиль
           </SidebarItem>
         </li>
