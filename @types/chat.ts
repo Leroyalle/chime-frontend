@@ -1,4 +1,5 @@
 import { Message } from './newDto';
+import { User } from './newResponse';
 
 export type ChatUpdate = {
   chatId: string;
@@ -15,4 +16,8 @@ export type UserChat = {
   name: string;
   imageUrl: string;
   createdAt: Date;
+};
+
+export type ChatWithMembers = UserChat & {
+  members: User[];
 };

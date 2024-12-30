@@ -3,7 +3,8 @@ import { Message } from '../../@types/newDto';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { InfinityResponse } from '../../@types/newResponse';
-import { UserChat } from '../../@types/chat';
+import { ChatWithMembers, UserChat } from '../../@types/chat';
+import { AxiosRequestHeaders } from 'axios';
 
 export const getMessagesByChatId = async ({
   id,
@@ -23,6 +24,16 @@ export const getMessagesByChatId = async ({
 
 export const getUserChats = async (): Promise<UserChat[]> => {
   return (await instance.get<UserChat[]>(ApiRouter.CHAT)).data;
+};
+
+export const getChatById = async ({
+  id,
+  headers,
+}: {
+  id: string;
+  headers?: AxiosRequestHeaders;
+}): Promise<ChatWithMembers> => {
+  return (await instance.get<ChatWithMembers>(`${ApiRouter.CHAT_INFO}/${id}`, { headers })).data;
 };
 
 export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {

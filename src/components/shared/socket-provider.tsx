@@ -42,10 +42,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       });
     });
 
-    socket.current.on('chat:create', (data: { id: string }) => {
-      console.log(data);
-      if (data.id) {
-        router.push(`/im/${data.id}`);
+    socket.current.on('chat:create', (id: string) => {
+      if (id) {
+        router.push(`/im/${id}`);
       }
     });
 

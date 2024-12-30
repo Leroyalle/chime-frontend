@@ -7,13 +7,15 @@ import { ChatBody as Body } from './chat-body';
 import { ChatInput as Field } from './chat-fields';
 import { useInfinityScrollMessages, useSocket } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
+import { ChatWithMembers } from '../../../../@types/chat';
 
 interface Props {
   chatId: string;
+  chat: ChatWithMembers;
   className?: string;
 }
 
-export const ChatWrapper: React.FC<Props> = ({ chatId, className }) => {
+export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const { send } = useSocket();
 
@@ -42,11 +44,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, className }) => {
         'py-2 pt-0 flex flex-col overflow-y-auto h-[calc(100vh-58px-32px)]',
         className,
       )}>
-      <Header
-        className="px-6"
-        name="Николай Мелонов"
-        avatar="https://avatars.githubusercontent.com/u/158848927?v=4"
-      />
+      <Header className="px-6" name={chat.name} avatar={chat.imageUrl} />
       <Body
         className="flex-1 px-4"
         messages={messages}

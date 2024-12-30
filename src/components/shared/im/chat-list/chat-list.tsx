@@ -13,12 +13,7 @@ export const ChatList: React.FC<Props> = ({ items, className }) => {
   return (
     <DarkLightBlock className={cn('flex flex-col gap-y-2 py-2 h-full overflow-y-auto', className)}>
       {items?.map((item, index) => (
-        <ChatItem
-          key={index}
-          chatId={item.id}
-          imageUrl={'https://avatars.githubusercontent.com/u/158848927?v=4'}
-          name={item.name}
-        />
+        <ChatItem key={index} chatId={item.id} imageUrl={item.imageUrl} name={item.name} />
       ))}
     </DarkLightBlock>
   );
