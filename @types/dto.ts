@@ -1,21 +1,4 @@
-export type User = {
-  id: string;
-  email: string;
-  password: string;
-  name: string;
-  avatarUrl?: string;
-  dateOfBirth?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  bio?: string;
-  location?: string;
-  posts: Post[];
-  following: Follows[];
-  followers: Follows[];
-  likes: Like[];
-  comments: Comment[];
-  isFollowing?: boolean;
-};
+import { User } from './newResponse';
 
 export type Follows = {
   id: string;

@@ -1,9 +1,9 @@
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
 import { PostWrapper } from '@/components/shared/post';
 import { Api } from '@/services/api-client';
-import { RoutesEnum, TokensEnum } from '../../../../../@types';
+import { TokensEnum } from '../../../../../@types';
+import { handleApiError } from '@/lib';
 
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
@@ -12,12 +12,7 @@ export default async function Post({ params }: { params: Promise<{ id: string }>
     Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
   });
 
-  const post = await Api.posts.getPostById({ id, headers }).catch((error) => {
-    if (error.response?.status === 401) {
-      return redirect(RoutesEnum.AUTH);
-    }
-    return notFound();
-  });
+  const post = await Api.posts.getPostById({ id, headers }).catch(handleApiError);
 
   return (
     <div>

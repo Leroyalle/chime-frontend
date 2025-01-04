@@ -1,9 +1,10 @@
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
-import { RoutesEnum, TokensEnum } from '../../../../../../@types/constants';
+import { notFound } from 'next/navigation';
+import { TokensEnum } from '../../../../../../@types/constants';
 import { EditWrapper } from '@/components/shared';
+import { handleApiError } from '@/lib';
 
 export default async function Edit() {
   const cookiesStore = await cookies();
@@ -11,12 +12,7 @@ export default async function Edit() {
     Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
   });
 
-  const user = await Api.users.current(headers).catch((error) => {
-    if (error.response?.status === 401) {
-      return redirect(RoutesEnum.AUTH);
-    }
-    throw error;
-  });
+  const user = await Api.users.current(headers).catch(handleApiError);
 
   if (!user) {
     return notFound();

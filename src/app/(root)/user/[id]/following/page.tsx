@@ -1,9 +1,9 @@
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { RoutesEnum, TokensEnum } from '../../../../../../@types';
-import { notFound, redirect } from 'next/navigation';
+import { TokensEnum } from '../../../../../../@types';
 import { FollowingWrapper } from '@/components/shared';
+import { handleApiError } from '@/lib';
 
 export default async function Following({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
@@ -12,23 +12,11 @@ export default async function Following({ params }: { params: Promise<{ id: stri
     Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
   });
 
-  const user = await Api.users.getUserById({ id, headers }).catch((error) => {
-    if (error.response?.status === 401) {
-      return redirect(RoutesEnum.AUTH);
-    }
-    return notFound();
-  });
+  const user = await Api.users.getUserById({ id, headers }).catch(handleApiError);
 
   const following = await Api.follow
     .getFollowing({ userId: user.user.id, headers })
-    .catch((error) => {
-      if (error.response?.status === 401) {
-        return redirect(RoutesEnum.AUTH);
-      }
-      return notFound();
-    });
-
-  console.log(following);
+    .catch(handleApiError);
 
   return <FollowingWrapper userId={user.user.id} initialData={following} />;
 }

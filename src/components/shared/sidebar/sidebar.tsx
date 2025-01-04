@@ -1,7 +1,15 @@
 'use client';
 import React from 'react';
 import { SidebarItem } from './sidebar-item';
-import { BookUser, Flame, MessageCircle, Newspaper, User } from 'lucide-react';
+import {
+  BookUser,
+  ContactRound,
+  Flame,
+  MessageCircle,
+  Newspaper,
+  User,
+  UserRoundCheck,
+} from 'lucide-react';
 import { RoutesEnum } from '../../../../@types';
 import { useGetMe } from '@/lib/hooks';
 
@@ -31,7 +39,23 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           </SidebarItem>
         </li>
         <li>
-          <SidebarItem icon={<BookUser size={20} />} href={RoutesEnum.FRIENDS}>
+          <SidebarItem
+            icon={<BookUser size={20} />}
+            href={`${RoutesEnum.USER}/${data?.user.id}${RoutesEnum.FOLLOWING}`}>
+            Ваши подписки
+          </SidebarItem>
+        </li>
+        <li>
+          <SidebarItem
+            icon={<ContactRound size={20} />}
+            href={`${RoutesEnum.USER}/${data?.user.id}${RoutesEnum.FOLLOWERS}`}>
+            Подписчики
+          </SidebarItem>
+        </li>
+        <li>
+          <SidebarItem
+            icon={<UserRoundCheck size={20} />}
+            href={`${RoutesEnum.FRIENDS}/${data?.user.id}`}>
             Друзья
           </SidebarItem>
         </li>

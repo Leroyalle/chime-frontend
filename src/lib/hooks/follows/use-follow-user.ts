@@ -29,9 +29,7 @@ export const useFollowUser = (followingId: string) => {
 
     onSettled: () => {
       queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(followingId));
-      console.log(
-        queryClient.getQueriesData(Api.follow.getFollowersInfinityQueryOptions(followingId)),
-      );
+      queryClient.resetQueries(Api.follow.getFriendsInfinityQueryOptions(followingId));
     },
 
     onError: (error, __, context) => {
@@ -39,7 +37,7 @@ export const useFollowUser = (followingId: string) => {
         Api.users.getUserQueryOptions(followingId).queryKey,
         context?.previousData,
       );
-      toast.error(error.message);
+      toast.error('Не удалось подписаться');
     },
   });
 

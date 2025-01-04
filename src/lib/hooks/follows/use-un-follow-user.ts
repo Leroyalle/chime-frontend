@@ -31,14 +31,12 @@ export const useUnFollowUser = (unFollowingId: string) => {
         Api.users.getUserQueryOptions(unFollowingId).queryKey,
         context?.previousData,
       );
-      toast.error(error.message);
+      toast.error('Не удалось отписаться');
     },
 
     onSettled: () => {
-      console.log(
-        queryClient.getQueriesData(Api.follow.getFollowersInfinityQueryOptions(unFollowingId)),
-      );
       queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(unFollowingId));
+      queryClient.resetQueries(Api.follow.getFriendsInfinityQueryOptions(unFollowingId));
     },
   });
 

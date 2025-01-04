@@ -12,9 +12,14 @@ interface Props {
 export const FollowersList: React.FC<Props> = ({ items, className }) => {
   return (
     <ul className={cn('flex flex-col gap-y-5', className)}>
-      {items.map((item, i) => (
-        <DarkLightBlock key={i} className="p-2">
-          <Friend friendId={item.id} name={item.follower.name} alias={''} avatarUrl={''} />
+      {items.map((item) => (
+        <DarkLightBlock key={item.id} className="p-2">
+          <Friend
+            friendId={item.followerId}
+            name={item.follower.name}
+            alias={item.follower.alias}
+            avatarUrl={item.follower.avatarUrl || ''}
+          />
         </DarkLightBlock>
       ))}
     </ul>

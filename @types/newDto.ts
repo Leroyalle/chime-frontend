@@ -54,3 +54,18 @@ export type Message = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type Friend = {
+  id: string;
+  banned: boolean;
+  role: string;
+  alias: string;
+  name: string;
+  avatarUrl: string | null;
+  location: string | null;
+  age: number | null;
+  status: string | null;
+  about: string | null;
+  createdAt: string;
+  updatedAt: string;
+};

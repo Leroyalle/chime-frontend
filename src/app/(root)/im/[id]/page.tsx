@@ -1,9 +1,9 @@
 import { ChatWrapper } from '@/components/shared';
 import { Api } from '@/services/api-client';
-import { notFound, redirect } from 'next/navigation';
-import { RoutesEnum, TokensEnum } from '../../../../../@types';
+import { TokensEnum } from '../../../../../@types';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
+import { handleApiError } from '@/lib';
 
 export default async function InstantMessagingCurrent({
   params,
@@ -16,14 +16,7 @@ export default async function InstantMessagingCurrent({
     Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
   });
 
-  const chat = await Api.chat.getChatById({ id, headers }).catch((error) => {
-    if (error.response?.status === 401) {
-      return redirect(RoutesEnum.AUTH);
-    }
-    return notFound();
-  });
-
-  console.log(chat);
+  const chat = await Api.chat.getChatById({ id, headers }).catch(handleApiError);
 
   return <ChatWrapper chatId={id} chat={chat} />;
 }

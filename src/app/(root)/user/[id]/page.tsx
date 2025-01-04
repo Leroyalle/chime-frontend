@@ -2,8 +2,9 @@ import { UserWrapper } from '@/components/shared';
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
-import { RoutesEnum, TokensEnum } from '../../../../../@types/constants';
+import { notFound } from 'next/navigation';
+import { TokensEnum } from '../../../../../@types/constants';
+import { handleApiError } from '@/lib';
 
 export default async function User({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
@@ -12,12 +13,7 @@ export default async function User({ params }: { params: Promise<{ id: string }>
     Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
   });
 
-  const user = await Api.users.getUserById({ id, headers }).catch((error) => {
-    if (error.response?.status === 401) {
-      return redirect(RoutesEnum.AUTH);
-    }
-    return notFound();
-  });
+  const user = await Api.users.getUserById({ id, headers }).catch(handleApiError);
 
   if (!user.user) {
     return notFound();

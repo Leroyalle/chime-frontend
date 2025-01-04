@@ -9,6 +9,7 @@ export enum ApiRouter {
   FOLLOW = '/follow',
   USER_FOLLOWERS = '/follow/followers',
   USER_FOLLOWING = '/follow/following',
+  FRIENDS = '/follow/friends',
   REFRESH = '/refresh',
   REGISTER = '/auth/email/sendCode',
   VERIFY = '/auth/email/verify',

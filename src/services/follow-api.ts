@@ -4,6 +4,7 @@ import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { infiniteQueryOptions } from '@tanstack/react-query';
 import { InfinityResponse } from '../../@types/newResponse';
+import { Friend } from '../../@types/newDto';
 
 export const followUser = async (data: { followingId: string }): Promise<Follows> => {
   return (await instance.post<Follows>(ApiRouter.FOLLOW, data)).data;
@@ -51,6 +52,25 @@ export const getFollowing = async ({
   ).data;
 };
 
+export const getFriends = async ({
+  userId,
+  page = 1,
+  perPage = 20,
+  headers,
+}: {
+  userId: string;
+  page?: number;
+  perPage?: number;
+  headers?: AxiosRequestHeaders;
+}): Promise<InfinityResponse<Friend[]>> => {
+  return (
+    await instance.get<InfinityResponse<Friend[]>>(
+      `${ApiRouter.FRIENDS}/${userId}?page=${page}&perPage=${perPage}`,
+      { headers },
+    )
+  ).data;
+};
+
 export const getFollowersInfinityQueryOptions = (userId: string) => {
   const perPage = 10;
   return infiniteQueryOptions({
@@ -70,6 +90,20 @@ export const getFollowingInfinityQueryOptions = (userId: string) => {
   return infiniteQueryOptions({
     queryKey: ['following', userId],
     queryFn: (meta) => getFollowing({ userId, page: meta.pageParam, perPage }),
+    initialPageParam: 1,
+    select: ({ pages }) => pages.flatMap((page) => page.data),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.data.length < perPage ? undefined : allPages.length + 1;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const getFriendsInfinityQueryOptions = (userId: string) => {
+  const perPage = 10;
+  return infiniteQueryOptions({
+    queryKey: ['friends', userId],
+    queryFn: (meta) => getFriends({ userId, page: meta.pageParam, perPage }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
     getNextPageParam(lastPage, allPages) {
