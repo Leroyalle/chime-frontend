@@ -13,6 +13,7 @@ import {
 import { RoutesEnum } from '../../../../@types';
 import { useGetMe } from '@/lib/hooks';
 import { DarkLightBlock } from '@/components/ui';
+import { useNewMarkSlice } from '@/store';
 
 interface Props {
   className?: string;
@@ -20,6 +21,11 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ className }) => {
   const { data } = useGetMe();
+  const { newMark, setNewMark } = useNewMarkSlice();
+
+  const handleClickNew = () => {
+    setNewMark(false);
+  };
 
   return (
     <DarkLightBlock className={className}>
@@ -35,8 +41,8 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
               Популярное
             </SidebarItem>
           </li>
-          <li>
-            <SidebarItem icon={<Flame size={20} />} href={RoutesEnum.NEW} mark={true}>
+          <li onClick={handleClickNew}>
+            <SidebarItem icon={<Flame size={20} />} href={RoutesEnum.NEW} mark={newMark}>
               Свежее
             </SidebarItem>
           </li>
