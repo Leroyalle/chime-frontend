@@ -34,9 +34,9 @@ export const FollowersWrapper: React.FC<Props> = ({ userId, initialData, classNa
   }
 
   return (
-    <section className={cn('', className)}>
+    <section className={cn('w-full m-auto', className)}>
       <h2 className="mb-2">Подписчики</h2>
-      <FollowersList items={data} className="max-w-[640px]" />
+      <FollowersList items={data} className="w-full" />
       {/* FIXME: багается инвалидация подписок при курсоре */}
       {data.length > 9 && cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}

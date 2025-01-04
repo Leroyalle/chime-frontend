@@ -9,7 +9,7 @@ import { RoutesEnum } from '../../../@types';
 
 export const Header: React.FC = () => {
   return (
-    <Navbar isBordered maxWidth="xl" className="bg-light-green">
+    <Navbar isBordered className="bg-light-green" maxWidth="2xl">
       <NavbarBrand className="grow-0 mr-20">
         <Link href={RoutesEnum.HOME} className="font-black text-2xl uppercase">
           Chime

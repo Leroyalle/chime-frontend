@@ -12,7 +12,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@nextui-org/input-otp": "^2.1.6",
     "@nextui-org/react": "^2.4.8",
-    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
     "@tanstack/react-query": "^5.62.2",
     "@tanstack/react-query-devtools": "^5.62.8",

@@ -18,7 +18,11 @@ export const Friend: React.FC<Props> = ({ friendId, name, alias, avatarUrl, clas
     <div className={cn('flex justify-between items-center', className)}>
       <User
         name={<Link href={`${RoutesEnum.USER}/${friendId}`}>{name}</Link>}
-        description={<Link href={`${RoutesEnum.USER}/${friendId}`}>@{alias}</Link>}
+        description={
+          <Link href={`${RoutesEnum.USER}/${friendId}`} className="text-blue-500">
+            @{alias}
+          </Link>
+        }
         avatarProps={{
           src: avatarUrl,
         }}

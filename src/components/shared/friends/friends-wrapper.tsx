@@ -33,7 +33,7 @@ export const FriendsWrapper: React.FC<Props> = ({ userId, initialData, className
   }
 
   return (
-    <section className={cn('w-full max-w-[500px]', className)}>
+    <section className={cn('w-full m-auto', className)}>
       <h2 className="text-2xl text-start mb-4">Друзья</h2>
       <FriendsList items={data} />
       {/* FIXME: багается инвалидация друзей при курсоре */}
