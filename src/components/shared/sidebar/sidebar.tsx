@@ -2,9 +2,11 @@
 import React from 'react';
 import { SidebarItem } from './sidebar-item';
 import {
+  Bookmark,
   BookUser,
   ContactRound,
   Flame,
+  Heart,
   MessageCircle,
   Newspaper,
   User,
@@ -29,6 +31,7 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
 
   return (
     <DarkLightBlock className={className}>
+      <div className="text-xs font-semibold uppercase text-muted-foreground mb-4">Основное</div>
       <nav>
         <ul className="flex flex-col gap-1">
           <li>
@@ -46,6 +49,11 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
               Свежее
             </SidebarItem>
           </li>
+        </ul>
+      </nav>
+      <div className="text-xs font-semibold uppercase text-muted-foreground my-4">Общение</div>
+      <nav>
+        <ul className="flex flex-col gap-1">
           <li>
             <SidebarItem
               icon={<BookUser size={20} />}
@@ -70,6 +78,21 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           <li>
             <SidebarItem icon={<MessageCircle size={20} />} href={RoutesEnum.MESSAGES}>
               Сообщения
+            </SidebarItem>
+          </li>
+        </ul>
+      </nav>
+      <div className="text-xs font-semibold uppercase text-muted-foreground my-4">Любимое</div>
+      <nav>
+        <ul className="flex flex-col gap-1">
+          <li>
+            <SidebarItem icon={<Heart size={20} />} href={RoutesEnum.LIKED}>
+              Ваши лайки
+            </SidebarItem>
+          </li>
+          <li>
+            <SidebarItem icon={<Bookmark size={20} />} href={RoutesEnum.BOOKMARKS}>
+              Закладки
             </SidebarItem>
           </li>
         </ul>

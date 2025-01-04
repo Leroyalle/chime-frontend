@@ -18,7 +18,7 @@ export const SidebarItem: FC<Props> = ({ icon, href, children, mark }) => {
     <Link
       className={cn(
         `flex gap-x-2 relative transition-all w-full items-center rounded-md p-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground`,
-        isPathMatch && 'bg-white',
+        isPathMatch && 'bg-accent/40',
         mark &&
           'after:absolute after:right-3 after:top-1/2 after:rounded-full after:-translate-y-1/2 after:rotate-45 after:text-red-500 after:font-black after:size-2 after:bg-yellow-500',
       )}
