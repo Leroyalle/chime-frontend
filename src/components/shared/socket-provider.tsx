@@ -5,10 +5,12 @@ import { createContext, useEffect, useRef, ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNewMarkSlice } from '@/store';
 
 type SocketContextType = {
   send: (message: MessageRequest) => void;
   createChat: (data: { recipientId: string }) => void;
+  broadcastNewPost: VoidFunction;
 };
 
 export const SocketContext = createContext<SocketContextType | null>(null);
@@ -18,6 +20,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get('jwtToken');
+  const { setNewMark } = useNewMarkSlice();
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -31,6 +34,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     socket.current.on('unauthorized', (message) => {
       console.log('Authorization error:', message);
       alert(message);
+    });
+
+    socket.current.on('post:new', (value: boolean) => {
+      setNewMark(value);
     });
 
     socket.current.on('checkData', (data: UserChat[]) => {
@@ -93,5 +100,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     socket.current?.emit('chat:create', data);
   };
 
-  return <SocketContext.Provider value={{ send, createChat }}>{children}</SocketContext.Provider>;
+  const broadcastNewPost = () => {
+    socket.current?.emit('post:new', true);
+  };
+
+  return (
+    <SocketContext.Provider value={{ send, createChat, broadcastNewPost }}>
+      {children}
+    </SocketContext.Provider>
+  );
 };

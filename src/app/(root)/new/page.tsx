@@ -13,9 +13,6 @@ export default async function New() {
   const posts = await Api.posts
     .getAllPosts({ page: 1, perPage: 10, headers })
     .catch(handleApiError);
-  return (
-    <div className="flex flex-col items-center">
-      <FeedWrapper initialPosts={posts} className="w-full my-auto max-w-[640px]" />
-    </div>
-  );
+
+  return <FeedWrapper initialPosts={posts} className="w-full m-auto max-w-[640px]" />;
 }

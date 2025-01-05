@@ -11,6 +11,8 @@ export enum RoutesEnum {
   MESSAGES = '/im',
   FOLLOWERS = '/followers',
   FOLLOWING = '/following',
+  BOOKMARKS = '/bookmarks',
+  LIKED = '/liked',
   FRIENDS = '/friends',
   PROFILE = '/profile',
   SETTINGS = '/profile/settings',
