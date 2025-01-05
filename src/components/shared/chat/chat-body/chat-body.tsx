@@ -17,7 +17,7 @@ export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, c
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, []);
+  }, [messages]);
 
   if (!messages || messages.length === 0) {
     return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;
@@ -30,6 +30,7 @@ export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, c
       {messages.map((message, i) => (
         <Message
           key={i}
+          messageId={message.id}
           userId={'1'}
           author="Николай Мелонов"
           content={message.body}

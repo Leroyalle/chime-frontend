@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
@@ -19,6 +19,8 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const { send } = useSocket();
 
+  console.log(chatId, chat, className)
+
   const {
     data: messages,
     cursor,
@@ -28,6 +30,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
     chatId,
     chatRef,
   });
+
 
   if (isPending) {
     return (

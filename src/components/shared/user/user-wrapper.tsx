@@ -20,6 +20,8 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
     initialData,
   });
 
+  console.log(initialData)
+
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
       <h2 className="sr-only">Профиль пользователя</h2>
