@@ -19,7 +19,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const { send } = useSocket();
 
-  console.log(chatId, chat, className)
+  // console.log(chatId, chat, className)
 
   const {
     data: messages,

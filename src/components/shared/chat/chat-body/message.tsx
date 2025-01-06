@@ -27,8 +27,6 @@ export const Message: React.FC<Props> = ({
   className,
   messageId
 }) => {
-
-
   const socket = useSocket()
 
 
@@ -42,6 +40,8 @@ export const Message: React.FC<Props> = ({
     console.log(messageId)
     socket.deleteMessage({ messageId })
   }
+
+
 
 
 
@@ -69,14 +69,22 @@ export const Message: React.FC<Props> = ({
 
         <DropdownMenu aria-label="Chat actions">
           <DropdownItem key="report">Закрепить</DropdownItem>
+          <>
 
-          <DropdownItem key="change">
-            Изменить
-          </DropdownItem>
+            {isSender && (
+              <>
+                <DropdownItem key="change">
+                  Изменить
+                </DropdownItem>
 
-          <DropdownItem key="delete" color="danger" className="text-danger" onPress={handleDeleteMessage}>
-            Удалить
-          </DropdownItem>
+                <DropdownItem key="delete" color="danger" className="text-danger" onPress={handleDeleteMessage}>
+                  Удалить
+                </DropdownItem>
+              </>
+            )}
+
+          </>
+
 
         </DropdownMenu>
 

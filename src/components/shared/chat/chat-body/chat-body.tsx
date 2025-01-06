@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { Message } from './message';
 import { Message as TMessage } from '../../../../../@types/newDto';
 import { EmptyState } from '../../empty-state';
+import { useGetMe } from '@/lib/hooks';
 
 interface Props {
   chatRef: React.RefObject<HTMLDivElement>;
@@ -19,23 +20,34 @@ export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, c
     }
   }, [messages]);
 
+
+  
+  const { data: userData } = useGetMe()
+
+
+
   if (!messages || messages.length === 0) {
     return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;
   }
+
+  console.log(messages)
+  // console.log(messages[0]?.userBase)
+
 
   return (
     <div ref={chatRef} className={cn('w-full flex flex-col gap-y-4 overflow-y-auto', className)}>
       {loader}
       {messages && cursor}
       {messages.map((message, i) => (
+
         <Message
           key={i}
           messageId={message.id}
-          userId={'1'}
-          author="Николай Мелонов"
+          userId={message.UserBase.id}
+          author={message.UserBase.name}
           content={message.body}
           avatar="https://avatars.githubusercontent.com/u/158848927?v=4"
-          isSender={true}
+          isSender={message.UserBase.id == userData?.user.id}
           createdAt={message.createdAt}
         />
       ))}

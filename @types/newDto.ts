@@ -50,7 +50,7 @@ export type Message = {
   id: string;
   body: string;
   chatId: string;
-  userBase: User;
+  UserBase: User;
   createdAt: Date;
   updatedAt: Date;
 };
