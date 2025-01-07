@@ -22,7 +22,7 @@ export const ProfileButton: React.FC = () => {
       <DropdownTrigger>
         <Avatar
           isBordered
-          size="lg"
+          size="md"
           as="button"
           className="transition-transform"
           src={'https://avatars.githubusercontent.com/u/158848927?v=4'}

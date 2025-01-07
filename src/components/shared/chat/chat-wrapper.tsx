@@ -19,8 +19,6 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const { send } = useSocket();
 
-  // console.log(chatId, chat, className)
-
   const {
     data: messages,
     cursor,
@@ -39,20 +37,20 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
         className="absolute bottom-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 "
       />
     );
-  }
+  };
 
   return (
     <DarkLightBlock
       className={cn(
-        'py-2 pt-0 flex flex-col overflow-y-auto h-[calc(100vh-58px-32px)]',
+        ' py-2 pt-0 flex flex-col overflow-y-auto w-auto h-full',
         className,
       )}>
-      <Header className="px-6" name={chat.name} avatar={chat.imageUrl} />
+      <Header className="px-6" name={chat.name} members={chat.members} avatar={chat.imageUrl} />
       <Body
         className="flex-1 px-4"
         messages={messages}
         chatRef={chatRef}
-        cursor={cursor}
+        cursor={cursor} 
         loader={
           isFetchingNextPage ? <Spinner color="warning" className="w-full mx-auto" /> : undefined
         }

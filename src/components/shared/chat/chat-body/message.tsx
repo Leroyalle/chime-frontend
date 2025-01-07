@@ -42,35 +42,40 @@ export const Message: React.FC<Props> = ({
   }
 
 
-
-
-
-
   return (
     <>
       <Dropdown>
 
         <DropdownTrigger>
-          <div className={cn('hover:bg-background p-2 duration-100 rounded-xl', className)}>
-            <div className="flex justify-between mb-2">
-              <div className="flex items-center gap-x-2">
+          <div className={cn(`hover:bg-background bg-gray-200 lg:w-8/12bg-gray-300  w-5/6  flex justify-between p-2 duration-100 
+             rounded-xl cursor-pointer
+              ${isSender ? ' bg-gray-600 text-white p-3 ml-auto hover:bg-gray-500' : ''} `, className)}>
+
+
+            <div className="flex justify-between items-center ">
+
+              <div className="flex items-center gap-x-3 ">
                 <Avatar src={avatar} size="md" />
-                <div className="flex flex-col justify-center">
+
+                <div className="flex flex-col justify-center ">
                   <h4 className="text-blue-700 font-semibold">
-                    <a href={`${RoutesEnum.USER}/${userId}`}>{author}</a>
+                    {!isSender ? author : ""}
                   </h4>
                   <p>{content}</p>
                 </div>
+
               </div>
-              <span className="text-gray-600 text-sm">{dayjs(createdAt).format('HH:mm')}</span>
+
             </div>
+            <span className="text-sm">{dayjs(createdAt).format('HH:mm')}</span>
+
+
           </div >
         </DropdownTrigger>
 
         <DropdownMenu aria-label="Chat actions">
           <DropdownItem key="report">Закрепить</DropdownItem>
           <>
-
             {isSender && (
               <>
                 <DropdownItem key="change">
@@ -82,12 +87,8 @@ export const Message: React.FC<Props> = ({
                 </DropdownItem>
               </>
             )}
-
           </>
-
-
         </DropdownMenu>
-
       </Dropdown >
     </>
   );

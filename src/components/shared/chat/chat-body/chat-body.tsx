@@ -20,18 +20,11 @@ export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, c
     }
   }, [messages]);
 
-
-  
   const { data: userData } = useGetMe()
-
-
 
   if (!messages || messages.length === 0) {
     return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;
   }
-
-  console.log(messages)
-  // console.log(messages[0]?.userBase)
 
 
   return (

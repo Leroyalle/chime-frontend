@@ -7,9 +7,16 @@ import { ProfileButton } from './profile-button';
 import Link from 'next/link';
 import { RoutesEnum } from '../../../@types';
 
-export const Header: React.FC = () => {
+
+interface Props {
+  sidebarIcon: React.ReactElement
+}
+
+export const Header: React.FC<Props> = ({ sidebarIcon }) => {
   return (
     <Navbar isBordered className="bg-light-green" maxWidth="2xl">
+      {sidebarIcon}
+
       <NavbarBrand className="grow-0 mr-20">
         <Link href={RoutesEnum.HOME} className="font-black text-2xl uppercase">
           Chime
