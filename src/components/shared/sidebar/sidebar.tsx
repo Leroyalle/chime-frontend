@@ -11,20 +11,18 @@ import {
   Newspaper,
   User,
   UserRoundCheck,
-  SidebarClose
-
 } from 'lucide-react';
 import { RoutesEnum } from '../../../../@types';
 import { useGetMe } from '@/lib/hooks';
 import { DarkLightBlock } from '@/components/ui';
 import { useNewMarkSlice } from '@/store';
+import { ListNavElement } from './list-nav-element';
 
 interface Props {
   className?: string;
-  handleCloseSidebar?: () => void;
 }
 
-export const Sidebar: React.FC<Props> = ({ className, handleCloseSidebar }) => {
+export const Sidebar: React.FC<Props> = ({ className }) => {
   const { data } = useGetMe();
   const { newMark, setNewMark } = useNewMarkSlice();
 
@@ -32,26 +30,8 @@ export const Sidebar: React.FC<Props> = ({ className, handleCloseSidebar }) => {
     setNewMark(false);
   };
 
-
-  const ListNavElement: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-      <nav onClick={handleCloseSidebar}>
-        <ul className="flex flex-col gap-1">
-          {children}
-        </ul>
-      </nav>
-    )
-  };
-
   return (
     <DarkLightBlock className={className}>
-
-      <SidebarClose className="absolute top-0 right-0 -translate-x-1/2 translate-y-1/2 hover:scale-110" rotate={-180}
-        onClick={handleCloseSidebar}
-      />
-
-
-
       <div className="text-xs font-semibold uppercase text-muted-foreground mb-4">Основное</div>
       <ListNavElement>
         <li>
@@ -114,9 +94,6 @@ export const Sidebar: React.FC<Props> = ({ className, handleCloseSidebar }) => {
           </SidebarItem>
         </li>
       </ListNavElement>
-
     </DarkLightBlock>
   );
 };
-
-

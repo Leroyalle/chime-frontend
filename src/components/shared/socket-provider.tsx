@@ -1,18 +1,13 @@
 import Cookies from 'js-cookie';
 import { Api } from '@/services/api-client';
 import { ChatUpdate, MessageRequest, UserChat } from '../../../@types/chat';
-import { createContext, useEffect, useRef, ReactNode } from 'react';
+import { createContext, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
-import { pages } from 'next/dist/build/templates/app-page';
 import { RoutesEnum } from '../../../@types';
 import { toast } from 'react-toastify';
-import { cursorTo } from 'readline';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { Message } from 'postcss';
 import { ToastMessage } from './chat/toast-message';
 
 type SocketContextType = {
@@ -30,7 +25,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get('jwtToken');
   const { setNewMark } = useNewMarkSlice();
-
   const pathname = usePathname();
 
   useEffect(() => {
@@ -52,7 +46,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     });
 
     socket.current.on('checkData', (data: UserChat[]) => {
-
       queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
         if (!old) {
           return undefined;
@@ -67,41 +60,33 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    socket.current.on('messages:get', (data: ChatUpdate) => {
-      //show notification if user not in chat
-      console.log(pathname)
-      console.log(`${RoutesEnum.MESSAGES}/${data.chatId}`)
-      if (window.location.pathname !== `${RoutesEnum.MESSAGES}/${data.chatId}`) {
-
-        toast.info(
-          <ToastMessage chatId={data.chatId} senderName={data.senderName} />,
-
-          {
-            onClick() {
-              router.push(`${RoutesEnum.MESSAGES}/${data.chatId}`)
-            }
-
-          },
-        );
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
       }
-      // ___
+    };
+  }, [queryClient, router, token, setNewMark]);
 
-      console.log(data.message)
+  useEffect(() => {
+    if (!socket.current) return;
 
+    const handleNewMessage = (data: ChatUpdate) => {
+      console.log('PATHNAME HOOK:', pathname);
+      console.log(`${RoutesEnum.MESSAGES}/${data.chatId}`);
+      if (pathname !== `${RoutesEnum.MESSAGES}/${data.chatId}`) {
+        toast.info(<ToastMessage chatId={data.chatId} senderName={data.senderName} />, {
+          onClick() {
+            router.push(`${RoutesEnum.MESSAGES}/${data.chatId}`);
+          },
+        });
+      }
 
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
+          if (!old) return undefined;
 
-          const updatedData = {
-            ...old,
-
-            pages: old.pages.map((page) => ({ ...page })),
-          };
-
+          const updatedData = { ...old, pages: old.pages.map((page) => ({ ...page })) };
           const lastPage = updatedData.pages[0];
 
           if (lastPage) {
@@ -110,7 +95,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           } else {
             updatedData.pages.push({
               data: [data.message],
-
               totalPages: 1,
               totalItems: 1,
             });
@@ -118,19 +102,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           return updatedData;
         },
       );
-    });
+    };
 
+    const handleDeleteMessage = (data: { chatId: string; messageId: string }) => {
+      console.log('delete message');
 
-    socket.current.on('message:delete', (data: { chatId: string; messageId: string }) => {
-      console.log("delete message")
-
-
-      //FIXME delete message for client by socket
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {
-          if (!old) return undefined
-
+          if (!old) return undefined;
 
           const updatedData = {
             ...old,
@@ -140,43 +120,42 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
             })),
           };
 
-
           updatedData.pages = updatedData.pages.map((page) => ({
             ...page,
             totalItems: page.data.length,
-          }))
+          }));
 
-          return updatedData
-        }
+          return updatedData;
+        },
       );
+    };
 
-
-
-    });
-
+    socket.current.on('messages:get', handleNewMessage);
+    socket.current.on('message:delete', handleDeleteMessage);
 
     return () => {
       if (socket.current) {
-        socket.current.disconnect();
+        socket.current.off('messages:get', handleNewMessage);
+        socket.current.off('message:delete', handleDeleteMessage);
       }
     };
-  }, [queryClient, router, token]);
+  }, [pathname, queryClient, router]);
 
-  const send = (message: MessageRequest) => {
+  const send = useCallback((message: MessageRequest) => {
     socket.current?.emit('messages:post', message);
-  };
+  }, []);
 
-  const createChat = (data: { recipientId: string }) => {
+  const createChat = useCallback((data: { recipientId: string }) => {
     socket.current?.emit('chat:create', data);
-  };
+  }, []);
 
-  const broadcastNewPost = () => {
+  const broadcastNewPost = useCallback(() => {
     socket.current?.emit('post:new', true);
-  };
+  }, []);
 
-  const deleteMessage = (data: { messageId: string }) => {
+  const deleteMessage = useCallback((data: { messageId: string }) => {
     socket.current?.emit('messages:delete', data);
-  }
+  }, []);
 
   return (
     <SocketContext.Provider value={{ send, createChat, broadcastNewPost, deleteMessage }}>

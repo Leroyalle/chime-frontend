@@ -6,17 +6,11 @@ import { Search } from 'lucide-react';
 import { ProfileButton } from './profile-button';
 import Link from 'next/link';
 import { RoutesEnum } from '../../../@types';
+import { SidebarDrawer } from './sidebar';
 
-
-interface Props {
-  sidebarIcon: React.ReactElement
-}
-
-export const Header: React.FC<Props> = ({ sidebarIcon }) => {
+export const Header: React.FC = () => {
   return (
     <Navbar isBordered className="bg-light-green" maxWidth="2xl">
-      {sidebarIcon}
-
       <NavbarBrand className="grow-0 mr-20">
         <Link href={RoutesEnum.HOME} className="font-black text-2xl uppercase">
           Chime
@@ -30,6 +24,7 @@ export const Header: React.FC<Props> = ({ sidebarIcon }) => {
       />
       <NavbarContent justify="end">
         <ProfileButton />
+        <SidebarDrawer />
       </NavbarContent>
     </Navbar>
   );
