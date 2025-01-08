@@ -6,7 +6,7 @@ import { io, Socket } from 'socket.io-client';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
-import { RoutesEnum } from '../../../@types';
+import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
 
@@ -23,7 +23,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const socket = useRef<Socket | null>(null);
-  const token = Cookies.get('jwtToken');
+  const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
   const pathname = usePathname();
 
@@ -32,20 +32,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       auth: { token },
     });
 
-    socket.current.on('connect', () => {
+    socket.current.on(SocketEventsEnum.CONNECT, () => {
       console.log('Connected to WebSocket');
     });
 
-    socket.current.on('unauthorized', (message) => {
+    socket.current.on(SocketEventsEnum.UNAUTHORIZED, (message) => {
       console.log('Authorization error:', message);
       alert(message);
     });
 
-    socket.current.on('post:new', (value: boolean) => {
+    socket.current.on(SocketEventsEnum.POST_NEW, (value: boolean) => {
       setNewMark(value);
     });
 
-    socket.current.on('checkData', (data: UserChat[]) => {
+    socket.current.on(SocketEventsEnum.CHECK_DATA, (data: UserChat[]) => {
       queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
         if (!old) {
           return undefined;
@@ -54,9 +54,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       });
     });
 
-    socket.current.on('chat:create', (id: string) => {
+    socket.current.on(SocketEventsEnum.CHAT_CREATE, (id: string) => {
       if (id) {
-        router.push(`/im/${id}`);
+        router.push(`${RoutesEnum.MESSAGES}/${id}`);
       }
     });
 
@@ -68,11 +68,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }, [queryClient, router, token, setNewMark]);
 
   useEffect(() => {
-    if (!socket.current) return;
+    if (!socket.current) {
+      return undefined;
+    }
 
     const handleNewMessage = (data: ChatUpdate) => {
-      console.log('PATHNAME HOOK:', pathname);
-      console.log(`${RoutesEnum.MESSAGES}/${data.chatId}`);
       if (pathname !== `${RoutesEnum.MESSAGES}/${data.chatId}`) {
         toast.info(<ToastMessage chatId={data.chatId} senderName={data.senderName} />, {
           onClick() {
@@ -105,8 +105,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const handleDeleteMessage = (data: { chatId: string; messageId: string }) => {
-      console.log('delete message');
-
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {
@@ -130,31 +128,31 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       );
     };
 
-    socket.current.on('messages:get', handleNewMessage);
-    socket.current.on('message:delete', handleDeleteMessage);
+    socket.current.on(SocketEventsEnum.MESSAGES_GET, handleNewMessage);
+    socket.current.on(SocketEventsEnum.MESSAGE_DELETE, handleDeleteMessage);
 
     return () => {
       if (socket.current) {
-        socket.current.off('messages:get', handleNewMessage);
-        socket.current.off('message:delete', handleDeleteMessage);
+        socket.current.off(SocketEventsEnum.MESSAGES_GET, handleNewMessage);
+        socket.current.off(SocketEventsEnum.MESSAGE_DELETE, handleDeleteMessage);
       }
     };
   }, [pathname, queryClient, router]);
 
   const send = useCallback((message: MessageRequest) => {
-    socket.current?.emit('messages:post', message);
+    socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);
   }, []);
 
   const createChat = useCallback((data: { recipientId: string }) => {
-    socket.current?.emit('chat:create', data);
+    socket.current?.emit(SocketEventsEnum.CHAT_CREATE, data);
   }, []);
 
   const broadcastNewPost = useCallback(() => {
-    socket.current?.emit('post:new', true);
+    socket.current?.emit(SocketEventsEnum.POST_NEW, true);
   }, []);
 
   const deleteMessage = useCallback((data: { messageId: string }) => {
-    socket.current?.emit('messages:delete', data);
+    socket.current?.emit(SocketEventsEnum.MESSAGE_DELETE, data);
   }, []);
 
   return (
