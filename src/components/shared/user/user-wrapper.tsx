@@ -6,7 +6,7 @@ import { UserActions, UserInfo } from './profile';
 import { UserResponse } from '../../../../@types/newResponse';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
-import { useSocket } from '@/lib/hooks';
+import { useCreateChat } from '@/lib/hooks';
 
 interface Props {
   initialData: UserResponse;
@@ -14,13 +14,14 @@ interface Props {
 }
 
 export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
-  const { createChat } = useSocket();
+  // const { createChat } = useSocket();
+  const { createChat, isLoading } = useCreateChat();
   const { data } = useQuery({
     ...Api.users.getUserQueryOptions(initialData.user.id),
     initialData,
   });
 
-  console.log(initialData)
+  console.log(initialData);
 
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
@@ -44,6 +45,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               isOwner={data.isOwner}
               isFollowing={data.user.isFollowing}
               onClickChat={createChat}
+              onClickChatLoading={isLoading}
             />
           </div>
           <UserInfo

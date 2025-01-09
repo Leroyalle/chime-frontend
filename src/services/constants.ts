@@ -15,4 +15,5 @@ export enum ApiRouter {
   VERIFY = '/auth/email/verify',
   CHAT = '/chat',
   CHAT_INFO = '/chat/info',
+  CHAT_GET = 'chat/create',
 }

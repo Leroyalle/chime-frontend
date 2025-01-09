@@ -36,6 +36,10 @@ export const getChatById = async ({
   return (await instance.get<ChatWithMembers>(`${ApiRouter.CHAT_INFO}/${id}`, { headers })).data;
 };
 
+export const getChatId = async (recipientId: string): Promise<Pick<UserChat, 'id'>> => {
+  return (await instance.get<Pick<UserChat, 'id'>>(`${ApiRouter.CHAT_GET}/${recipientId}`)).data;
+};
+
 export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
   const perPage = 20;
   return infiniteQueryOptions({

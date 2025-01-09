@@ -12,7 +12,6 @@ import { ToastMessage } from './chat/toast-message';
 
 type SocketContextType = {
   send: (message: MessageRequest) => void;
-  createChat: (data: { recipientId: string }) => void;
   broadcastNewPost: VoidFunction;
   deleteMessage: (data: { messageId: string }) => void;
 };
@@ -22,10 +21,10 @@ export const SocketContext = createContext<SocketContextType | null>(null);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const pathname = usePathname();
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
-  const pathname = usePathname();
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -52,12 +51,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         }
         return data;
       });
-    });
-
-    socket.current.on(SocketEventsEnum.CHAT_CREATE, (id: string) => {
-      if (id) {
-        router.push(`${RoutesEnum.MESSAGES}/${id}`);
-      }
     });
 
     return () => {
@@ -143,10 +136,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);
   }, []);
 
-  const createChat = useCallback((data: { recipientId: string }) => {
-    socket.current?.emit(SocketEventsEnum.CHAT_CREATE, data);
-  }, []);
-
   const broadcastNewPost = useCallback(() => {
     socket.current?.emit(SocketEventsEnum.POST_NEW, true);
   }, []);
@@ -156,7 +145,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ send, createChat, broadcastNewPost, deleteMessage }}>
+    <SocketContext.Provider value={{ send, broadcastNewPost, deleteMessage }}>
       {children}
     </SocketContext.Provider>
   );
