@@ -27,7 +27,6 @@ export enum SocketEventsEnum {
   POST_NEW = 'post:new',
   CHECK_DATA = 'checkData',
   MESSAGES_GET = 'messages:get',
-  MESSAGE_DELETE = 'message:delete',
+  MESSAGE_DELETE = 'messages:delete',
   MESSAGES_POST = 'messages:post',
-  MESSAGES_DELETE_EMIT = 'messages:delete',
 }

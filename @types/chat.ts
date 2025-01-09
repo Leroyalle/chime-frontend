@@ -16,6 +16,8 @@ export type UserChat = {
   id: string;
   name: string;
   imageUrl: string;
+  lastMessage: string;
+  lastMessageAt: Date;
   createdAt: Date;
 };
 

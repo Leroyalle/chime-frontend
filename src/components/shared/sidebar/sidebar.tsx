@@ -16,7 +16,7 @@ import { RoutesEnum } from '../../../../@types';
 import { useGetMe } from '@/lib/hooks';
 import { DarkLightBlock } from '@/components/ui';
 import { useNewMarkSlice } from '@/store';
-import { ListNavElement } from './list-nav-element';
+import { ListNavElement } from '../../ui';
 
 interface Props {
   className?: string;

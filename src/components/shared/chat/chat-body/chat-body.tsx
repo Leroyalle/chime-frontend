@@ -15,11 +15,10 @@ interface Props {
 
 export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, className }) => {
   useEffect(() => {
-    console.log(chatRef);
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, []);
 
   const { data: userData } = useGetMe();
 

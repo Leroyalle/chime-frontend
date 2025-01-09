@@ -141,6 +141,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const deleteMessage = useCallback((data: { messageId: string }) => {
+    console.log('delete', data);
     socket.current?.emit(SocketEventsEnum.MESSAGE_DELETE, data);
   }, []);
 
