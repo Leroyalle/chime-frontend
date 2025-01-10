@@ -2,12 +2,10 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { PostItem } from './post-item';
 import { Post } from '../../../@types/newDto';
-import { User } from '../../../@types/newResponse';
 import { useGetMe } from '@/lib/hooks';
 
 interface Props {
   items: Post[];
-  user: User;
   className?: string;
 }
 

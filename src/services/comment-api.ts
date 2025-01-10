@@ -26,8 +26,8 @@ export const getUserComments = async ({
   ).data;
 };
 
-export const deleteComment = async (id: string): Promise<void> => {
-  return (await instance.delete<void>(`${ApiRouter.COMMENT}/${id}`)).data;
+export const deleteComment = async (id: string): Promise<Comment> => {
+  return (await instance.delete<Comment>(`${ApiRouter.COMMENT}/${id}`)).data;
 };
 
 export const getUserCommentsInfinityQueryOptions = (userId: string) => {

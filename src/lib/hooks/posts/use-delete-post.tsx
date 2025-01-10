@@ -53,5 +53,9 @@ export const useDeletePost = (postId: string) => {
     },
   });
 
-  return { deletePost: deletePostMutation.mutate, isPending: deletePostMutation.isPending };
+  return {
+    deletePost: deletePostMutation.mutate,
+    isPending: deletePostMutation.isPending,
+    isError: deletePostMutation.isError,
+  };
 };
