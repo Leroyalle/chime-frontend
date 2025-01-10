@@ -26,6 +26,16 @@ export const getUserComments = async ({
   ).data;
 };
 
+export const updateComment = async ({
+  id,
+  content,
+}: {
+  id: string;
+  content: string;
+}): Promise<Comment> => {
+  return (await instance.patch<Comment>(`${ApiRouter.COMMENT}/${id}`, { content })).data;
+};
+
 export const deleteComment = async (id: string): Promise<Comment> => {
   return (await instance.delete<Comment>(`${ApiRouter.COMMENT}/${id}`)).data;
 };

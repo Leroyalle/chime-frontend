@@ -6,10 +6,11 @@ import { useGetMe } from '@/lib/hooks';
 
 interface Props {
   items: Comment[];
+  onClickEditComment: (comment: Comment) => void;
   className?: string;
 }
 
-export const CommentsList: React.FC<Props> = ({ items, className }) => {
+export const CommentsList: React.FC<Props> = ({ items, onClickEditComment, className }) => {
   const { data: userData } = useGetMe();
 
   return (
@@ -25,6 +26,7 @@ export const CommentsList: React.FC<Props> = ({ items, className }) => {
           content={item.content}
           createdAt={item.createdAt}
           isOwner={userData?.user.id === item.user.id}
+          onUpdate={() => onClickEditComment(item)}
           className="mb-3"
         />
       ))}

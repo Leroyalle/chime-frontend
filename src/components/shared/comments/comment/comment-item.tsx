@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Link as NextLink, User } from '@nextui-org/react';
+import { Link as NextUiLink, User } from '@nextui-org/react';
 import { CommentActions } from './comment-actions';
 import Link from 'next/link';
 import { RoutesEnum } from '../../../../../@types';
@@ -17,6 +17,7 @@ interface Props {
   content: string;
   createdAt: Date;
   isOwner: boolean;
+  onUpdate: VoidFunction;
   className?: string;
 }
 
@@ -29,6 +30,7 @@ export const CommentItem: React.FC<Props> = ({
   content,
   createdAt,
   isOwner,
+  onUpdate,
   className,
 }) => {
   return (
@@ -43,11 +45,17 @@ export const CommentItem: React.FC<Props> = ({
             }}
           />
         </Link>
-        <CommentActions postId={postId} commentId={id} userId={authorId} isOwner={isOwner} />
+        <CommentActions
+          postId={postId}
+          commentId={id}
+          userId={authorId}
+          isOwner={isOwner}
+          onUpdate={onUpdate}
+        />
       </div>
       <p>{content}</p>
       <div className="flex w-full justify-between items-center">
-        <NextLink className="text-blue-700 text-xs cursor-pointer">Ответить</NextLink>
+        <NextUiLink className="text-blue-700 text-xs cursor-pointer">Ответить</NextUiLink>
         <span className="text-xs">{(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}</span>
       </div>
     </OpacityAnimateBlock>

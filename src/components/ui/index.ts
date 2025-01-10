@@ -6,3 +6,4 @@ export * from './sheet';
 export { ListNavElement } from './list-nav-element';
 export { MotionDiv } from './motion-div';
 export { OpacityAnimateBlock } from './opacity-animate-block';
+export { EditableMessage } from './editable-message';

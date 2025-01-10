@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from './message';
 import { Message as TMessage } from '../../../../../../@types/newDto';
-import { EmptyState } from '../../../empty-state';
 import { useGetMe } from '@/lib/hooks';
+import { EmptyState } from '../../../empty-state';
 
 interface Props {
   chatRef: React.RefObject<HTMLDivElement>;

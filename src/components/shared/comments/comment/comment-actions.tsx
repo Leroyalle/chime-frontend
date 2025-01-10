@@ -7,10 +7,17 @@ interface Props {
   postId: string;
   commentId: string;
   userId: string;
+  onUpdate: VoidFunction;
   isOwner: boolean;
 }
 
-export const CommentActions: React.FC<Props> = ({ postId, commentId, userId, isOwner }) => {
+export const CommentActions: React.FC<Props> = ({
+  postId,
+  commentId,
+  userId,
+  isOwner,
+  onUpdate,
+}) => {
   const { deleteComment } = useDeleteComment({ postId, commentId, userId });
   return (
     <Dropdown>
@@ -21,7 +28,9 @@ export const CommentActions: React.FC<Props> = ({ postId, commentId, userId, isO
         <DropdownItem key="share">Пожаловаться</DropdownItem>
         {isOwner ? (
           <>
-            <DropdownItem key="update">Изменить</DropdownItem>
+            <DropdownItem key="update" onPress={onUpdate}>
+              Изменить
+            </DropdownItem>
             <DropdownItem
               key="delete"
               color="danger"

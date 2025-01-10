@@ -15,6 +15,8 @@ export const useDeleteComment = ({
   const deleteCommentMutation = useMutation({
     mutationFn: () => Api.comments.deleteComment(commentId),
     onMutate: () => {
+      queryClient.cancelQueries({ queryKey: ['comments'] });
+
       const previousPostByIdData = queryClient.getQueryData({
         ...Api.posts.getPostByIdQueryOptions(postId).queryKey,
       });

@@ -5,3 +5,4 @@ export { useCreateComment } from './use-create-comment';
 export { useInfinityScrollPosts } from './use-infinity-scroll-posts';
 export { useDeletePost } from './use-delete-post';
 export { useDeleteComment } from './use-delete-comment';
+export { useUpdateComment } from './use-update-comment';
