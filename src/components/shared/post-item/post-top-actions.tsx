@@ -1,9 +1,15 @@
-'use client';
 import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { Ellipsis } from 'lucide-react';
+import { useDeletePost } from '@/lib/hooks';
 
-export const PostHeadActions: React.FC = () => {
+interface Props {
+  postId: string;
+  isOwner: boolean;
+}
+
+export const PostHeadActions: React.FC<Props> = ({ postId, isOwner }) => {
+  const { deletePost } = useDeletePost(postId);
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -12,7 +18,17 @@ export const PostHeadActions: React.FC = () => {
       <DropdownMenu aria-label="Post actions" onAction={(key) => alert(key)}>
         <DropdownItem key="favorites">Сохранить в закладках</DropdownItem>
         <DropdownItem key="share">Поделиться</DropdownItem>
-        <DropdownItem key="report">Пожаловаться</DropdownItem>
+        {isOwner ? (
+          <DropdownItem
+            key="delete"
+            color="danger"
+            className="text-danger"
+            onPress={() => deletePost()}>
+            Удалить
+          </DropdownItem>
+        ) : (
+          <DropdownItem key="report">Пожаловаться</DropdownItem>
+        )}
       </DropdownMenu>
     </Dropdown>
   );

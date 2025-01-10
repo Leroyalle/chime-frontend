@@ -19,6 +19,7 @@ export const useLikePost = (postId: string, userId: string) => {
         if (!old) {
           return undefined;
         }
+
         return {
           ...old,
           pages: old.pages.map((page) => ({
@@ -38,6 +39,7 @@ export const useLikePost = (postId: string, userId: string) => {
           if (!old) {
             return undefined;
           }
+
           return {
             ...old,
             pages: old.pages.map((page) => ({

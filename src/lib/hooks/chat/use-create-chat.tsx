@@ -11,7 +11,7 @@ export const useCreateChat = () => {
   const handleCreateChat = async ({ recipientId }: { recipientId: string }) => {
     try {
       setIsLoading(true);
-      const chatId = await Api.chat.getChatId(recipientId);
+      const { chatId } = await Api.chat.getChatId(recipientId);
       router.push(`${RoutesEnum.MESSAGES}/${chatId}`);
     } catch (error) {
       if (hasErrorField(error)) {

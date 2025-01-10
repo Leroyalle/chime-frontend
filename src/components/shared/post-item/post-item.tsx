@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
@@ -20,10 +20,11 @@ interface Props {
   commentCount: number;
   sharedCount: number;
   isLiked: boolean;
+  isOwner: boolean;
   className?: string;
 }
 
-export const PostItem: React.FC<Props> = ({
+export const PostItem: React.FC<Props> = memo(function PostItem({
   userId,
   postId,
   fullName,
@@ -34,8 +35,9 @@ export const PostItem: React.FC<Props> = ({
   commentCount,
   sharedCount,
   isLiked,
+  isOwner,
   className,
-}) => {
+}) {
   return (
     <DarkLightBlock className={cn('p-4', className)}>
       <div>
@@ -49,7 +51,7 @@ export const PostItem: React.FC<Props> = ({
               }}
             />
           </Link>
-          <PostHeadActions />
+          <PostHeadActions postId={postId} isOwner={isOwner} />
         </header>
         <div className="flex flex-col gap-y-2 mb-2">
           <div>
@@ -70,4 +72,4 @@ export const PostItem: React.FC<Props> = ({
       </div>
     </DarkLightBlock>
   );
-};
+});

@@ -14,9 +14,5 @@ export default async function Post({ params }: { params: Promise<{ id: string }>
 
   const post = await Api.posts.getPostById({ id, headers }).catch(handleApiError);
 
-  return (
-    <div>
-      <PostWrapper initialData={post} className="w-full my-auto max-w-[640px]" />
-    </div>
-  );
+  return <PostWrapper initialData={post} className="max-w-[640px]" />;
 }
