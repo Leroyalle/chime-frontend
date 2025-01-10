@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '@nextui-org/react';
-import { Send, X } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSocket } from '@/lib/hooks';
 import { Message } from '../../../../../../@types/newDto';
+import { EditableMessage } from './editable-message';
 
 interface Props {
   chatId: string;
@@ -42,21 +43,7 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
 
   return (
     <form className={cn('pt-5', className)} onSubmit={handleSubmit(onSubmit)}>
-      {editableMessage && (
-        <div className="py-4 flex justify-between items-center">
-          <div
-            className={cn(
-              'relative flex flex-col pl-4',
-              'before:absolute before:bottom-0 before:-left-0 before:h-full before:w-1 before:bg-blue-500',
-            )}>
-            <span className="text-blue-500 font-bold select-none">Редактируемое сообщение</span>
-            <p>{editableMessage.body}</p>
-          </div>
-          <button onClick={cancelEdit}>
-            <X />
-          </button>
-        </div>
-      )}
+      {editableMessage && <EditableMessage text={editableMessage.body} onClose={cancelEdit} />}
       <Controller
         render={({ field }) => (
           <Input

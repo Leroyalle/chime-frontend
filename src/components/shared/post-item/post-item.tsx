@@ -5,8 +5,9 @@ import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import { PostHeadActions } from './post-top-actions';
 import { PostBottomActions } from './post-bottom-actions';
-import { formatToClientDate } from '@/lib';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 interface Props {
   userId: string;
@@ -36,14 +37,13 @@ export const PostItem: React.FC<Props> = ({
   className,
 }) => {
   return (
-    // max-w-[640px]
     <DarkLightBlock className={cn('p-4', className)}>
       <div>
         <header className="flex justify-between items-center mb-2">
           <Link href={`/user/${userId}`} className="text-lg font-bold hover:underline">
             <User
               name={fullName}
-              description={formatToClientDate(createdAt)}
+              description={(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}
               avatarProps={{
                 src: 'https://avatars.githubusercontent.com/u/158848927?v=4',
               }}
