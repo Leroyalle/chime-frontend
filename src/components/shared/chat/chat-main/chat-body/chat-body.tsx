@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from './message';
-import { Message as TMessage } from '../../../../../@types/newDto';
-import { EmptyState } from '../../empty-state';
+import { Message as TMessage } from '../../../../../../@types/newDto';
+import { EmptyState } from '../../../empty-state';
 import { useGetMe } from '@/lib/hooks';
 
 interface Props {
@@ -10,10 +10,18 @@ interface Props {
   messages?: TMessage[];
   cursor?: JSX.Element;
   loader?: JSX.Element;
+  onEditMessage: (message: TMessage) => void;
   className?: string;
 }
 
-export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, className }) => {
+export const ChatBody: React.FC<Props> = ({
+  chatRef,
+  messages,
+  cursor,
+  loader,
+  onEditMessage,
+  className,
+}) => {
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -40,6 +48,7 @@ export const ChatBody: React.FC<Props> = ({ chatRef, messages, cursor, loader, c
           avatar="https://avatars.githubusercontent.com/u/158848927?v=4"
           isSender={message.UserBase.id == userData?.user.id}
           createdAt={message.createdAt}
+          onUpdate={() => onEditMessage(message)}
         />
       ))}
     </div>

@@ -9,11 +9,13 @@ import { useNewMarkSlice } from '@/store';
 import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
+import { Message } from '../../../@types/newDto';
 
 type SocketContextType = {
-  send: (message: MessageRequest) => void;
+  sendMessage: (message: MessageRequest) => void;
   broadcastNewPost: VoidFunction;
   deleteMessage: (data: { messageId: string }) => void;
+  updateMessage: (data: { messageId: string; messageBody: string }) => void;
 };
 
 export const SocketContext = createContext<SocketContextType | null>(null);
@@ -97,11 +99,34 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       );
     };
 
+    const handleUpdateMessage = (data: { chatId: string; message: Message }) => {
+      console.log('SOCKET MESSAGE', data);
+      queryClient.setQueryData(
+        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
+        (old) => {
+          if (!old) {
+            return undefined;
+          }
+          const updatedData = {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              data: page.data.map((m) => (m.id === data.message.id ? data.message : m)),
+            })),
+          };
+
+          return updatedData;
+        },
+      );
+    };
+
     const handleDeleteMessage = (data: { chatId: string; messageId: string }) => {
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {
-          if (!old) return undefined;
+          if (!old) {
+            return undefined;
+          }
 
           const updatedData = {
             ...old,
@@ -122,17 +147,18 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     };
 
     socket.current.on(SocketEventsEnum.MESSAGES_GET, handleNewMessage);
-    socket.current.on(SocketEventsEnum.MESSAGE_DELETE, handleDeleteMessage);
+    socket.current.on(SocketEventsEnum.MESSAGES_DELETE, handleDeleteMessage);
+    socket.current.on(SocketEventsEnum.MESSAGES_UPDATE, handleUpdateMessage);
 
     return () => {
       if (socket.current) {
         socket.current.off(SocketEventsEnum.MESSAGES_GET, handleNewMessage);
-        socket.current.off(SocketEventsEnum.MESSAGE_DELETE, handleDeleteMessage);
+        socket.current.off(SocketEventsEnum.MESSAGES_DELETE, handleDeleteMessage);
       }
     };
   }, [pathname, queryClient, router]);
 
-  const send = useCallback((message: MessageRequest) => {
+  const sendMessage = useCallback((message: MessageRequest) => {
     socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);
   }, []);
 
@@ -141,12 +167,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const deleteMessage = useCallback((data: { messageId: string }) => {
-    console.log('delete', data);
-    socket.current?.emit(SocketEventsEnum.MESSAGE_DELETE, data);
+    socket.current?.emit(SocketEventsEnum.MESSAGES_DELETE, data);
+  }, []);
+
+  const updateMessage = useCallback((data: { messageId: string; messageBody: string }) => {
+    socket.current?.emit(SocketEventsEnum.MESSAGES_UPDATE, data);
   }, []);
 
   return (
-    <SocketContext.Provider value={{ send, broadcastNewPost, deleteMessage }}>
+    <SocketContext.Provider value={{ sendMessage, broadcastNewPost, deleteMessage, updateMessage }}>
       {children}
     </SocketContext.Provider>
   );

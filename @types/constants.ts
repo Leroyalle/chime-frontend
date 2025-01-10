@@ -26,7 +26,8 @@ export enum SocketEventsEnum {
   UNAUTHORIZED = 'unauthorized',
   POST_NEW = 'post:new',
   CHECK_DATA = 'checkData',
-  MESSAGES_GET = 'messages:get',
-  MESSAGE_DELETE = 'messages:delete',
   MESSAGES_POST = 'messages:post',
+  MESSAGES_GET = 'messages:get',
+  MESSAGES_DELETE = 'messages:delete',
+  MESSAGES_UPDATE = 'messages:patch',
 }

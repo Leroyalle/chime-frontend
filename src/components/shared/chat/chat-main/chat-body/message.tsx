@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
-import { Avatar } from '../../../ui';
+import { Avatar } from '../../../../ui';
 import dayjs from 'dayjs';
 import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
 import { useSocket } from '@/lib/hooks';
@@ -14,6 +14,7 @@ interface Props {
   isSender: boolean;
   createdAt: Date;
   className?: string;
+  onUpdate?: VoidFunction;
 }
 
 export const Message: React.FC<Props> = memo(function Message({
@@ -25,18 +26,9 @@ export const Message: React.FC<Props> = memo(function Message({
   createdAt,
   className,
   messageId,
+  onUpdate,
 }) {
   const { deleteMessage } = useSocket();
-
-  const handleDeleteMessage = () => {
-    console.log(messageId);
-    deleteMessage({ messageId });
-  };
-
-  // const handlePatchMessage = () => {
-  //   console.log(messageId, userId);
-  //   deleteMessage({ messageId });
-  // };
 
   return (
     <>
@@ -44,9 +36,9 @@ export const Message: React.FC<Props> = memo(function Message({
         <DropdownTrigger>
           <div
             className={cn(
-              `hover:bg-background bg-gray-200 lg:w-8/12bg-gray-300  w-5/6  flex justify-between p-2 duration-100 
+              `hover:bg-background lg:w-8/12 bg-gray-200 w-5/6 flex justify-between p-2 duration-100 
              rounded-xl cursor-pointer
-              ${isSender ? ' bg-gray-600 text-white p-3 ml-auto hover:bg-gray-500' : ''} `,
+              ${isSender && 'bg-gray-600 text-white p-3 ml-auto hover:bg-gray-500'} `,
               className,
             )}>
             <div className="flex justify-between items-center ">
@@ -68,13 +60,15 @@ export const Message: React.FC<Props> = memo(function Message({
           <>
             {isSender && (
               <>
-                <DropdownItem key="change">Изменить</DropdownItem>
+                <DropdownItem key="update" onPress={onUpdate}>
+                  Изменить
+                </DropdownItem>
 
                 <DropdownItem
                   key="delete"
                   color="danger"
                   className="text-danger"
-                  onPress={handleDeleteMessage}>
+                  onPress={() => deleteMessage({ messageId })}>
                   Удалить
                 </DropdownItem>
               </>

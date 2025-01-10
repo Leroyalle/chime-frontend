@@ -3,11 +3,10 @@ import React, { useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
-import { ChatBody as Body } from './chat-body';
-import { ChatInput as Field } from './chat-fields';
-import { useInfinityScrollMessages, useSocket } from '@/lib/hooks';
+import { useInfinityScrollMessages } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
 import { ChatWithMembers } from '../../../../@types/chat';
+import { ChatMain as Main } from './chat-main';
 
 interface Props {
   chatId: string;
@@ -17,7 +16,6 @@ interface Props {
 
 export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const { send } = useSocket();
 
   const {
     data: messages,
@@ -45,16 +43,13 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
         className,
       )}>
       <Header className="px-6" name={chat.name} members={chat.members} avatar={chat.imageUrl} />
-      <Body
-        className="flex-1 px-4"
-        messages={messages}
+      <Main
         chatRef={chatRef}
+        chatId={chatId}
+        messages={messages}
         cursor={cursor}
-        loader={
-          isFetchingNextPage ? <Spinner color="warning" className="w-full mx-auto" /> : undefined
-        }
+        isFetchingNextPage={isFetchingNextPage}
       />
-      <Field className="px-6" chatId={chatId} onSendMessage={send} />
     </DarkLightBlock>
   );
 };
