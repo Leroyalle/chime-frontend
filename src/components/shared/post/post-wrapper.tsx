@@ -25,7 +25,7 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
   }
 
   return (
-    <section className={cn('w-full mx-auto', className)}>
+    <section className={cn('w-full mx-auto relative', className)}>
       <PostItem
         userId={postItem.authorId}
         postId={postItem.id}

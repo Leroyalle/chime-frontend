@@ -6,11 +6,12 @@ import { useDeleteComment } from '@/lib/hooks';
 interface Props {
   postId: string;
   commentId: string;
+  userId: string;
   isOwner: boolean;
 }
 
-export const CommentActions: React.FC<Props> = ({ postId, commentId, isOwner }) => {
-  const { deleteComment } = useDeleteComment({ postId, commentId });
+export const CommentActions: React.FC<Props> = ({ postId, commentId, userId, isOwner }) => {
+  const { deleteComment } = useDeleteComment({ postId, commentId, userId });
   return (
     <Dropdown>
       <DropdownTrigger>

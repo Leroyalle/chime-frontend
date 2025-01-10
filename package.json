@@ -25,6 +25,7 @@
     "framer-motion": "^11.13.1",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.464.0",
+    "motion": "^11.17.0",
     "next": "15.0.3",
     "nextjs-toploader": "^3.7.15",
     "react": "19.0.0-rc-66855b96-20241106",

@@ -13,8 +13,8 @@ interface Props {
 export const CommentSection: React.FC<Props> = ({ userId, postId, comments }) => {
   return (
     <>
-      <WriteComment userId={userId} postId={postId} className="mb-3" />
       <CommentsList items={comments} className="mb-3" />
+      <WriteComment userId={userId} postId={postId} className="mb-3 sticky bottom-2" />
     </>
   );
 };

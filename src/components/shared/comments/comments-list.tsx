@@ -11,6 +11,7 @@ interface Props {
 
 export const CommentsList: React.FC<Props> = ({ items, className }) => {
   const { data: userData } = useGetMe();
+
   return (
     <div className={cn('', className)}>
       {items.map((item) => (
