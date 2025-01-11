@@ -19,7 +19,7 @@ export const CommentsTab: React.FC<Props> = ({ userId }) => {
 
   return (
     <>
-      <CommentsList items={comments} />
+      <CommentsList items={comments} pageType="user" />
       {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </>

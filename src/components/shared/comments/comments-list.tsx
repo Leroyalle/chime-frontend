@@ -4,13 +4,21 @@ import { Comment } from '../../../../@types/newDto';
 import { CommentItem } from './comment';
 import { useGetMe } from '@/lib/hooks';
 
+export type PageType = 'user' | 'post';
+
 interface Props {
   items: Comment[];
-  onClickEditComment: (comment: Comment) => void;
+  onClickEditComment?: (comment: Comment) => void;
+  pageType: PageType;
   className?: string;
 }
 
-export const CommentsList: React.FC<Props> = ({ items, onClickEditComment, className }) => {
+export const CommentsList: React.FC<Props> = ({
+  items,
+  onClickEditComment,
+  pageType,
+  className,
+}) => {
   const { data: userData } = useGetMe();
 
   return (
@@ -26,7 +34,10 @@ export const CommentsList: React.FC<Props> = ({ items, onClickEditComment, class
           content={item.content}
           createdAt={item.createdAt}
           isOwner={userData?.user.id === item.user.id}
-          onUpdate={() => onClickEditComment(item)}
+          onUpdate={() => {
+            if (onClickEditComment) onClickEditComment(item);
+          }}
+          pageType={pageType}
           className="mb-3"
         />
       ))}

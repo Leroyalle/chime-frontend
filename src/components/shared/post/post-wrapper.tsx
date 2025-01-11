@@ -44,6 +44,7 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
         userId={postItem.authorId}
         postId={postItem.id}
         comments={postItem.comments}
+        pageType="post"
       />
     </section>
   );

@@ -7,6 +7,7 @@ import { RoutesEnum } from '../../../../../@types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { OpacityAnimateBlock } from '@/components/ui';
+import { PageType } from '../comments-list';
 
 interface Props {
   id: string;
@@ -17,7 +18,8 @@ interface Props {
   content: string;
   createdAt: Date;
   isOwner: boolean;
-  onUpdate: VoidFunction;
+  pageType: PageType;
+  onUpdate?: VoidFunction;
   className?: string;
 }
 
@@ -31,6 +33,7 @@ export const CommentItem: React.FC<Props> = ({
   createdAt,
   isOwner,
   onUpdate,
+  pageType,
   className,
 }) => {
   return (
@@ -46,6 +49,7 @@ export const CommentItem: React.FC<Props> = ({
           />
         </Link>
         <CommentActions
+          pageType={pageType}
           postId={postId}
           commentId={id}
           userId={authorId}
