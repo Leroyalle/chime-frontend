@@ -5,17 +5,19 @@ import { useDeletePost } from '@/lib/hooks';
 
 interface Props {
   postId: string;
+  userId: string;
   isOwner: boolean;
 }
 
-export const PostHeadActions: React.FC<Props> = ({ postId, isOwner }) => {
-  const { deletePost } = useDeletePost(postId);
+export const PostHeadActions: React.FC<Props> = ({ postId, userId, isOwner }) => {
+  const { deletePost } = useDeletePost(userId, postId);
+  console.log(postId, userId);
   return (
     <Dropdown>
       <DropdownTrigger>
         <Ellipsis />
       </DropdownTrigger>
-      <DropdownMenu aria-label="Post actions" onAction={(key) => alert(key)}>
+      <DropdownMenu aria-label="Post actions">
         <DropdownItem key="favorites">Сохранить в закладках</DropdownItem>
         <DropdownItem key="share">Поделиться</DropdownItem>
         {isOwner ? (

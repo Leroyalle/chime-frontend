@@ -37,6 +37,7 @@ export const useUnFollowUser = (unFollowingId: string) => {
     onSettled: () => {
       queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(unFollowingId));
       queryClient.resetQueries(Api.follow.getFriendsInfinityQueryOptions(unFollowingId));
+      queryClient.invalidateQueries(Api.users.getMeQueryOptions());
     },
   });
 

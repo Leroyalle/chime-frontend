@@ -2,7 +2,7 @@ import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
 
-export const useDeletePost = (postId: string) => {
+export const useDeletePost = (userId: string, postId: string) => {
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const router = useRouter();
@@ -14,7 +14,7 @@ export const useDeletePost = (postId: string) => {
         queryKey: ['posts'],
       });
 
-      const previousData = queryClient.getQueryData({
+      const previousAllPostsData = queryClient.getQueryData({
         ...Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       });
 
@@ -32,13 +32,38 @@ export const useDeletePost = (postId: string) => {
         };
       });
 
-      return { previousData };
+      const previousUserPostsData = queryClient.getQueryData({
+        ...Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
+      });
+
+      queryClient.setQueryData(
+        Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
+        (old) => {
+          if (!old) {
+            return undefined;
+          }
+
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              data: page.data.filter((p) => p.id !== postId),
+            })),
+          };
+        },
+      );
+
+      return { previousAllPostsData, previousUserPostsData };
     },
 
     onError: (_, __, context) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
-        context?.previousData,
+        context?.previousAllPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
+        context?.previousUserPostsData,
       );
     },
 

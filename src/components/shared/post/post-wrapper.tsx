@@ -38,6 +38,7 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
         sharedCount={0}
         isLiked={postItem.isLiked}
         isOwner={userData?.user.id === postItem.authorId}
+        tags={postItem.tags}
         className="mb-3"
       />
       <CommentSection

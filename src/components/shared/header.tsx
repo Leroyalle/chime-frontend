@@ -1,31 +1,17 @@
-'use client';
 import React from 'react';
-import { Input } from '@nextui-org/input';
-import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react';
-import { Search } from 'lucide-react';
-import { ProfileButton } from './profile-button';
-import Link from 'next/link';
-import { RoutesEnum } from '../../../@types';
-import { SidebarDrawer } from './sidebar';
+import { cn } from '@/lib/utils';
 
-export const Header: React.FC = () => {
+interface Props {
+  className?: string;
+}
+
+export const Header: React.FC<Props> = ({ className }) => {
   return (
-    <Navbar isBordered className="bg-light-green" maxWidth="2xl">
-      <NavbarBrand className="grow-0 mr-20">
-        <Link href={RoutesEnum.HOME} className="font-black text-2xl uppercase">
-          Chime
-        </Link>
-      </NavbarBrand>
-      <Input
-        startContent={<Search size={20} />}
-        placeholder="Поиск..."
-        isClearable
-        className="max-w-64"
-      />
-      <NavbarContent justify="end">
-        <ProfileButton />
-        <SidebarDrawer />
-      </NavbarContent>
-    </Navbar>
+    <header className={cn('w-full mb-6 select-none', className)}>
+      <div className="flex gap-x-1 items-center justify-center">
+        <img className="w-8 h-8" src="/logo.svg" alt="Chime" />
+        <span className="text-2xl font-black">Chime</span>
+      </div>
+    </header>
   );
 };

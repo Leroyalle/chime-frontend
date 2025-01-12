@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
 import { SocketProvider } from './socket-provider';
 import { AuthGuard } from './auth-guard';
+import { ThemeProvider } from './theme-provider';
 
 interface Props {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
   const queryClient = new QueryClient();
 
   return (
-    <>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
       <NextUIProvider>
         <QueryClientProvider client={queryClient}>
           <AuthGuard>
@@ -25,8 +26,8 @@ export const Providers: React.FC<Props> = ({ children }) => {
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </NextUIProvider>
-      <NextTopLoader />
+      <NextTopLoader color="#f97316" />
       <ToastContainer />
-    </>
+    </ThemeProvider>
   );
 };

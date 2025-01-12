@@ -30,6 +30,7 @@ export const useFollowUser = (followingId: string) => {
     onSettled: () => {
       queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(followingId));
       queryClient.resetQueries(Api.follow.getFriendsInfinityQueryOptions(followingId));
+      queryClient.invalidateQueries(Api.users.getMeQueryOptions());
     },
 
     onError: (error, __, context) => {

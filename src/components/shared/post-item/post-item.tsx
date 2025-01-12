@@ -8,6 +8,7 @@ import { PostBottomActions } from './post-bottom-actions';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Tag } from '../../../../@types/newDto';
 
 interface Props {
   userId: string;
@@ -21,6 +22,7 @@ interface Props {
   sharedCount: number;
   isLiked: boolean;
   isOwner: boolean;
+  tags?: Tag[];
   className?: string;
 }
 
@@ -36,6 +38,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
   sharedCount,
   isLiked,
   isOwner,
+  tags,
   className,
 }) {
   return (
@@ -51,16 +54,26 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
               }}
             />
           </Link>
-          <PostHeadActions postId={postId} isOwner={isOwner} />
+          <PostHeadActions postId={postId} userId={userId} isOwner={isOwner} />
         </header>
-        <div className="flex flex-col gap-y-2 mb-2">
+        <div className="flex flex-col gap-y-1 mb-3">
           <div>
             <p>{content}</p>
           </div>
           {imageUrl && (
             <img className="w-full object-cover rounded-md" src={imageUrl} alt={'Post image'} />
           )}
+          {tags && tags.length > 0 && (
+            <ul className="flex flex-wrap gap-x-2">
+              {tags.map((tag) => (
+                <li key={tag.id} className="text-sm text-blue-500">
+                  {`#${tag.value}`}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
+        <div className="my-2 w-full h-[0.1px] bg-gray-700" />
         <PostBottomActions
           userId={userId}
           postId={postId}

@@ -7,5 +7,7 @@ interface Props {
 }
 
 export const DarkLightBlock: React.FC<Props> = ({ children, className }) => {
-  return <div className={cn('relative bg-white rounded-xl w-full', className)}>{children}</div>;
+  return (
+    <div className={cn('relative bg-primary-light rounded-xl w-full', className)}>{children}</div>
+  );
 };

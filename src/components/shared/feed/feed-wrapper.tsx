@@ -18,7 +18,7 @@ export const FeedWrapper: React.FC<Props> = ({ initialPosts, className }) => {
 
   return (
     <div className={className}>
-      <WritePost className="mb-10" />
+      <WritePost className="mb-10" avatarUrl={''} />
       {posts ? (
         <>
           <PostsList items={posts} />

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { RoutesEnum } from '../../../../../@types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { OpacityAnimateBlock } from '@/components/ui';
+import { DarkLightBlock, OpacityAnimateBlock } from '@/components/ui';
 import { PageType } from '../comments-list';
 
 interface Props {
@@ -37,31 +37,34 @@ export const CommentItem: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <OpacityAnimateBlock
-      className={cn('flex flex-col gap-y-2 bg-[#f6f6f6] p-4 rounded-xl', className)}>
-      <div className="flex justify-between items-center">
-        <Link href={`${RoutesEnum.USER}/${authorId}`}>
-          <User
-            name={author}
-            avatarProps={{
-              src: avatar,
-            }}
+    <OpacityAnimateBlock className={className}>
+      <DarkLightBlock className="flex bg-primary-light flex-col gap-y-2 p-4 rounded-xl">
+        <div className="flex justify-between items-center">
+          <Link href={`${RoutesEnum.USER}/${authorId}`}>
+            <User
+              name={author}
+              avatarProps={{
+                src: avatar,
+              }}
+            />
+          </Link>
+          <CommentActions
+            pageType={pageType}
+            postId={postId}
+            commentId={id}
+            userId={authorId}
+            isOwner={isOwner}
+            onUpdate={onUpdate}
           />
-        </Link>
-        <CommentActions
-          pageType={pageType}
-          postId={postId}
-          commentId={id}
-          userId={authorId}
-          isOwner={isOwner}
-          onUpdate={onUpdate}
-        />
-      </div>
-      <p>{content}</p>
-      <div className="flex w-full justify-between items-center">
-        <NextUiLink className="text-blue-700 text-xs cursor-pointer">Ответить</NextUiLink>
-        <span className="text-xs">{(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}</span>
-      </div>
+        </div>
+        <p>{content}</p>
+        <div className="flex w-full justify-between items-center">
+          <NextUiLink className="text-blue-700 text-xs cursor-pointer">Ответить</NextUiLink>
+          <span className="text-xs">
+            {(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}
+          </span>
+        </div>
+      </DarkLightBlock>
     </OpacityAnimateBlock>
   );
 };

@@ -27,6 +27,7 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
           sharedCount={0}
           isLiked={item.isLiked}
           isOwner={userData?.user.id === item.authorId}
+          tags={item.tags}
           className="mb-10"
         />
       ))}

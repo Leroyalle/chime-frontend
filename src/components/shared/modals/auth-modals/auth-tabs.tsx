@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
-import { Tab, Tabs } from '@nextui-org/react';
 import { LoginForm } from '../../forms';
 import { RegisterActions } from './register-actions';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 
 export const AuthTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('login');
 
   return (
-    <Tabs
-      aria-label="Auth variants"
-      variant={'solid'}
-      color="primary"
-      fullWidth
-      selectedKey={activeTab}
-      onSelectionChange={(key) => setActiveTab(key as string)}>
-      <Tab key="login" title="Вход">
+    <Tabs defaultValue={activeTab} className="w-[400px]">
+      <TabsList className="flex">
+        <TabsTrigger className="w-full" value="login">
+          Вход
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="register">
+          Регистрация
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="login">
         <LoginForm />
-      </Tab>
-      <Tab key="register" title="Регистрация">
+      </TabsContent>
+      <TabsContent value="register">
         <RegisterActions onChangeTab={() => setActiveTab('login')} />
-      </Tab>
+      </TabsContent>
     </Tabs>
   );
 };
