@@ -5,13 +5,19 @@ import { DarkLightBlock } from '../../../ui/dark-light-block';
 import { UserChat } from '../../../../../@types/chat';
 
 interface Props {
-  items: UserChat[];
+  items?: UserChat[];
+  itemsStyles?: string;
   className?: string;
 }
 
-export const ChatList: React.FC<Props> = ({ items, className }) => {
+export const ChatList: React.FC<Props> = ({ items, itemsStyles, className }) => {
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
-    <DarkLightBlock className={cn('flex flex-col gap-y-2 py-2 h-full overflow-y-auto', className)}>
+    <DarkLightBlock
+      className={cn('flex flex-col gap-y-2 p-2 h-full w-full overflow-y-auto', className)}>
       {items.map((item) => (
         <ChatItem
           key={item.id}
@@ -19,7 +25,7 @@ export const ChatList: React.FC<Props> = ({ items, className }) => {
           imageUrl={item.imageUrl}
           name={item.name}
           lastMessage={item.lastMessage}
-          lastMessageAt={item.lastMessageAt}
+          className={itemsStyles}
         />
       ))}
     </DarkLightBlock>

@@ -1,5 +1,4 @@
-import { Container, Header, ProfileCard, Sidebar } from '@/components/shared';
-import { AdvtWrapper } from '@/components/shared/advt';
+import { Container, Header, ProfileCard, Sidebar, AsideChatsWrapper } from '@/components/shared';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 
@@ -23,7 +22,7 @@ export default function HomeLayout({
           <Sidebar className="flex-shrink-0 flex-1 pt-2 hidden md:block rounded-none overflow-y-auto" />
         </div>
         <main className="flex-1 w-full max-w-[640px] mx-auto py-4">{children}</main>
-        <AdvtWrapper className="hidden flex-shrink-0 lg:block h-screen max-w-[300px] min-w-[300px] sticky p-4 top-0 rounded-none border-l-1" />
+        <AsideChatsWrapper className="hidden flex-shrink-0 lg:block h-screen max-w-[300px] min-w-[300px] sticky p-4 top-0 rounded-none border-l-1" />
       </Container>
       {/* <footer className="mt-auto bg-gray-100 p-4 text-center">Footer</footer> */}
     </div>

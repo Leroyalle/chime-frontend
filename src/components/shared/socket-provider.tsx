@@ -35,6 +35,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     socket.current.on(SocketEventsEnum.CONNECT, () => {
       console.log('Connected to WebSocket');
+      console.log('Socket ID:', socket.current?.id);
     });
 
     socket.current.on(SocketEventsEnum.UNAUTHORIZED, (message) => {
@@ -68,16 +69,41 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const handleNewMessage = (data: ChatUpdate) => {
-      if (pathname !== `${RoutesEnum.MESSAGES}/${data.chatId}`) {
-        toast.info(<ToastMessage chatId={data.chatId} senderName={data.senderName} />, {
+      console.log('NEWMESSAGE:', data);
+      if (pathname !== `${RoutesEnum.MESSAGES}/${data.chat.id}`) {
+        toast.info(<ToastMessage chatId={data.chat.id} senderName={data.senderName} />, {
           onClick() {
-            router.push(`${RoutesEnum.MESSAGES}/${data.chatId}`);
+            router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`);
           },
         });
       }
 
+      queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old?: UserChat[]) => {
+        if (!old) {
+          return undefined;
+        }
+
+        const updatedChats = old.map((chat) => {
+          if (chat.id === data.chat.id) {
+            return { ...chat, lastMessage: data.message };
+          }
+          return chat;
+        });
+
+        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
+        if (!existingChat) {
+          updatedChats.push({ ...data.chat, lastMessage: data.message });
+        }
+
+        return updatedChats.sort(
+          (a, b) =>
+            new Date(b.lastMessage.createdAt).getTime() -
+            new Date(a.lastMessage.createdAt).getTime(),
+        );
+      });
+
       queryClient.setQueryData(
-        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
+        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
           if (!old) return undefined;
 

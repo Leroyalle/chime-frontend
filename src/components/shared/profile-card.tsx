@@ -14,7 +14,10 @@ export const ProfileCard: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn('p-4 w-full', className)}>
       <div className="flex flex-col w-full items-center">
-        <Avatar src={me?.user.avatarUrl || ''} size="lg" />
+        <Avatar
+          src={me?.user.avatarUrl || 'https://avatars.githubusercontent.com/u/158848927?v=4'}
+          size="lg"
+        />
         <span className="font-semibold text-lg">{me?.user.name}</span>
         <Link
           href={`${RoutesEnum.USER}/${me?.user.id}`}

@@ -2,7 +2,7 @@ import { Message } from './newDto';
 import { User } from './newResponse';
 
 export type ChatUpdate = {
-  chatId: string;
+  chat: UserChat;
   message: Message;
   senderName: string;
 };
@@ -16,8 +16,7 @@ export type UserChat = {
   id: string;
   name: string;
   imageUrl: string;
-  lastMessage: string;
-  lastMessageAt: Date;
+  lastMessage: Message;
   createdAt: Date;
 };
 

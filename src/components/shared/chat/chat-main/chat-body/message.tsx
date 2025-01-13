@@ -36,7 +36,7 @@ export const Message: React.FC<Props> = memo(function Message({
         <DropdownTrigger>
           <div
             className={cn(
-              `hover:bg-background lg:w-8/12 bg-gray-200 w-5/6 flex justify-between p-2 duration-100 
+              `hover:bg-gray-400 text-black lg:w-8/12 bg-gray-200 w-5/6 flex justify-between p-2 duration-100 
              rounded-xl cursor-pointer
               ${isSender && 'bg-gray-600 text-white p-3 ml-auto hover:bg-gray-500'} `,
               className,
@@ -44,7 +44,6 @@ export const Message: React.FC<Props> = memo(function Message({
             <div className="flex justify-between items-center ">
               <div className="flex items-center gap-x-3 ">
                 <Avatar src={avatar} size="md" />
-
                 <div className="flex flex-col justify-center ">
                   <h4 className="text-blue-700 font-semibold">{!isSender ? author : ''}</h4>
                   <p>{content}</p>

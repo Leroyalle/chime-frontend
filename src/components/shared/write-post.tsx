@@ -55,7 +55,11 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
     <DarkLightBlock className={cn('p-4', className)}>
       <form className={'flex flex-col gap-y-2'} onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center gap-x-3">
-          <Avatar src={avatarUrl || ''} size="md" className="self-start" />
+          <Avatar
+            src={avatarUrl || 'https://avatars.githubusercontent.com/u/158848927?v=4'}
+            size="md"
+            className="self-start flex-shrink-0"
+          />
           <div className="w-full flex flex-col gap-y-2">
             <Controller
               control={control}
@@ -66,6 +70,7 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
               render={({ field }) => (
                 <Input
                   variant="bordered"
+                  autoComplete="off"
                   isClearable
                   onClear={() => setValue('post', '')}
                   placeholder="Что нового?"

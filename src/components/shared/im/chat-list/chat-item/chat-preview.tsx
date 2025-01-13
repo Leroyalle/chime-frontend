@@ -2,23 +2,17 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Message } from '../../../../../../@types/newDto';
 
 interface Props {
   imageUrl?: string;
   name: string;
   // FIXME:  убрать optional
-  lastMessage?: string;
-  lastMessageAt: Date;
+  lastMessage?: Message;
   className?: string;
 }
 
-export const ChatPreview: React.FC<Props> = ({
-  imageUrl,
-  name,
-  lastMessage,
-  lastMessageAt,
-  className,
-}) => {
+export const ChatPreview: React.FC<Props> = ({ imageUrl, name, lastMessage, className }) => {
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>
       <div className="w-[52px] h-[52px] rounded-full overflow-hidden flex-shrink-0">
@@ -29,9 +23,9 @@ export const ChatPreview: React.FC<Props> = ({
           <span>{name}</span>
         </div>
         <div className="flex items-center justify-between gap-x-2">
-          <span>{lastMessage}</span>
+          <span className="text-gray-400 text-[14px] self-end">{lastMessage?.body}</span>
           <span className="text-gray-600 text-[14px] self-end">
-            {(dayjs.extend(relativeTime), dayjs(lastMessageAt).fromNow())}
+            {(dayjs.extend(relativeTime), dayjs(lastMessage?.createdAt).fromNow())}
           </span>
         </div>
       </div>

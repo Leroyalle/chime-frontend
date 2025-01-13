@@ -20,7 +20,7 @@ export const MultipleSelectorCreatable = ({ value, setValue, className }: Props)
         maxSelected={4}
         creatable
         className="bg-primary-light rounded-md"
-        badgeClassName="bg-foreground transition hover:bg-foreground hover:opacity-80"
+        badgeClassName="bg-foreground transition text-blue-500 font-bold hover:bg-foreground hover:opacity-80"
       />
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 import { Link as NextUiLink, User } from '@nextui-org/react';
 import { CommentActions } from './comment-actions';
 import Link from 'next/link';
