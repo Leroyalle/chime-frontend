@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   title: string;
-  text: string;
+  text?: string;
   className?: string;
 }
 

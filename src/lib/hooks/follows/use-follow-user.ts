@@ -1,6 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { toggleUserFollow } from './lib';
 
 export const useFollowUser = (followingId: string) => {
   const queryClient = useQueryClient();
@@ -15,13 +16,7 @@ export const useFollowUser = (followingId: string) => {
       );
 
       queryClient.setQueryData(Api.users.getUserQueryOptions(followingId).queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-        return {
-          ...old,
-          user: { ...old.user, isFollowing: true, followerCount: old.user.followerCount + 1 },
-        };
+        return toggleUserFollow(old, 'follow');
       });
 
       return { previousData };

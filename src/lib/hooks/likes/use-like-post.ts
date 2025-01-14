@@ -1,5 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { togglePostLike } from './lib';
 
 export const useLikePost = (postId: string, userId: string) => {
   const queryClient = useQueryClient();
@@ -11,59 +12,50 @@ export const useLikePost = (postId: string, userId: string) => {
         queryKey: ['posts'],
       });
 
-      const previousData = queryClient.getQueryData(
+      const previousAllPostsData = queryClient.getQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       );
 
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            data: page.data.map((post) =>
-              post.id === postId
-                ? { ...post, isLiked: true, likesCount: post.likesCount + 1 }
-                : post,
-            ),
-          })),
-        };
+        return togglePostLike(postId, old, 'like');
       });
+
+      const previousPostsByUserIdData = queryClient.getQueryData(
+        Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
+      );
 
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
-
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              data: page.data.map((post) =>
-                post.id === postId
-                  ? { ...post, isLiked: true, likesCount: post.likesCount + 1 }
-                  : post,
-              ),
-            })),
-          };
+          return togglePostLike(postId, old, 'like');
         },
       );
 
-      return { previousData };
+      const previousLikedPostsData = queryClient.getQueryData(
+        Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(
+        Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
+        (old) => {
+          return togglePostLike(postId, old, 'like');
+        },
+      );
+
+      return { previousAllPostsData, previousPostsByUserIdData, previousLikedPostsData };
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
-        context?.previousData,
+        context?.previousAllPostsData,
       );
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
-        context?.previousData,
+        context?.previousPostsByUserIdData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
+        context?.previousLikedPostsData,
       );
     },
     onSettled: () => {

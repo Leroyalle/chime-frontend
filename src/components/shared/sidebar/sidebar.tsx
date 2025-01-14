@@ -61,7 +61,7 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           <li>
             <SidebarItem
               icon={<Heart size={20} className="text-red-500" />}
-              href={RoutesEnum.LIKED}>
+              href={RoutesEnum.LIKES}>
               Ваши лайки
             </SidebarItem>
           </li>

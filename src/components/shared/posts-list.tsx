@@ -11,6 +11,11 @@ interface Props {
 
 export const PostsList: React.FC<Props> = ({ items, className }) => {
   const { data: userData } = useGetMe();
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
     <section className={cn('', className)}>
       {items.map((item) => (

@@ -1,10 +1,8 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { TokensEnum } from '../../@types';
 
-export async function updatePath(path: string) {
-  if (!path.startsWith('/')) {
-    console.log('The path must start at /');
-  }
-  revalidatePath(path);
+export async function deleteCookie() {
+  (await cookies()).delete(TokensEnum.JWT);
 }

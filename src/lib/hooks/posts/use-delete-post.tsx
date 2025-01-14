@@ -1,6 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
+import { handleDeletePost } from './lib';
 
 export const useDeletePost = (userId: string, postId: string) => {
   const queryClient = useQueryClient();
@@ -19,17 +20,7 @@ export const useDeletePost = (userId: string, postId: string) => {
       });
 
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            data: page.data.filter((p) => p.id !== postId),
-          })),
-        };
+        return handleDeletePost(postId, old);
       });
 
       const previousUserPostsData = queryClient.getQueryData({
@@ -39,17 +30,7 @@ export const useDeletePost = (userId: string, postId: string) => {
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
-
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              data: page.data.filter((p) => p.id !== postId),
-            })),
-          };
+          return handleDeletePost(postId, old);
         },
       );
 

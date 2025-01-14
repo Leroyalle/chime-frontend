@@ -17,6 +17,8 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
     ...Api.chat.getUserChatsQueryOptions(),
   });
 
+  console.log(chats);
+
   if (isPendingChats) {
     return <Skeleton className={cn('w-full', className)} />;
   }

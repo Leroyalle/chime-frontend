@@ -61,6 +61,23 @@ export const deletePost = async (id: string): Promise<void> => {
   return (await instance.delete<void>(`${ApiRouter.POST}/${id}`)).data;
 };
 
+export const getUserLikedPosts = async ({
+  page = 1,
+  perPage = 10,
+  headers,
+}: {
+  page?: number;
+  perPage?: number;
+  headers?: AxiosRequestHeaders;
+}): Promise<InfinityResponse<Post[]>> => {
+  return (
+    await instance.get<InfinityResponse<Post[]>>(
+      `${ApiRouter.USER_LIKES}?page=${page}&perPage=${perPage}`,
+      { headers },
+    )
+  ).data;
+};
+
 export const getAllPostsInfinityQueryOptions = () => {
   return infiniteQueryOptions({
     queryKey: ['posts', 'list'],
@@ -92,6 +109,39 @@ export const getPostsByUserIdInfinityQueryOptions = (userId: string) => {
     select: ({ pages }) => pages.flatMap((page) => page.data),
     getNextPageParam(lastPage, allPages) {
       return lastPage.data.length < perPage ? undefined : allPages.length + 1;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const getUserLikedPostsInfinityQueryOptions = () => {
+  const perPage = 10;
+  return infiniteQueryOptions({
+    queryKey: ['posts', 'list', 'liked'],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getUserLikedPosts({ page: pageParam, perPage });
+      if (!response || !response.data) {
+        throw new Error('Failed to fetch liked posts');
+      }
+      console.log('RESPONSE', response, 'pageParam:', pageParam);
+      return response;
+    },
+    initialPageParam: 1,
+    select: ({ pages }) => pages.flatMap((page) => page.data),
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPages = lastPage.totalPages;
+      const currentPage = allPages.length + 1;
+      console.log(
+        'Current page:',
+        currentPage,
+        'Total pages:',
+        totalPages,
+        'lastPage:',
+        lastPage,
+        'allPages:',
+        allPages,
+      );
+      return currentPage < totalPages ? currentPage : undefined;
     },
     refetchOnWindowFocus: false,
   });

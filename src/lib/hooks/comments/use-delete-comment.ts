@@ -1,5 +1,10 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  handleDeleteCommentOnPostPage,
+  handleDeleteCommentOnUserPage,
+  handlePostCommentAction,
+} from './lib';
 
 export const useDeleteComment = ({
   postId,
@@ -22,14 +27,7 @@ export const useDeleteComment = ({
       });
 
       queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-
-        return {
-          ...old,
-          comments: old.comments.filter((comment) => comment.id !== commentId),
-        };
+        return handleDeleteCommentOnPostPage(commentId, old);
       });
 
       const previousAllPostsData = queryClient.getQueryData({
@@ -37,19 +35,7 @@ export const useDeleteComment = ({
       });
 
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            data: page.data.map((p) =>
-              p.id === postId ? { ...p, commentsCount: p.commentsCount - 1 } : p,
-            ),
-          })),
-        };
+        return handlePostCommentAction(postId, old, 'delete');
       });
 
       const previousPostsByUserIdData = queryClient.getQueryData({
@@ -59,17 +45,7 @@ export const useDeleteComment = ({
       queryClient.setQueryData(
         Api.comments.getUserCommentsInfinityQueryOptions(userId).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
-
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              data: page.data.filter((c) => c.id !== commentId),
-            })),
-          };
+          return handleDeleteCommentOnUserPage(commentId, old);
         },
       );
 

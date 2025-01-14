@@ -12,7 +12,7 @@ export enum RoutesEnum {
   FOLLOWERS = '/followers',
   FOLLOWING = '/following',
   BOOKMARKS = '/bookmarks',
-  LIKED = '/liked',
+  LIKES = '/likes',
   FRIENDS = '/friends',
   PROFILE = '/profile',
   SETTINGS = '/profile/settings',

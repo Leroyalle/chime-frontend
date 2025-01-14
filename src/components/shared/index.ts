@@ -12,3 +12,4 @@ export { FollowersWrapper } from './follows';
 export { FollowingWrapper } from './follows';
 export { Header } from './header';
 export { AsideChatsWrapper } from './aside-chats';
+export { LikedPostsWrapper } from './liked-posts';

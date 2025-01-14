@@ -1,5 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { handleUpdateCommentOnPostPage } from './lib';
 
 export const useUpdateComment = (userId: string, postId: string) => {
   const queryClient = useQueryClient();
@@ -16,22 +17,7 @@ export const useUpdateComment = (userId: string, postId: string) => {
       });
 
       queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-
-        return {
-          ...old,
-          comments: old.comments.map((comment) => {
-            if (comment.id === commentId) {
-              return {
-                ...comment,
-                content: content,
-              };
-            }
-            return comment;
-          }),
-        };
+        return handleUpdateCommentOnPostPage(commentId, old, content);
       });
 
       return { previewPostByIdData };

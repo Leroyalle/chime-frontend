@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '@nextui-org/react';
 import { useGetMe } from '@/lib/hooks';
+import Cookies from 'js-cookie';
+import { RoutesEnum, TokensEnum } from '../../../@types';
 
 interface Props {
   children: React.ReactNode;
@@ -13,7 +15,8 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (isError) {
-      router.push('/auth');
+      Cookies.remove(TokensEnum.JWT);
+      router.push(RoutesEnum.AUTH);
     }
   }, [isError, data, router]);
 

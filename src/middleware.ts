@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export default async function middleware(req: NextRequest) {
-  const jwtToken = req.cookies.get('jwtToken')?.value;
+  const token = req.cookies.get('jwtToken')?.value;
+  const response = NextResponse.next();
 
-  if (!jwtToken) {
+  if (!token) {
     return NextResponse.redirect(new URL('/auth', req.url));
   }
 
-  NextResponse.next();
+  response.headers.set('Authorization', `Bearer ${token}`);
+
+  return response;
 }
 export const config = {
   matcher: [

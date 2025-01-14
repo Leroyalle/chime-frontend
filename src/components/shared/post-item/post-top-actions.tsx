@@ -11,7 +11,7 @@ interface Props {
 
 export const PostHeadActions: React.FC<Props> = ({ postId, userId, isOwner }) => {
   const { deletePost } = useDeletePost(userId, postId);
-  console.log(postId, userId);
+
   return (
     <Dropdown>
       <DropdownTrigger>
