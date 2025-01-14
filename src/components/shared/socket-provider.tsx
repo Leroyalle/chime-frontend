@@ -78,7 +78,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         });
       }
 
-      queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old?: UserChat[]) => {
+      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
         if (!old) {
           return undefined;
         }

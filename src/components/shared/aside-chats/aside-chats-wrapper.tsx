@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DarkLightBlock } from '../../ui';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
@@ -7,19 +7,32 @@ import { Api } from '@/services/api-client';
 import { Skeleton } from '@nextui-org/react';
 import { ChatList } from '../im/chat-list';
 import { SearchChats } from './search-chats';
+import { useDebounce } from '@/components/ui/shadcn-expendsions';
 
 interface Props {
   className?: string;
 }
 
 export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
-  const { data: chats, isPending: isPendingChats } = useQuery({
-    ...Api.chat.getUserChatsQueryOptions(),
+  const isMounted = React.useRef(false);
+  const [searchValue, setSearchValue] = useState('');
+  const value = useDebounce(searchValue, 500);
+  const {
+    data: chats,
+    isLoading,
+    isFetching: isFetchingChats,
+  } = useQuery({
+    ...Api.chat.getUserChatsQueryOptions(value),
   });
 
-  console.log(chats);
+  useEffect(() => {
+    // FIXME: каждый перезапрос при изменении searchValue триггерит загрузку
+    if (!isMounted.current) {
+      isMounted.current = true;
+    }
+  }, []);
 
-  if (isPendingChats) {
+  if (isLoading && !isMounted.current) {
     return <Skeleton className={cn('w-full', className)} />;
   }
 
@@ -27,9 +40,14 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
     <DarkLightBlock className={cn('bg-background', className)}>
       <section>
         <h2 className="text-xl mb-2">Сообщения</h2>
-        <SearchChats className="mb-2 w-full" />
+        <SearchChats
+          className="mb-2 w-full"
+          value={searchValue}
+          onChange={setSearchValue}
+          isLoading={isFetchingChats}
+        />
         <div className="w-full h-[2px] bg-primary-light" />
-        {chats && chats.length > 0 ? (
+        {chats && chats.length ? (
           <ChatList items={chats} className="bg-background" itemsStyles="hover:bg-primary-light" />
         ) : (
           <h2>нет чатов</h2>

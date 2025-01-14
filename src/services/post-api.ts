@@ -128,20 +128,12 @@ export const getUserLikedPostsInfinityQueryOptions = () => {
     },
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
-    getNextPageParam: (lastPage, allPages) => {
-      const totalPages = lastPage.totalPages;
-      const currentPage = allPages.length + 1;
-      console.log(
-        'Current page:',
-        currentPage,
-        'Total pages:',
-        totalPages,
-        'lastPage:',
-        lastPage,
-        'allPages:',
-        allPages,
-      );
-      return currentPage < totalPages ? currentPage : undefined;
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      console.log('lastPage:', lastPage, 'allPages:', allPages);
+      if (lastPage.data.length === 0) {
+        return undefined;
+      }
+      return lastPageParam + 1;
     },
     refetchOnWindowFocus: false,
   });

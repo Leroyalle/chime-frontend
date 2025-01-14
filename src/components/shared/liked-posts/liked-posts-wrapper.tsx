@@ -14,7 +14,7 @@ interface Props {
 export const LikedPostsWrapper: React.FC<Props> = ({ initialData }) => {
   const {
     data: likedPosts,
-    cursor,
+    // cursor,
     isFetchingNextPage,
   } = useInfinityScrollUserLikedPosts(initialData);
   return (
@@ -23,7 +23,7 @@ export const LikedPostsWrapper: React.FC<Props> = ({ initialData }) => {
         <>
           <PostsList items={likedPosts} />
           {/* FIXME: при наличии курсора багается инвалидация лайкнутых постов, кэш старый при валидном ответе сервера */}
-          {likedPosts && likedPosts.length > 0 && cursor}
+          {/* {likedPosts && cursor} */}
           {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
         </>
       ) : (

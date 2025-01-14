@@ -22,8 +22,9 @@ export const getMessagesByChatId = async ({
   ).data;
 };
 
-export const getUserChats = async (): Promise<UserChat[]> => {
-  return (await instance.get<UserChat[]>(ApiRouter.CHAT)).data;
+export const getUserChats = async (query: string = ''): Promise<UserChat[]> => {
+  const hasQuery = query ? `?query=${query}` : '';
+  return (await instance.get<UserChat[]>(`${ApiRouter.CHAT}${hasQuery}`)).data;
 };
 
 export const getChatById = async ({
@@ -57,11 +58,12 @@ export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
   });
 };
 
-export const getUserChatsQueryOptions = () => {
+export const getUserChatsQueryOptions = (query?: string) => {
   return queryOptions({
-    queryKey: ['user-chats'],
-    queryFn: getUserChats,
+    queryKey: ['user-chats', query],
+    queryFn: () => getUserChats(query),
     refetchOnWindowFocus: false,
     gcTime: Infinity,
+    staleTime: 1 * 60 * 1000,
   });
 };
