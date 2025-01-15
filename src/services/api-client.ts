@@ -4,6 +4,7 @@ import * as comments from './comment-api';
 import * as users from './user-api';
 import * as follow from './follow-api';
 import * as chat from './chat-api';
+import * as bookmark from './bookmark-api';
 
 export const Api = {
   posts,
@@ -12,4 +13,5 @@ export const Api = {
   users,
   follow,
   chat,
+  bookmark,
 };

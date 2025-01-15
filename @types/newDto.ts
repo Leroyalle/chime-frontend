@@ -16,6 +16,7 @@ export type Post = {
   likes: Like[];
   comments: Comment[];
   isLiked: boolean;
+  isBookmarked: boolean;
   likesCount: number;
   commentsCount: number;
   tags: Tag[];

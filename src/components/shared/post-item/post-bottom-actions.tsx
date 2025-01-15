@@ -5,7 +5,7 @@ import { Bookmark, Heart, MessageCircle, Undo2 } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useLikePost, useUnlikePost } from '@/lib/hooks';
+import { useAddBookmark, useLikePost, useRemoveBookmark, useUnlikePost } from '@/lib/hooks';
 import { RoutesEnum } from '../../../../@types';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
   comments: number;
   shared: number;
   isLiked: boolean;
+  isBookmarked: boolean;
   className?: string;
 }
 
@@ -25,17 +26,28 @@ export const PostBottomActions: React.FC<Props> = ({
   comments,
   shared,
   isLiked,
+  isBookmarked,
   className,
 }) => {
   const pathName = usePathname();
   const { likePost, isPending: isPendingLike } = useLikePost(postId, userId);
   const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId, userId);
+  const { addBookmark, isPending: isPendingAddBookmark } = useAddBookmark(postId, userId);
+  const { removeBookmark, isPending: isPendingRemoveBookmark } = useRemoveBookmark(postId, userId);
 
-  const onClickLikePost = async () => {
+  const handleLikePost = async () => {
     if (isLiked) {
       unlikePost();
     } else {
       likePost();
+    }
+  };
+
+  const handleAddBookmark = async () => {
+    if (isBookmarked) {
+      removeBookmark();
+    } else {
+      addBookmark();
     }
   };
   return (
@@ -43,7 +55,7 @@ export const PostBottomActions: React.FC<Props> = ({
       <div className={'flex items-center gap-x-3 w-full'}>
         <PostBottomActionsItem
           count={likes}
-          onClick={onClickLikePost}
+          onClick={handleLikePost}
           loading={isPendingLike || isPendingUnlike}
           icon={
             <Heart
@@ -59,7 +71,16 @@ export const PostBottomActions: React.FC<Props> = ({
         )}
         <PostBottomActionsItem count={shared} icon={<Undo2 size={20} />} />
       </div>
-      <PostBottomActionsItem icon={<Bookmark size={20} className="text-purple-500" />} />
+      <PostBottomActionsItem
+        onClick={handleAddBookmark}
+        loading={isPendingAddBookmark || isPendingRemoveBookmark}
+        icon={
+          <Bookmark
+            size={20}
+            className={cn('text-purple-500', isBookmarked && 'fill-purple-500')}
+          />
+        }
+      />
     </div>
   );
 };

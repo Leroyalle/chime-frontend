@@ -9,6 +9,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Tag } from '../../../../@types/newDto';
+import { PostTags } from './post-tags';
 
 interface Props {
   userId: string;
@@ -21,8 +22,9 @@ interface Props {
   commentCount: number;
   sharedCount: number;
   isLiked: boolean;
+  isBookmarked: boolean;
   isOwner: boolean;
-  tags?: Tag[];
+  tags: Tag[];
   className?: string;
 }
 
@@ -37,6 +39,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
   commentCount,
   sharedCount,
   isLiked,
+  isBookmarked,
   isOwner,
   tags,
   className,
@@ -63,15 +66,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           {imageUrl && (
             <img className="w-full object-cover rounded-md" src={imageUrl} alt={'Post image'} />
           )}
-          {tags && tags.length > 0 && (
-            <ul className="flex flex-wrap gap-x-2">
-              {tags.map((tag) => (
-                <li key={tag.id} className="text-sm text-blue-500">
-                  {`#${tag.value}`}
-                </li>
-              ))}
-            </ul>
-          )}
+          <PostTags tags={tags} />
         </div>
         <div className="my-2 w-full h-[0.1px] bg-gray-700" />
         <PostBottomActions
@@ -81,6 +76,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           comments={commentCount}
           shared={sharedCount}
           isLiked={isLiked}
+          isBookmarked={isBookmarked}
         />
       </div>
     </DarkLightBlock>

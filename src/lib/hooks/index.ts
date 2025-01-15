@@ -4,4 +4,5 @@ export * from './user';
 export * from './chat';
 export * from './likes';
 export * from './comments';
+export * from './bookmarks';
 export { useSocket } from './use-socket';

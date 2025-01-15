@@ -31,6 +31,7 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
           commentCount={item.commentsCount}
           sharedCount={0}
           isLiked={item.isLiked}
+          isBookmarked={item.isBookmarked}
           isOwner={userData?.user.id === item.authorId}
           tags={item.tags}
           className="mb-10"

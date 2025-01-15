@@ -17,5 +17,5 @@ export enum ApiRouter {
   CHAT_INFO = '/chat/info',
   CHAT_GET = 'chat/create',
   USER_LIKES = '/posts/user/liked',
-  USER_BOOKMARKS = '/bookmark/user',
+  USER_BOOKMARKS = '/bookmark',
 }
