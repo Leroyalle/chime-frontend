@@ -31,3 +31,5 @@ export enum SocketEventsEnum {
   MESSAGES_DELETE = 'messages:delete',
   MESSAGES_UPDATE = 'messages:patch',
 }
+
+// TODO: add QueriesEnum

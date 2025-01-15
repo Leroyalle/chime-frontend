@@ -34,7 +34,21 @@ export const useAddBookmark = (postId: string, userId: string) => {
         toggleBookmark(postId, old, 'add'),
       );
 
-      return { previousAllPostsData, previousPostsByUserIdData, previousLikedPostsData };
+      const previousBookmarksData = queryClient.getQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+        (old) => toggleBookmark(postId, old, 'add'),
+      );
+
+      return {
+        previousAllPostsData,
+        previousPostsByUserIdData,
+        previousLikedPostsData,
+        previousBookmarksData,
+      };
     },
 
     onError: (_, __, context) => {
