@@ -16,9 +16,9 @@ export const useLikePost = (postId: string, userId: string) => {
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       );
 
-      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        return togglePostLike(postId, old, 'like');
-      });
+      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
+        togglePostLike(postId, old, 'like'),
+      );
 
       const previousPostsByUserIdData = queryClient.getQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
@@ -26,23 +26,32 @@ export const useLikePost = (postId: string, userId: string) => {
 
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
-        (old) => {
-          return togglePostLike(postId, old, 'like');
-        },
+        (old) => togglePostLike(postId, old, 'like'),
       );
 
       const previousLikedPostsData = queryClient.getQueryData(
         Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
       );
 
-      queryClient.setQueryData(
-        Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
-        (old) => {
-          return togglePostLike(postId, old, 'like');
-        },
+      queryClient.setQueryData(Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey, (old) =>
+        togglePostLike(postId, old, 'like'),
       );
 
-      return { previousAllPostsData, previousPostsByUserIdData, previousLikedPostsData };
+      const previousBookmarksData = queryClient.getQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+        (old) => togglePostLike(postId, old, 'like'),
+      );
+
+      return {
+        previousAllPostsData,
+        previousPostsByUserIdData,
+        previousLikedPostsData,
+        previousBookmarksData,
+      };
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(

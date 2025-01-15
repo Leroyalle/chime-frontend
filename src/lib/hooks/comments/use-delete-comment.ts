@@ -26,17 +26,17 @@ export const useDeleteComment = ({
         ...Api.posts.getPostByIdQueryOptions(postId).queryKey,
       });
 
-      queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) => {
-        return handleDeleteCommentOnPostPage(commentId, old);
-      });
+      queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) =>
+        handleDeleteCommentOnPostPage(commentId, old),
+      );
 
       const previousAllPostsData = queryClient.getQueryData({
         ...Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       });
 
-      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        return handlePostCommentAction(postId, old, 'delete');
-      });
+      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
+        handlePostCommentAction(postId, old, 'delete'),
+      );
 
       const previousPostsByUserIdData = queryClient.getQueryData({
         ...Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
@@ -44,12 +44,24 @@ export const useDeleteComment = ({
 
       queryClient.setQueryData(
         Api.comments.getUserCommentsInfinityQueryOptions(userId).queryKey,
-        (old) => {
-          return handleDeleteCommentOnUserPage(commentId, old);
-        },
+        (old) => handleDeleteCommentOnUserPage(commentId, old),
       );
 
-      return { previousPostByIdData, previousAllPostsData, previousPostsByUserIdData };
+      const previousBookmarksData = queryClient.getQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(
+        Api.bookmark.getUserBookmarksInfinityQueryOptions().queryKey,
+        (old) => handlePostCommentAction(postId, old, 'delete'),
+      );
+
+      return {
+        previousPostByIdData,
+        previousAllPostsData,
+        previousPostsByUserIdData,
+        previousBookmarksData,
+      };
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(
