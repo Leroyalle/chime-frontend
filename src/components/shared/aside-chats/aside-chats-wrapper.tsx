@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
 import { Skeleton } from '@nextui-org/react';
 import { ChatList } from '../im/chat-list';
-import { SearchChats } from './search-chats';
+import { SearchChats } from '../search-chats';
 import { useDebounce } from '@/components/ui/shadcn-expendsions';
 
 interface Props {

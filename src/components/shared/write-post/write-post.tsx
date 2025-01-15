@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Avatar, Button, Input } from '@nextui-org/react';
+import { Avatar, Input } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib';
 import { useCreatePost } from '@/lib/hooks';
-import { DarkLightBlock, MultipleSelectorCreatable } from '../ui';
-import { Camera, Hash } from 'lucide-react';
-import { Option } from '../ui/shadcn-expendsions';
+import { DarkLightBlock, MultipleSelectorCreatable } from '../../ui';
+import { Option } from '../../ui/shadcn-expendsions';
 import { toast } from 'react-toastify';
+import { SelectedImage } from './selected-image';
+import { WritePostActions } from './write-post-actions';
 
 interface Props {
   avatarUrl: string | null;
@@ -89,37 +90,12 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
             {tagsIsOpen && <MultipleSelectorCreatable value={tags} setValue={setTags} />}
           </div>
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-x-3">
-            <Button
-              startContent={<Camera size={15} />}
-              variant="ghost"
-              size="sm"
-              className="border-none"
-              disabled={isPendingCreate}>
-              <label className="grid place-items-center w-full h-full" htmlFor="postImage">
-                Добавить фото
-              </label>
-            </Button>
-            <Button
-              onPress={() => setTagsIsOpen(!tagsIsOpen)}
-              startContent={<Hash size={15} />}
-              variant="ghost"
-              size="sm"
-              className="border-none">
-              Хэштег
-            </Button>
-          </div>
-          <Button
-            variant="solid"
-            type="submit"
-            size="sm"
-            className="p-2"
-            isLoading={isPendingCreate}>
-            Отправить
-          </Button>
-        </div>
+        <SelectedImage selectedFile={selectedFile} onDelete={setSelectedFile} />
+        <WritePostActions
+          isPendingCreate={isPendingCreate}
+          tagsIsOpen={tagsIsOpen}
+          setTagsIsOpen={setTagsIsOpen}
+        />
       </form>
     </DarkLightBlock>
   );

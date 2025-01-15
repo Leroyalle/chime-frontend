@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { WritePost } from '../write-post';
+import { WritePost } from '../write-post/write-post';
 import { useInfinityScrollPosts } from '@/lib/hooks';
 import { PostsList } from '../posts-list';
 import { Spinner } from '@nextui-org/react';

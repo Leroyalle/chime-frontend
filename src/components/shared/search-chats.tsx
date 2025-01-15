@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '@nextui-org/react';
-import { Loader } from 'lucide-react';
+import { Loader, Search } from 'lucide-react';
 
 interface Props {
   value: string;
@@ -24,6 +24,7 @@ export const SearchChats: React.FC<Props> = ({ value, onChange, isLoading, class
         variant="bordered"
         autoComplete="off"
         isClearable
+        startContent={<Search size={16} />}
         placeholder="Поиск..."
         endContent={isLoading && <Loader className="size-4 animate-spin" />}
       />
