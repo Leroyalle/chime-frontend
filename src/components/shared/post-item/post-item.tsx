@@ -3,13 +3,10 @@ import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
-import { PostHeadActions } from './post-top-actions';
-import { PostBottomActions } from './post-bottom-actions';
 import Link from 'next/link';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { Tag } from '../../../../@types/newDto';
-import { PostTags } from './post-tags';
+import { Image, Tag } from '../../../../@types/newDto';
+import { TopActions, Images, Tags, BottomActions, Content } from './components';
+import { getRelativeTime } from '@/lib';
 
 interface Props {
   userId: string;
@@ -17,7 +14,7 @@ interface Props {
   fullName: string;
   createdAt: Date;
   content: string;
-  imageUrl?: string;
+  images: Image[] | null;
   likeCount: number;
   commentCount: number;
   sharedCount: number;
@@ -34,7 +31,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
   fullName,
   createdAt,
   content,
-  imageUrl,
+  images,
   likeCount,
   commentCount,
   sharedCount,
@@ -51,25 +48,21 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           <Link href={`/user/${userId}`} className="text-lg font-bold hover:underline">
             <User
               name={fullName}
-              description={(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}
+              description={getRelativeTime(createdAt)}
               avatarProps={{
                 src: 'https://avatars.githubusercontent.com/u/158848927?v=4',
               }}
             />
           </Link>
-          <PostHeadActions postId={postId} userId={userId} isOwner={isOwner} />
+          <TopActions postId={postId} userId={userId} isOwner={isOwner} />
         </header>
         <div className="flex flex-col gap-y-1 mb-3">
-          <div>
-            <p>{content}</p>
-          </div>
-          {imageUrl && (
-            <img className="w-full object-cover rounded-md" src={imageUrl} alt={'Post image'} />
-          )}
-          <PostTags tags={tags} />
+          <Content content={content} className="mb-2" />
+          <Images items={images} />
+          <Tags tags={tags} />
         </div>
         <div className="my-2 w-full h-[0.1px] bg-gray-700" />
-        <PostBottomActions
+        <BottomActions
           userId={userId}
           postId={postId}
           likes={likeCount}

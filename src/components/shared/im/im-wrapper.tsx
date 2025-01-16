@@ -17,9 +17,9 @@ interface Props {
 export const ImWrapper: React.FC<Props> = ({ className }) => {
   const isMounted = React.useRef(false);
   const [searchValue, setSearchValue] = useState('');
-  const value = useDebounce(searchValue, 500);
+  const searchQuery = useDebounce(searchValue, 500);
   const { data, isPending } = useQuery({
-    ...Api.chat.getUserChatsQueryOptions(value),
+    ...Api.chat.getUserChatsQueryOptions(searchQuery),
   });
 
   useEffect(() => {

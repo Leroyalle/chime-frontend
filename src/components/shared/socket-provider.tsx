@@ -69,7 +69,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const handleNewMessage = (data: ChatUpdate) => {
-      console.log('NEWMESSAGE:', data);
       if (pathname !== `${RoutesEnum.MESSAGES}/${data.chat.id}`) {
         toast.info(<ToastMessage chatId={data.chat.id} senderName={data.senderName} />, {
           onClick() {
@@ -126,7 +125,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const handleUpdateMessage = (data: { chatId: string; message: Message }) => {
-      console.log('SOCKET MESSAGE', data);
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {

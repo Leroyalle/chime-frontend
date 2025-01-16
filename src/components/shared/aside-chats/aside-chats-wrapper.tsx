@@ -16,13 +16,13 @@ interface Props {
 export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   const isMounted = React.useRef(false);
   const [searchValue, setSearchValue] = useState('');
-  const value = useDebounce(searchValue, 500);
+  const searchQuery = useDebounce(searchValue, 500);
   const {
     data: chats,
     isLoading,
     isFetching: isFetchingChats,
   } = useQuery({
-    ...Api.chat.getUserChatsQueryOptions(value),
+    ...Api.chat.getUserChatsQueryOptions(searchQuery),
   });
 
   useEffect(() => {

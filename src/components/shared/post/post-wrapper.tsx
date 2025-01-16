@@ -32,9 +32,10 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
         fullName={postItem.author.name}
         createdAt={postItem.createdAt}
         content={postItem.content}
-        imageUrl={''}
+        imageUrl={postItem.imageUrl}
         likeCount={postItem.likes.length}
         commentCount={postItem.comments.length}
+        isBookmarked={postItem.isBookmarked}
         sharedCount={0}
         isLiked={postItem.isLiked}
         isOwner={userData?.user.id === postItem.authorId}

@@ -7,7 +7,7 @@ import { useCreatePost } from '@/lib/hooks';
 import { DarkLightBlock, MultipleSelectorCreatable } from '../../ui';
 import { Option } from '../../ui/shadcn-expendsions';
 import { toast } from 'react-toastify';
-import { SelectedImage } from './selected-image';
+import { SelectedImages } from './selected-images';
 import { WritePostActions } from './write-post-actions';
 
 interface Props {
@@ -16,15 +16,22 @@ interface Props {
 }
 
 export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [tagsIsOpen, setTagsIsOpen] = useState(false);
   const [tags, setTags] = useState<Option[]>([]);
   const { createPost, isPending: isPendingCreate } = useCreatePost();
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
+    const files = event.target.files;
+
+    if (files) {
+      if (selectedFiles.length + files.length > 4) {
+        toast.error('Вы можете загрузить не более 4 файлов');
+        return;
+      }
+
+      const newSelectedFiles = Array.from(files);
+      setSelectedFiles((prevFiles) => [...prevFiles, ...newSelectedFiles]);
     }
   };
 
@@ -38,10 +45,17 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
     try {
       const formData = new FormData();
       formData.append('content', data.post);
-      if (selectedFile) formData.append('postImage', selectedFile);
-      if (tags.length > 0) formData.append('tags', JSON.stringify(tags));
+
+      selectedFiles.forEach((file) => {
+        formData.append(`postImages`, file);
+      });
+
+      if (tags.length > 0) {
+        formData.append('tags', JSON.stringify(tags));
+      }
+
       createPost({ postData: formData });
-      setSelectedFile(null);
+      setSelectedFiles([]);
       setValue('post', '');
       setTags([]);
     } catch (error) {
@@ -86,11 +100,12 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
               className="hidden"
               onChange={onChangeFile}
               accept=".png, .jpg, .jpeg"
+              multiple
             />
             {tagsIsOpen && <MultipleSelectorCreatable value={tags} setValue={setTags} />}
           </div>
         </div>
-        <SelectedImage selectedFile={selectedFile} onDelete={setSelectedFile} />
+        <SelectedImages selectedFiles={selectedFiles} onDelete={setSelectedFiles} />
         <WritePostActions
           isPendingCreate={isPendingCreate}
           tagsIsOpen={tagsIsOpen}

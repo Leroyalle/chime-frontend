@@ -11,15 +11,24 @@ export type Post = {
   content: string;
   imageUrl: string | null;
   authorId: string;
-  createdAt: Date;
   author: Author;
-  likes: Like[];
-  comments: Comment[];
+  likes: Like[] | null;
+  comments: Comment[] | null;
+  images: Image[] | null;
   isLiked: boolean;
   isBookmarked: boolean;
   likesCount: number;
   commentsCount: number;
   tags: Tag[];
+  createdAt: Date;
+};
+
+export type Image = {
+  id: string;
+  url: string;
+  postId: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type Tag = {

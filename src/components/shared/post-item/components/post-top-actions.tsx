@@ -9,7 +9,7 @@ interface Props {
   isOwner: boolean;
 }
 
-export const PostHeadActions: React.FC<Props> = ({ postId, userId, isOwner }) => {
+export const PostTopActions: React.FC<Props> = ({ postId, userId, isOwner }) => {
   const { deletePost } = useDeletePost(userId, postId);
 
   return (
@@ -18,7 +18,6 @@ export const PostHeadActions: React.FC<Props> = ({ postId, userId, isOwner }) =>
         <Ellipsis />
       </DropdownTrigger>
       <DropdownMenu aria-label="Post actions">
-        <DropdownItem key="favorites">Сохранить в закладках</DropdownItem>
         <DropdownItem key="share">Поделиться</DropdownItem>
         {isOwner ? (
           <DropdownItem
