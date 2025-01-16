@@ -5,7 +5,7 @@ import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
 import { Image, Tag } from '../../../../@types/newDto';
-import { TopActions, Images, Tags, BottomActions, Content } from './components';
+import { TopActions, BottomActions, PostBody } from './components';
 import { getRelativeTime } from '@/lib';
 
 interface Props {
@@ -56,11 +56,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           </Link>
           <TopActions postId={postId} userId={userId} isOwner={isOwner} />
         </header>
-        <div className="flex flex-col gap-y-1 mb-3">
-          <Content content={content} className="mb-2" />
-          <Images items={images} />
-          <Tags tags={tags} />
-        </div>
+        <PostBody content={content} images={images} tags={tags} className="mb-3" />
         <div className="my-2 w-full h-[0.1px] bg-gray-700" />
         <BottomActions
           userId={userId}

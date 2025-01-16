@@ -6,7 +6,7 @@ import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAddBookmark, useLikePost, useRemoveBookmark, useUnlikePost } from '@/lib/hooks';
-import { RoutesEnum } from '../../../../../@types';
+import { RoutesEnum } from '../../../../../../@types';
 
 interface Props {
   userId: string;

@@ -8,3 +8,4 @@ export { MotionDiv } from './motion-div';
 export { OpacityAnimateBlock } from './opacity-animate-block';
 export { EditableMessage } from './editable-message';
 export { MultipleSelectorCreatable } from './multiple-selector-creatable';
+export * from './dialog';

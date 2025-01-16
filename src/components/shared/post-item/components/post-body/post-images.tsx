@@ -1,14 +1,15 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { getAbsoluteUrl } from '@/lib';
-import { Image } from '../../../../../@types/newDto';
+import { Image } from '../../../../../../@types/newDto';
 
 interface Props {
   items: Image[] | null;
+  onClick: (id: number) => void;
   className?: string;
 }
 
-export const PostImages: React.FC<Props> = ({ items, className }) => {
+export const PostImages: React.FC<Props> = ({ items, onClick, className }) => {
   if (items && items.length === 0) {
     return null;
   }
@@ -22,6 +23,7 @@ export const PostImages: React.FC<Props> = ({ items, className }) => {
       {items?.map((image, i) => (
         <img
           key={i}
+          onClick={() => onClick(i)}
           className="w-full h-full aspect-[1/1] object-cover rounded-md"
           src={getAbsoluteUrl(image.url)}
           alt={'Post image'}
