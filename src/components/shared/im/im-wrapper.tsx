@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ChatList } from './chat-list';
+import { ChatList } from '../chat-list';
 import { ImHead as Header } from './im-head';
 import { EmptyState } from '../empty-state';
 import { useQuery } from '@tanstack/react-query';

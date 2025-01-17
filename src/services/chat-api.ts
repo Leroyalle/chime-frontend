@@ -58,7 +58,7 @@ export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
   });
 };
 
-export const getUserChatsQueryOptions = (query?: string) => {
+export const getUserChatsQueryOptions = (query: string = '') => {
   return queryOptions({
     queryKey: ['user-chats', query],
     queryFn: () => getUserChats(query),

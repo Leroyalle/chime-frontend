@@ -1,12 +1,13 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Bookmark, Heart, MessageCircle, Undo2 } from 'lucide-react';
+import { Bookmark, Heart, MessageCircle } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAddBookmark, useLikePost, useRemoveBookmark, useUnlikePost } from '@/lib/hooks';
 import { RoutesEnum } from '../../../../../../@types';
+import { SharedBody } from './shared-body';
 
 interface Props {
   userId: string;
@@ -69,7 +70,7 @@ export const PostBottomActions: React.FC<Props> = ({
             <PostBottomActionsItem count={comments} icon={<MessageCircle size={20} />} />
           </Link>
         )}
-        <PostBottomActionsItem count={shared} icon={<Undo2 size={20} />} />
+        <SharedBody shared={shared} />
       </div>
       <PostBottomActionsItem
         onClick={handleAddBookmark}
