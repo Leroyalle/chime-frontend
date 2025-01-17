@@ -9,11 +9,19 @@ export const useUnlikePost = (postId: string, userId: string) => {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['posts'] });
 
-      const previousData = queryClient.getQueryData(
+      const previousAllPostsData = queryClient.getQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       );
 
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
+        togglePostLike(postId, old, 'unlike'),
+      );
+
+      const previousAllPopularPostsData = queryClient.getQueryData({
+        ...Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+      });
+
+      queryClient.setQueryData(Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey, (old) =>
         togglePostLike(postId, old, 'unlike'),
       );
 
@@ -44,7 +52,8 @@ export const useUnlikePost = (postId: string, userId: string) => {
       );
 
       return {
-        previousData,
+        previousAllPostsData,
+        previousAllPopularPostsData,
         previousPostsByUserIdData,
         previousLikedPostsData,
         previousBookmarksData,
@@ -53,11 +62,15 @@ export const useUnlikePost = (postId: string, userId: string) => {
     onError: (_, __, context) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
-        context?.previousData,
+        context?.previousAllPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+        context?.previousAllPopularPostsData,
       );
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
-        context?.previousData,
+        context?.previousPostsByUserIdData,
       );
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
     },

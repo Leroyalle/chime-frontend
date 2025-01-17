@@ -35,7 +35,8 @@ export const PostGallery: React.FC<Props> = ({
         </DialogHeader>
         <div className="relative w-full h-full flex items-center justify-center">
           <PostGalleryItem
-            imageUrl={images?.[currentIndex]?.url}
+            currentIndex={currentIndex}
+            images={images}
             onClickNext={onClickNext}
             onClickPrev={onClickPrev}
           />

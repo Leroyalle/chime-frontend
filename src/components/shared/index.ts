@@ -3,7 +3,7 @@ export { Providers } from './providers';
 export { ProfileCard } from './profile-card';
 export { Sidebar } from './sidebar';
 export { ProfileButton } from './profile-button';
-export { FeedWrapper } from './feed';
+export { NewFeedWrapper, PopularFeedWrapper } from './feed';
 export { UserWrapper } from './user';
 export { ImWrapper } from './im';
 export { ChatWrapper } from './chat';

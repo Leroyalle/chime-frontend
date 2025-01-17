@@ -1,4 +1,4 @@
-import { FeedWrapper } from '@/components/shared/feed';
+import { NewFeedWrapper } from '@/components/shared/feed';
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
@@ -14,5 +14,5 @@ export default async function New() {
     .getAllPosts({ page: 1, perPage: 10, headers })
     .catch(handleApiError);
 
-  return <FeedWrapper initialPosts={posts} className="w-full m-auto max-w-[640px]" />;
+  return <NewFeedWrapper initialPosts={posts} className="w-full m-auto max-w-[640px]" />;
 }

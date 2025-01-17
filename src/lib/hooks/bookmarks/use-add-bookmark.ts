@@ -16,6 +16,13 @@ export const useAddBookmark = (postId: string, userId: string) => {
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
         toggleBookmark(postId, old, 'add'),
       );
+      const previousAllPopularPostsData = queryClient.getQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey, (old) =>
+        toggleBookmark(postId, old, 'add'),
+      );
 
       const previousPostsByUserIdData = queryClient.getQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
@@ -45,6 +52,7 @@ export const useAddBookmark = (postId: string, userId: string) => {
 
       return {
         previousAllPostsData,
+        previousAllPopularPostsData,
         previousPostsByUserIdData,
         previousLikedPostsData,
         previousBookmarksData,
@@ -55,6 +63,10 @@ export const useAddBookmark = (postId: string, userId: string) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
         context?.previousAllPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+        context?.previousAllPopularPostsData,
       );
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,

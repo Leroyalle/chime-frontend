@@ -19,9 +19,17 @@ export const useDeletePost = (userId: string, postId: string) => {
         ...Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       });
 
-      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        return handleDeletePost(postId, old);
+      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
+        handleDeletePost(postId, old),
+      );
+
+      const previousAllPopularPostsData = queryClient.getQueryData({
+        ...Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
       });
+
+      queryClient.setQueryData(Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey, (old) =>
+        handleDeletePost(postId, old),
+      );
 
       const previousUserPostsData = queryClient.getQueryData({
         ...Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
@@ -29,12 +37,10 @@ export const useDeletePost = (userId: string, postId: string) => {
 
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
-        (old) => {
-          return handleDeletePost(postId, old);
-        },
+        (old) => handleDeletePost(postId, old),
       );
 
-      return { previousAllPostsData, previousUserPostsData };
+      return { previousAllPostsData, previousUserPostsData, previousAllPopularPostsData };
     },
 
     onError: (_, __, context) => {

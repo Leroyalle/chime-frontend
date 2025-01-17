@@ -2,6 +2,7 @@ export enum ApiRouter {
   USER = '/user',
   ME = '/user/me',
   POST = '/posts',
+  POST_POPULAR = '/posts/popular',
   USER_POSTS = '/posts/user',
   COMMENT = '/comment',
   USER_COMMENTS = 'comment/user',

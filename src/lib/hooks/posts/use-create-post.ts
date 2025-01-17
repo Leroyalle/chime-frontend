@@ -10,6 +10,7 @@ export const useCreatePost = () => {
     mutationFn: Api.posts.createPost,
     onSettled: () => {
       queryClient.resetQueries(Api.posts.getAllPostsInfinityQueryOptions());
+      queryClient.resetQueries(Api.posts.getAllPopularPostsInfinityQueryOptions());
     },
 
     onSuccess: () => {

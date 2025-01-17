@@ -21,6 +21,22 @@ export const getAllPosts = async ({
     )
   ).data;
 };
+export const getAllPopularPosts = async ({
+  page,
+  perPage,
+  headers,
+}: {
+  page: number;
+  perPage: number;
+  headers?: AxiosRequestHeaders;
+}): Promise<InfinityResponse<Post[]>> => {
+  return (
+    await instance.get<InfinityResponse<Post[]>>(
+      `${ApiRouter.POST_POPULAR}?page=${page}&perPage=${perPage}`,
+      { headers },
+    )
+  ).data;
+};
 
 export const createPost = async (data: { postData: FormData }): Promise<Post> => {
   return (await instance.post<Post>(ApiRouter.POST, data.postData)).data;
@@ -82,6 +98,20 @@ export const getAllPostsInfinityQueryOptions = () => {
   return infiniteQueryOptions({
     queryKey: ['posts', 'list'],
     queryFn: (meta) => getAllPosts({ page: meta.pageParam, perPage: 10 }),
+    initialPageParam: 1,
+    select: ({ pages }) => pages.flatMap((page) => page.data),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 1 * 60 * 1000,
+  });
+};
+
+export const getAllPopularPostsInfinityQueryOptions = () => {
+  return infiniteQueryOptions({
+    queryKey: ['posts', 'popular'],
+    queryFn: (meta) => getAllPopularPosts({ page: meta.pageParam, perPage: 10 }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
     getNextPageParam(lastPage, allPages) {

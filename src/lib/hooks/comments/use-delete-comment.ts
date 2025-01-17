@@ -22,20 +22,28 @@ export const useDeleteComment = ({
     onMutate: () => {
       queryClient.cancelQueries({ queryKey: ['comments'] });
 
-      const previousPostByIdData = queryClient.getQueryData({
-        ...Api.posts.getPostByIdQueryOptions(postId).queryKey,
-      });
-
-      queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) =>
-        handleDeleteCommentOnPostPage(commentId, old),
-      );
-
       const previousAllPostsData = queryClient.getQueryData({
         ...Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       });
 
       queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
         handlePostCommentAction(postId, old, 'delete'),
+      );
+
+      const previousAllPopularPostsData = queryClient.getQueryData({
+        ...Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+      });
+
+      queryClient.setQueryData(Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey, (old) =>
+        handlePostCommentAction(postId, old, 'delete'),
+      );
+
+      const previousPostByIdData = queryClient.getQueryData({
+        ...Api.posts.getPostByIdQueryOptions(postId).queryKey,
+      });
+
+      queryClient.setQueryData(Api.posts.getPostByIdQueryOptions(postId).queryKey, (old) =>
+        handleDeleteCommentOnPostPage(commentId, old),
       );
 
       const previousPostsByUserIdData = queryClient.getQueryData({
@@ -58,6 +66,7 @@ export const useDeleteComment = ({
 
       return {
         previousPostByIdData,
+        previousAllPopularPostsData,
         previousAllPostsData,
         previousPostsByUserIdData,
         previousBookmarksData,
@@ -65,12 +74,16 @@ export const useDeleteComment = ({
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(
-        Api.posts.getPostByIdQueryOptions(commentId).queryKey,
-        context?.previousPostByIdData,
-      );
-      queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
         context?.previousAllPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+        context?.previousAllPopularPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getPostByIdQueryOptions(commentId).queryKey,
+        context?.previousPostByIdData,
       );
     },
   });

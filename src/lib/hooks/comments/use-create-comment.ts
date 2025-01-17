@@ -14,9 +14,17 @@ export const useCreateComment = (postId: string, userId: string) => {
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
       );
 
-      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) => {
-        return handlePostCommentAction(postId, old, 'create');
-      });
+      queryClient.setQueryData(Api.posts.getAllPostsInfinityQueryOptions().queryKey, (old) =>
+        handlePostCommentAction(postId, old, 'create'),
+      );
+
+      const previousAllPopularPostsData = queryClient.getQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+      );
+
+      queryClient.setQueryData(Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey, (old) =>
+        handlePostCommentAction(postId, old, 'create'),
+      );
 
       const previousUserPostsData = queryClient.getQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
@@ -36,13 +44,22 @@ export const useCreateComment = (postId: string, userId: string) => {
         (old) => handlePostCommentAction(postId, old, 'create'),
       );
 
-      return { previousAllPostsData, previousUserPostsData, previousBookmarksData };
+      return {
+        previousAllPostsData,
+        previousAllPopularPostsData,
+        previousUserPostsData,
+        previousBookmarksData,
+      };
     },
 
     onError: (_, __, context) => {
       queryClient.setQueryData(
         Api.posts.getAllPostsInfinityQueryOptions().queryKey,
         context?.previousAllPostsData,
+      );
+      queryClient.setQueryData(
+        Api.posts.getAllPopularPostsInfinityQueryOptions().queryKey,
+        context?.previousAllPopularPostsData,
       );
       queryClient.setQueryData(
         Api.posts.getPostsByUserIdInfinityQueryOptions(userId).queryKey,
