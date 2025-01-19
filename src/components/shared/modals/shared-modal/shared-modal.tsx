@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import {
   Dialog,
@@ -10,8 +10,7 @@ import {
 } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
-import { ChatList } from '../../chat-list';
-import { Button, Skeleton } from '@nextui-org/react';
+import { ChatListShareMode } from '../../chat-list';
 import { SearchChats } from '../../search-chats';
 import { useDebounce } from '@/components/ui/shadcn-expendsions';
 
@@ -36,12 +35,7 @@ export const SharedModal: React.FC<Props> = ({ isOpen, onClose, className }) => 
           <DialogDescription className="sr-only">Send to friends</DialogDescription>
         </DialogHeader>
         <SearchChats value={searchValue} onChange={setSearchValue} />
-        <form className="flex flex-col gap-y-2">
-          <ChatList items={chats} hasActions={false} />
-          <Button variant="faded" type="submit" className="ml-auto">
-            Поделиться
-          </Button>
-        </form>
+        <ChatListShareMode items={chats} hasActions={false} />
       </DialogContent>
     </Dialog>
   );

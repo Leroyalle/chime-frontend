@@ -33,7 +33,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
     return (
       <Spinner
         color="warning"
-        className="absolute bottom-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 "
+        className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
     );
   }

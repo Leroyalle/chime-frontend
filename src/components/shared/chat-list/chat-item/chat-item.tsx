@@ -12,6 +12,7 @@ interface Props {
   name: string;
   lastMessage: Message;
   hasActions?: boolean;
+  isShareMode?: boolean;
   className?: string;
 }
 
@@ -24,9 +25,9 @@ export const ChatItem: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className="relative">
+    <div className={cn('relative', className)}>
       <Link href={`${RoutesEnum.MESSAGES}/${chatId}`} className="w-full select-none">
-        <div className={cn('p-2 rounded-xl transition-all hover:bg-primary', className)}>
+        <div className={'p-2 rounded-xl transition-all hover:bg-primary'}>
           <Preview imageUrl={imageUrl} name={name} lastMessage={lastMessage} />
         </div>
       </Link>

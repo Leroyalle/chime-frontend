@@ -1,8 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { Message } from '../../../../../@types/newDto';
+import { getRelativeTime } from '@/lib';
 
 interface Props {
   imageUrl?: string;
@@ -25,7 +24,7 @@ export const ChatPreview: React.FC<Props> = ({ imageUrl, name, lastMessage, clas
         <div className="flex items-center justify-between gap-x-2">
           <span className="text-gray-400 text-[14px] self-end">{lastMessage?.body}</span>
           <span className="text-gray-600 text-[14px] self-end">
-            {(dayjs.extend(relativeTime), dayjs(lastMessage?.createdAt).fromNow())}
+            {getRelativeTime(lastMessage?.createdAt)}
           </span>
         </div>
       </div>

@@ -17,7 +17,7 @@ export const PostImages: React.FC<Props> = ({ items, onClick, className }) => {
   return (
     <div
       className={cn(
-        'grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-2',
+        'grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-2 select-none',
         className,
       )}>
       {items?.map((image, i) => (
