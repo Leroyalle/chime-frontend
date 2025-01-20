@@ -1,13 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Comment } from '../../../../@types/newDto';
+import { Comment } from '../../../../@types/dto';
 import { CommentItem } from './comment';
 import { useGetMe } from '@/lib/hooks';
 
 export type PageType = 'user' | 'post';
 
 interface Props {
-  items: Comment[];
+  items: Comment[] | null;
   onClickEditComment?: (comment: Comment) => void;
   pageType: PageType;
   className?: string;
@@ -20,6 +20,10 @@ export const CommentsList: React.FC<Props> = ({
   className,
 }) => {
   const { data: userData } = useGetMe();
+
+  if (!items || items.length === 0) {
+    return null;
+  }
 
   return (
     <div className={cn('', className)}>

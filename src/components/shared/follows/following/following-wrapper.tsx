@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { InfinityResponse } from '../../../../../@types/newResponse';
+import { InfinityResponse } from '../../../../../@types/response';
 import { useInfinityScrollUserFollowing } from '@/lib/hooks';
 import { FollowingList } from './following-list';
 import { Spinner } from '@nextui-org/react';

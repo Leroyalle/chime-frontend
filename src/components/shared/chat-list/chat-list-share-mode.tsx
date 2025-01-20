@@ -15,21 +15,39 @@ import {
 import { useForm } from 'react-hook-form';
 import { ChatListShareModeSchema, ChatListShareModeSchemaType } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSocket } from '@/lib/hooks';
+import { useSharedPostSlice } from '@/store';
+import { MessageTypeEnum } from '../../../../@types';
+import { toast } from 'react-toastify';
+import { Input } from '@nextui-org/react';
 
 interface Props {
-  hasActions?: boolean;
   items?: UserChat[];
+  onCloseModal?: VoidFunction;
+  hasActions?: boolean;
   itemsStyles?: string;
   className?: string;
 }
 
-export const ChatListShareMode: React.FC<Props> = ({ items, hasActions, className }) => {
+export const ChatListShareMode: React.FC<Props> = ({
+  items,
+  onCloseModal,
+  hasActions,
+  className,
+}) => {
+  const { sendMessage } = useSocket();
+  const sharedPost = useSharedPostSlice((state) => state.sharedPost);
   const form = useForm<ChatListShareModeSchemaType>({
     resolver: zodResolver(ChatListShareModeSchema),
     defaultValues: {
-      users: [],
+      chats: [],
+      message: '',
     },
   });
+
+  if (!sharedPost) {
+    return null;
+  }
 
   if (!items || items.length === 0) {
     return null;
@@ -37,6 +55,16 @@ export const ChatListShareMode: React.FC<Props> = ({ items, hasActions, classNam
 
   const onSubmit = (data: ChatListShareModeSchemaType) => {
     console.log(data);
+    sendMessage({
+      body: {
+        chatIds: data.chats,
+        type: MessageTypeEnum.POST,
+        postId: sharedPost.postId,
+        content: data.message || null,
+      },
+    });
+    toast.success('Пост отправлен');
+    onCloseModal?.();
   };
 
   return (
@@ -45,14 +73,14 @@ export const ChatListShareMode: React.FC<Props> = ({ items, hasActions, classNam
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-2">
           <FormField
             control={form.control}
-            name="users"
+            name="chats"
             render={() => (
               <FormItem>
                 {items.map((item) => (
                   <FormField
                     key={item.id}
                     control={form.control}
-                    name="users"
+                    name="chats"
                     render={({ field }) => {
                       return (
                         <FormItem key={item.id} className="flex items-center gap-x-2">
@@ -84,6 +112,18 @@ export const ChatListShareMode: React.FC<Props> = ({ items, hasActions, classNam
                     }}
                   />
                 ))}
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="select-none">Ваше сообщение</FormLabel>
+                <FormControl>
+                  <Input variant="bordered" placeholder="Введите сообщение..." {...field} />
+                </FormControl>
               </FormItem>
             )}
           />

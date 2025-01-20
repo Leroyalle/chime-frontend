@@ -3,13 +3,14 @@ import { Api } from '@/services/api-client';
 import { ChatUpdate, MessageRequest, UserChat } from '../../../@types/chat';
 import { createContext, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
 import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
-import { Message } from '../../../@types/newDto';
+import { MessageDto } from '../../../@types/dto';
+import { useGetMe } from '@/lib/hooks';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;
@@ -23,10 +24,10 @@ export const SocketContext = createContext<SocketContextType | null>(null);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const pathname = usePathname();
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
+  const { data: me } = useGetMe();
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -69,7 +70,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const handleNewMessage = (data: ChatUpdate) => {
-      if (pathname !== `${RoutesEnum.MESSAGES}/${data.chat.id}`) {
+      if (me?.user.id !== data.message.UserBase.id) {
         toast.info(<ToastMessage chatId={data.chat.id} senderName={data.senderName} />, {
           onClick() {
             router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`);
@@ -124,7 +125,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       );
     };
 
-    const handleUpdateMessage = (data: { chatId: string; message: Message }) => {
+    const handleUpdateMessage = (data: { chatId: string; message: MessageDto }) => {
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
         (old) => {
@@ -180,7 +181,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         socket.current.off(SocketEventsEnum.MESSAGES_DELETE, handleDeleteMessage);
       }
     };
-  }, [pathname, queryClient, router]);
+  }, [queryClient, router]);
 
   const sendMessage = useCallback((message: MessageRequest) => {
     socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);

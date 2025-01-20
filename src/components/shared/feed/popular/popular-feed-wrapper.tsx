@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { InfinityResponse } from '../../../../../@types/newResponse';
-import { Post } from '../../../../../@types/newDto';
+import { InfinityResponse } from '../../../../../@types/response';
+import { Post } from '../../../../../@types/dto';
 import { useInfinityScrollPopularPosts } from '@/lib/hooks';
 import { WritePost } from '../../write-post';
 import { PostsList } from '../../posts-list';

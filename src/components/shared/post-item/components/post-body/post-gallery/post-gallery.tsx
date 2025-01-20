@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from '../../../../../../../@types/newDto';
+import { Image } from '../../../../../../../@types/dto';
 import { PostGalleryItem } from './post-gallery-item';
 import {
   Dialog,

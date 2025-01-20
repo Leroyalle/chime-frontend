@@ -31,11 +31,11 @@ export const SharedModal: React.FC<Props> = ({ isOpen, onClose, className }) => 
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className={cn('', className)}>
         <DialogHeader>
-          <DialogTitle>Поделиться:</DialogTitle>
+          <DialogTitle className="select-none">Поделиться:</DialogTitle>
           <DialogDescription className="sr-only">Send to friends</DialogDescription>
         </DialogHeader>
         <SearchChats value={searchValue} onChange={setSearchValue} />
-        <ChatListShareMode items={chats} hasActions={false} />
+        <ChatListShareMode items={chats} onCloseModal={onClose} hasActions={false} />
       </DialogContent>
     </Dialog>
   );

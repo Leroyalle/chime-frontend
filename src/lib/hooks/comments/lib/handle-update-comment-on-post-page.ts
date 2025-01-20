@@ -1,4 +1,4 @@
-import { Post } from '../../../../../@types/newDto';
+import { Post } from '../../../../../@types/dto';
 
 type TData = Post | undefined;
 

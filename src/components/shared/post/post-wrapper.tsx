@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { PostItem } from '../post-item';
-import { Post } from '../../../../@types/newDto';
+import { Post } from '../../../../@types/dto';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
 import { CommentSection } from './comment-section';
@@ -32,9 +32,9 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
         fullName={postItem.author.name}
         createdAt={postItem.createdAt}
         content={postItem.content}
-        imageUrl={postItem.imageUrl}
-        likeCount={postItem.likes.length}
-        commentCount={postItem.comments.length}
+        images={postItem.images}
+        likeCount={postItem.likesCount}
+        commentCount={postItem.commentsCount}
         isBookmarked={postItem.isBookmarked}
         sharedCount={0}
         isLiked={postItem.isLiked}

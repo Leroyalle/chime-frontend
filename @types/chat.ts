@@ -1,22 +1,21 @@
-import { Message } from './newDto';
-import { User } from './newResponse';
+import { MessageDto, PostMessageBody, TextMessageBody } from './dto';
+import { User } from './response';
 
 export type ChatUpdate = {
   chat: UserChat;
-  message: Message;
+  message: MessageDto;
   senderName: string;
 };
 
 export type MessageRequest = {
-  chatId: string;
-  message: string;
+  body: TextMessageBody | PostMessageBody;
 };
 
 export type UserChat = {
   id: string;
   name: string;
   imageUrl: string;
-  lastMessage: Message;
+  lastMessage: MessageDto;
   createdAt: Date;
 };
 

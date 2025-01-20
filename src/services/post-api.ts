@@ -1,9 +1,9 @@
 import { ApiRouter } from './constants';
-import { Post } from '../../@types/newDto';
+import { Post } from '../../@types/dto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { InfinityResponse } from '../../@types/newResponse';
+import { InfinityResponse } from '../../@types/response';
 
 export const getAllPosts = async ({
   page,

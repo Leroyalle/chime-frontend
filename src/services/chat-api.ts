@@ -1,8 +1,8 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { Message } from '../../@types/newDto';
+import { MessageDto } from '../../@types/dto';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
-import { InfinityResponse } from '../../@types/newResponse';
+import { InfinityResponse } from '../../@types/response';
 import { ChatWithMembers, UserChat } from '../../@types/chat';
 import { AxiosRequestHeaders } from 'axios';
 
@@ -14,9 +14,9 @@ export const getMessagesByChatId = async ({
   id: string;
   page: number;
   perPage: number;
-}): Promise<InfinityResponse<Message[]>> => {
+}): Promise<InfinityResponse<MessageDto[]>> => {
   return (
-    await instance.get<InfinityResponse<Message[]>>(
+    await instance.get<InfinityResponse<MessageDto[]>>(
       `${ApiRouter.CHAT}/${id}?page=${page}&perPage=${perPage}`,
     )
   ).data;

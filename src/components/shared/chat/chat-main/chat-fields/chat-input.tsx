@@ -5,7 +5,7 @@ import { Send } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSocket } from '@/lib/hooks';
 import { EditableMessage } from '@/components/ui';
-import { Message } from '../../../../../../@types/newDto';
+import { Message, MessageTypeEnum } from '../../../../../../@types/dto';
 
 interface Props {
   chatId: string;
@@ -23,8 +23,8 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
   });
 
   useEffect(() => {
-    if (editableMessage) {
-      setValue('message', editableMessage.body);
+    if (editableMessage && editableMessage.content) {
+      setValue('message', editableMessage.content);
     } else {
       setValue('message', '');
     }
@@ -35,7 +35,13 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
     if (editableMessage) {
       updateMessage({ messageId: editableMessage.id, messageBody: data.message });
     } else {
-      sendMessage({ message: data.message, chatId });
+      sendMessage({
+        body: {
+          chatId,
+          type: MessageTypeEnum.TEXT,
+          content: data.message,
+        },
+      });
     }
     setValue('message', '');
     cancelEdit();
@@ -43,10 +49,10 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
 
   return (
     <form className={cn('pt-5', className)} onSubmit={handleSubmit(onSubmit)}>
-      {editableMessage && (
+      {editableMessage && editableMessage.content && (
         <EditableMessage
           title="Редактируемое сообщение"
-          text={editableMessage.body}
+          text={editableMessage.content}
           onClose={cancelEdit}
         />
       )}

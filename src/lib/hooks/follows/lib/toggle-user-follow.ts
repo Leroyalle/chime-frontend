@@ -1,4 +1,4 @@
-import { UserResponse } from '../../../../../@types/newResponse';
+import { UserResponse } from '../../../../../@types/response';
 
 type TData = UserResponse | undefined;
 

@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import { WriteComment } from '../write-comment';
 import { CommentsList, PageType } from '../comments/comments-list';
-import { Comment } from '../../../../@types/newDto';
+import { Comment } from '../../../../@types/dto';
 
 interface Props {
   userId: string;
   postId: string;
-  comments: Comment[];
+  comments: Comment[] | null;
   pageType: PageType;
 }
 

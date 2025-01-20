@@ -11,14 +11,14 @@ interface Props {
 
 export const AuthGuard: React.FC<Props> = ({ children }) => {
   const router = useRouter();
-  const { data, isPending, isError } = useGetMe();
+  const { isPending, isError } = useGetMe();
 
   useEffect(() => {
     if (isError) {
       Cookies.remove(TokensEnum.JWT);
       router.push(RoutesEnum.AUTH);
     }
-  }, [isError, data, router]);
+  }, []);
 
   if (isPending) {
     return (

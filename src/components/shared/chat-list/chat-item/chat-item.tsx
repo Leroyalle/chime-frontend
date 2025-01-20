@@ -4,13 +4,13 @@ import { ChatPreview as Preview } from './chat-preview';
 import Link from 'next/link';
 import { ChatActions as Actions } from './chat-actions';
 import { RoutesEnum } from '../../../../../@types';
-import { Message } from '../../../../../@types/newDto';
+import { MessageDto } from '../../../../../@types/dto';
 
 interface Props {
   chatId: string;
   imageUrl?: string;
   name: string;
-  lastMessage: Message;
+  lastMessage: MessageDto;
   hasActions?: boolean;
   isShareMode?: boolean;
   className?: string;
@@ -27,7 +27,7 @@ export const ChatItem: React.FC<Props> = ({
   return (
     <div className={cn('relative', className)}>
       <Link href={`${RoutesEnum.MESSAGES}/${chatId}`} className="w-full select-none">
-        <div className={'p-2 rounded-xl transition-all hover:bg-primary'}>
+        <div className={'p-2 rounded-xl transition-all hover:bg-primary-light'}>
           <Preview imageUrl={imageUrl} name={name} lastMessage={lastMessage} />
         </div>
       </Link>

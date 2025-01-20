@@ -4,7 +4,7 @@ import { Avatar } from '@/components/ui';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { RoutesEnum } from '../../../../../@types';
-import { User } from '../../../../../@types/newResponse';
+import { User } from '../../../../../@types/response';
 import { useGetMe } from '@/lib/hooks';
 import Link from 'next/link';
 
@@ -27,7 +27,7 @@ export const ChatHead: React.FC<Props> = ({ name, members, avatar, className }) 
         'relative px-2 py-4 flex justify-between gap-x-2 border-b-gray-300 border-b-1',
         className,
       )}>
-      <button onClick={() => router.back()}>
+      <button onClick={() => router.push(RoutesEnum.MESSAGES)}>
         <ArrowLeft />
       </button>
 

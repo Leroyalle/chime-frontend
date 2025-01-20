@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { getAbsoluteUrl } from '@/lib';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PostGalleryButton } from './post-gallery-button';
-import { Image } from '../../../../../../../@types/newDto';
+import { Image } from '../../../../../../../@types/dto';
 
 interface Props extends React.HTMLAttributes<HTMLImageElement> {
   currentIndex: number;

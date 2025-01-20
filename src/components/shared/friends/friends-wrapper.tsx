@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 import { FriendsList } from '../friend';
 import { useInfinityScrollUserFriends } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
-import { InfinityResponse } from '../../../../@types/newResponse';
+import { InfinityResponse } from '../../../../@types/response';
 import { EmptyState } from '../empty-state';
-import { Friend } from '../../../../@types/newDto';
+import { Friend } from '../../../../@types/dto';
 
 interface Props {
   userId: string;

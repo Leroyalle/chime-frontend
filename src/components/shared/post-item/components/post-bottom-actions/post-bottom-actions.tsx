@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { Bookmark, Heart, MessageCircle } from 'lucide-react';
 import { PostBottomActionsItem } from './post-bottom-actions-item';
@@ -8,10 +8,14 @@ import { usePathname } from 'next/navigation';
 import { useAddBookmark, useLikePost, useRemoveBookmark, useUnlikePost } from '@/lib/hooks';
 import { RoutesEnum } from '../../../../../../@types';
 import { SharedBody } from './shared-body';
+import { useSharedPostSlice } from '@/store';
+import { Image } from '../../../../../../@types/dto';
 
 interface Props {
   userId: string;
   postId: string;
+  content: string;
+  images: Image[] | null;
   likes: number;
   comments: number;
   shared: number;
@@ -23,6 +27,8 @@ interface Props {
 export const PostBottomActions: React.FC<Props> = ({
   userId,
   postId,
+  content,
+  images,
   likes,
   comments,
   shared,
@@ -30,27 +36,38 @@ export const PostBottomActions: React.FC<Props> = ({
   isBookmarked,
   className,
 }) => {
+  console.log('IMAGES:', images);
   const pathName = usePathname();
   const { likePost, isPending: isPendingLike } = useLikePost(postId, userId);
   const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId, userId);
   const { addBookmark, isPending: isPendingAddBookmark } = useAddBookmark(postId, userId);
   const { removeBookmark, isPending: isPendingRemoveBookmark } = useRemoveBookmark(postId, userId);
+  const setSharedPost = useSharedPostSlice((store) => store.setSharedPost);
 
-  const handleLikePost = async () => {
+  const handleLikePost = useCallback(async () => {
     if (isLiked) {
       unlikePost();
     } else {
       likePost();
     }
-  };
+  }, [isLiked, likePost, unlikePost]);
 
-  const handleAddBookmark = async () => {
+  const handleAddBookmark = useCallback(async () => {
     if (isBookmarked) {
       removeBookmark();
     } else {
       addBookmark();
     }
-  };
+  }, [isBookmarked, addBookmark, removeBookmark]);
+
+  const handleSharePost = useCallback(() => {
+    setSharedPost({
+      postId,
+      contentPost: content,
+      imagePreview: images && images.length ? images[0].url : null,
+    });
+  }, [setSharedPost, content, postId]);
+
   return (
     <div className={cn('flex items-center justify-between', className)}>
       <div className={'flex items-center gap-x-3 w-full'}>
@@ -70,7 +87,7 @@ export const PostBottomActions: React.FC<Props> = ({
             <PostBottomActionsItem count={comments} icon={<MessageCircle size={20} />} />
           </Link>
         )}
-        <SharedBody shared={shared} />
+        <SharedBody shared={shared} onClick={handleSharePost} />
       </div>
       <PostBottomActionsItem
         onClick={handleAddBookmark}

@@ -1,17 +1,21 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Message } from '../../../../../@types/newDto';
+import { MessageDto } from '../../../../../@types/dto';
 import { getRelativeTime } from '@/lib';
 
 interface Props {
   imageUrl?: string;
   name: string;
   // FIXME:  убрать optional
-  lastMessage?: Message;
+  lastMessage?: MessageDto;
   className?: string;
 }
 
 export const ChatPreview: React.FC<Props> = ({ imageUrl, name, lastMessage, className }) => {
+  const lastMessageContent =
+    lastMessage?.content && lastMessage?.content?.length > 6
+      ? `${lastMessage?.content?.slice(0, 6)}...`
+      : lastMessage?.content;
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>
       <div className="w-[52px] h-[52px] rounded-full overflow-hidden flex-shrink-0">
@@ -22,7 +26,7 @@ export const ChatPreview: React.FC<Props> = ({ imageUrl, name, lastMessage, clas
           <span>{name}</span>
         </div>
         <div className="flex items-center justify-between gap-x-2">
-          <span className="text-gray-400 text-[14px] self-end">{lastMessage?.body}</span>
+          <span className="text-gray-400 text-[14px] self-end">{lastMessageContent}</span>
           <span className="text-gray-600 text-[14px] self-end">
             {getRelativeTime(lastMessage?.createdAt)}
           </span>

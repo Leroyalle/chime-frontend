@@ -1,8 +1,8 @@
 import { ApiRouter } from './constants';
-import { Comment } from '../../@types/newDto';
+import { Comment } from '../../@types/dto';
 import { instance } from './instance';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { InfinityResponse } from '../../@types/newResponse';
+import { InfinityResponse } from '../../@types/response';
 
 export const createComment = async (data: {
   content: string;

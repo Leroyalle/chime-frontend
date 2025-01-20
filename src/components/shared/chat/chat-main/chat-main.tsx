@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChatBody } from './chat-body';
 import { ChatInput } from './chat-fields';
-import { Message } from '../../../../../@types/newDto';
+import { Message } from '../../../../../@types/dto';
 import { Spinner } from '@nextui-org/react';
 
 interface Props {

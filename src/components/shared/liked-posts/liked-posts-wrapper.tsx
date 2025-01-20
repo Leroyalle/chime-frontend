@@ -4,8 +4,8 @@ import { useInfinityScrollUserLikedPosts } from '@/lib/hooks';
 import { PostsList } from '../posts-list';
 import { Spinner } from '@nextui-org/react';
 import { EmptyState } from '../empty-state';
-import { InfinityResponse } from '../../../../@types/newResponse';
-import { Post } from '../../../../@types/newDto';
+import { InfinityResponse } from '../../../../@types/response';
+import { Post } from '../../../../@types/dto';
 
 interface Props {
   initialData: InfinityResponse<Post[]>;

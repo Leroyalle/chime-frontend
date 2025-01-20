@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
-import { Image, Tag } from '../../../../@types/newDto';
+import { Image, Tag } from '../../../../@types/dto';
 import { TopActions, BottomActions, PostBody } from './components';
 import { getRelativeTime } from '@/lib';
 
@@ -61,6 +61,8 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
         <BottomActions
           userId={userId}
           postId={postId}
+          content={content}
+          images={images}
           likes={likeCount}
           comments={commentCount}
           shared={sharedCount}

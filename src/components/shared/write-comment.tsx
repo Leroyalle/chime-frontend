@@ -7,7 +7,7 @@ import { hasErrorField } from '@/lib';
 import { useCreateComment, useUpdateComment } from '@/lib/hooks';
 import { Loader, Send } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { Comment } from '../../../@types/newDto';
+import { Comment } from '../../../@types/dto';
 import { DarkLightBlock, EditableMessage } from '../ui';
 
 interface Props {

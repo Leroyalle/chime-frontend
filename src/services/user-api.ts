@@ -1,6 +1,6 @@
 import { AxiosRequestHeaders } from 'axios';
 import { TAuthTokens } from '../../@types/auth';
-import { SendEmailResponse, User, UserDto, UserResponse } from '../../@types/newResponse';
+import { SendEmailResponse, User, UserDto, UserResponse } from '../../@types/response';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { queryOptions } from '@tanstack/react-query';
