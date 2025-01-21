@@ -13,8 +13,8 @@ interface Props {
 
 export const ChatPreview: React.FC<Props> = ({ imageUrl, name, lastMessage, className }) => {
   const lastMessageContent =
-    lastMessage?.content && lastMessage?.content?.length > 6
-      ? `${lastMessage?.content?.slice(0, 6)}...`
+    lastMessage?.content && lastMessage?.content?.length > 4
+      ? `${lastMessage?.content?.slice(0, 4)}...`
       : lastMessage?.content;
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>

@@ -18,7 +18,7 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
       Cookies.remove(TokensEnum.JWT);
       router.push(RoutesEnum.AUTH);
     }
-  }, []);
+  }, [isError]);
 
   if (isPending) {
     return (

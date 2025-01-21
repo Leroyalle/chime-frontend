@@ -10,7 +10,6 @@ import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
 import { MessageDto } from '../../../@types/dto';
-import { useGetMe } from '@/lib/hooks';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;
@@ -27,7 +26,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
-  const { data: me } = useGetMe();
+  const me = queryClient.getQueryData(Api.users.getMeQueryOptions().queryKey);
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -62,7 +61,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         socket.current.disconnect();
       }
     };
-  }, [queryClient, router, token, setNewMark]);
+  }, [queryClient, token, setNewMark]);
 
   useEffect(() => {
     if (!socket.current) {
@@ -181,7 +180,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         socket.current.off(SocketEventsEnum.MESSAGES_DELETE, handleDeleteMessage);
       }
     };
-  }, [queryClient, router]);
+  }, [queryClient]);
 
   const sendMessage = useCallback((message: MessageRequest) => {
     socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);

@@ -5,10 +5,7 @@ import dayjs from 'dayjs';
 import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
 import { useSocket } from '@/lib/hooks';
 import { Author, MessageTypeEnum } from '../../../../../../../@types/dto';
-import Link from 'next/link';
-import { RoutesEnum } from '../../../../../../../@types';
-import { User } from '@nextui-org/react';
-import { getAbsoluteUrl, getRelativeTime } from '@/lib';
+import { MainContent, SharedContent } from './components';
 
 interface Props {
   userId: string;
@@ -48,10 +45,6 @@ export const Message: React.FC<Props> = memo(function Message({
   const { deleteMessage } = useSocket();
   console.log(imagePreview);
 
-  const handleOpenPost = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
   return (
     <>
       <Dropdown>
@@ -66,43 +59,15 @@ export const Message: React.FC<Props> = memo(function Message({
             <div className="grid [grid-template-columns:auto_1fr] flex-1 gap-x-3">
               <Avatar src={avatar} size="md" className="justify-self-start" />
               <div className="flex flex-1 flex-col gap-y-3">
-                <div className="flex flex-col justify-center ">
-                  <Link
-                    href={`${RoutesEnum.USER}/${userId}`}
-                    className="text-blue-700 font-semibold w-fit">
-                    {author}
-                  </Link>
-                  <p>{content}</p>
-                </div>
+                <MainContent userId={userId} author={author} content={content} />
                 {messageType === MessageTypeEnum.POST && (
-                  <div className="flex flex-col gap-y-1">
-                    <User
-                      name={<Link href={`${RoutesEnum.POST}/${postId}`}>{postAuthor?.name}</Link>}
-                      description={getRelativeTime(postCreatedAt)}
-                      avatarProps={{
-                        src: postAuthor?.avatar ? getAbsoluteUrl(postAuthor?.avatar) : undefined,
-                        size: 'sm',
-                      }}
-                      className="justify-start"
-                    />
-                    {imagePreview && (
-                      <img
-                        src={getAbsoluteUrl(imagePreview)}
-                        alt=""
-                        className="w-full h-full aspect-[1/1] object-cover rounded-md"
-                      />
-                    )}
-                    <p>{contentPost}</p>
-                    <div
-                      onPointerDown={handleOpenPost}
-                      onPointerUp={handleOpenPost}
-                      onClick={handleOpenPost}
-                      className="grid place-items-center text-blue-500 font-semibold border border-blue-500 p-1 rounded-lg">
-                      <Link href={`${RoutesEnum.POST}/${postId}`} className="w-full text-center">
-                        Открыть пост
-                      </Link>
-                    </div>
-                  </div>
+                  <SharedContent
+                    contentPost={contentPost}
+                    imagePreview={imagePreview}
+                    postId={postId}
+                    postAuthor={postAuthor}
+                    postCreatedAt={postCreatedAt}
+                  />
                 )}
               </div>
             </div>
