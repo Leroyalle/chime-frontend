@@ -43,7 +43,6 @@ export const Message: React.FC<Props> = memo(function Message({
   onUpdate,
 }) {
   const { deleteMessage } = useSocket();
-  console.log(imagePreview);
 
   return (
     <>

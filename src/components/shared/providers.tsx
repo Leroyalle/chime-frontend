@@ -1,7 +1,7 @@
 'use client';
 import { NextUIProvider } from '@nextui-org/react';
 import NextTopLoader from 'nextjs-toploader';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
@@ -10,7 +10,7 @@ import { AuthGuard } from './auth-guard';
 import { ThemeProvider } from './theme-provider';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const Providers: React.FC<Props> = ({ children }) => {

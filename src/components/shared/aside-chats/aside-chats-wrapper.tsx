@@ -49,7 +49,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
         />
         <div className="w-full h-[2px] bg-primary-light" />
         {chats && chats.length ? (
-          <ChatList items={chats} className="bg-background" />
+          <ChatList items={chats.slice(0, 5)} className="bg-background" hasActions={false} />
         ) : (
           <h2>нет чатов</h2>
         )}

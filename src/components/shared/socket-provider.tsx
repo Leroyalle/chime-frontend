@@ -9,7 +9,6 @@ import { useNewMarkSlice } from '@/store';
 import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
-import { MessageDto } from '../../../@types/dto';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;
@@ -22,11 +21,12 @@ export const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
+  const me = queryClient.getQueryData(Api.users.getMeQueryOptions().queryKey);
+  console.log(me);
   const router = useRouter();
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
-  const me = queryClient.getQueryData(Api.users.getMeQueryOptions().queryKey);
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -70,12 +70,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     const handleNewMessage = (data: ChatUpdate) => {
       if (me?.user.id !== data.message.UserBase.id) {
-        toast.info(<ToastMessage chatId={data.chat.id} senderName={data.senderName} />, {
+        toast.info(<ToastMessage chatId={data.chat.id} senderName={data.message.UserBase.name} />, {
           onClick() {
             router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`);
           },
         });
       }
+      console.log(me);
 
       queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
         if (!old) {
@@ -124,9 +125,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       );
     };
 
-    const handleUpdateMessage = (data: { chatId: string; message: MessageDto }) => {
+    const handleUpdateMessage = (data: ChatUpdate) => {
       queryClient.setQueryData(
-        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
+        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
           if (!old) {
             return undefined;
@@ -142,11 +143,36 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           return updatedData;
         },
       );
+
+      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
+        if (!old) {
+          return undefined;
+        }
+
+        const updatedChats = old.map((chat) => {
+          if (chat.id === data.chat.id) {
+            return { ...chat, lastMessage: data.chat.lastMessage };
+          }
+          return chat;
+        });
+
+        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
+        if (!existingChat) {
+          updatedChats.push({ ...data.chat, lastMessage: data.message });
+        }
+
+        return updatedChats.sort(
+          (a, b) =>
+            new Date(b.lastMessage.createdAt).getTime() -
+            new Date(a.lastMessage.createdAt).getTime(),
+        );
+      });
     };
 
-    const handleDeleteMessage = (data: { chatId: string; messageId: string }) => {
+    const handleDeleteMessage = (data: ChatUpdate) => {
+      console.log('DELETED:', data);
       queryClient.setQueryData(
-        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chatId).queryKey,
+        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
           if (!old) {
             return undefined;
@@ -156,7 +182,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
             ...old,
             pages: old.pages.map((page) => ({
               ...page,
-              data: page.data.filter((message) => message.id !== data.messageId),
+              data: page.data.filter((message) => message.id !== data.message.id),
             })),
           };
 
@@ -168,6 +194,30 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           return updatedData;
         },
       );
+
+      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
+        if (!old) {
+          return undefined;
+        }
+
+        const updatedChats = old.map((chat) => {
+          if (chat.id === data.chat.id) {
+            return { ...chat, lastMessage: data.chat.lastMessage };
+          }
+          return chat;
+        });
+
+        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
+        if (!existingChat) {
+          updatedChats.push({ ...data.chat, lastMessage: data.chat.lastMessage });
+        }
+
+        return updatedChats.sort(
+          (a, b) =>
+            new Date(b.lastMessage.createdAt).getTime() -
+            new Date(a.lastMessage.createdAt).getTime(),
+        );
+      });
     };
 
     socket.current.on(SocketEventsEnum.MESSAGES_GET, handleNewMessage);

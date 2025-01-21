@@ -60,5 +60,6 @@ export const getUserQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['user', id],
     queryFn: () => getUserById({ id }),
+    gcTime: Infinity,
   });
 };
