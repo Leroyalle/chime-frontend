@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@nextui-org/react';
 import { MessageCircleMore, Settings } from 'lucide-react';
 import Link from 'next/link';
-import { RoutesEnum } from '../../../../../@types';
+import { RoutesEnum } from '../../../../types';
 import { useFollowUser, useUnFollowUser } from '@/lib/hooks';
 
 interface Props {

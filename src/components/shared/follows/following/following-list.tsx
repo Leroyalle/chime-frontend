@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Follows } from '../../../../../@types/dto';
+import { Follows } from '@/types';
 import { Friend } from '../../friend';
 import { DarkLightBlock } from '../../../ui';
 
@@ -18,7 +18,7 @@ export const FollowingList: React.FC<Props> = ({ items, className }) => {
             friendId={item.followingId}
             name={item.following.name}
             alias={item.following.alias}
-            avatarUrl={item.following.avatarUrl || ''}
+            avatarUrl={item.following.avatar || ''}
           />
         </DarkLightBlock>
       ))}

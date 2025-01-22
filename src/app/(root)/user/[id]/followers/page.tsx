@@ -1,9 +1,9 @@
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { TokensEnum } from '../../../../../../@types';
+import { TokensEnum } from '../../../../../types';
 import { FollowersWrapper } from '@/components/shared';
-import { handleApiError } from '@/lib';
+import { handleApiError } from '@/lib/utils';
 
 export default async function Followers({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;

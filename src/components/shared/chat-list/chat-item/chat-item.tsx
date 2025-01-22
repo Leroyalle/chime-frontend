@@ -3,8 +3,7 @@ import { cn } from '@/lib/utils';
 import { ChatPreview as Preview } from './chat-preview';
 import Link from 'next/link';
 import { ChatActions as Actions } from './chat-actions';
-import { RoutesEnum } from '../../../../../@types';
-import { MessageDto } from '../../../../../@types/dto';
+import { MessageDto, RoutesEnum } from '@/types';
 import { useGetMeData } from '@/lib/hooks';
 
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { RoutesEnum } from '../../../../../../../../@types';
+import { RoutesEnum } from '@/types';
 import Link from 'next/link';
 
 interface Props {

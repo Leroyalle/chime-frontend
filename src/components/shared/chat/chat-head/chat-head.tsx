@@ -3,8 +3,7 @@ import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/ui';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { RoutesEnum } from '../../../../../@types';
-import { User } from '../../../../../@types/response';
+import { User, RoutesEnum } from '@/types';
 import { useGetMe } from '@/lib/hooks';
 import Link from 'next/link';
 

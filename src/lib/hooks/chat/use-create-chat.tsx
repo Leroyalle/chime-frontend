@@ -1,7 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useRouter } from 'next/navigation';
-import { RoutesEnum } from '../../../../@types';
-import { hasErrorField } from '@/lib/has-error-field';
+import { RoutesEnum } from '../../../types';
+import { hasErrorField } from '@/lib/utils/has-error-field';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 

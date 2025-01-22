@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
-import { hasErrorField } from '@/lib';
+import { hasErrorField } from '@/lib/utils';
 import { useCreateComment, useUpdateComment } from '@/lib/hooks';
 import { Loader, Send } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { Comment } from '../../../@types/dto';
+import { Comment } from '../../types/dto';
 import { DarkLightBlock, EditableMessage } from '../ui';
 
 interface Props {

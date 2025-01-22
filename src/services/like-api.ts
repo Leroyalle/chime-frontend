@@ -1,5 +1,5 @@
 import { ApiRouter } from './constants';
-import { Like } from '../../@types/dto';
+import { Like } from '../types/dto';
 import { instance } from './instance';
 
 export const likePost = async (data: { postId: string }): Promise<Like> => {

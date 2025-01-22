@@ -1,6 +1,5 @@
 import { AxiosRequestHeaders } from 'axios';
-import { TAuthTokens } from '../../@types/auth';
-import { SendEmailResponse, User, UserDto, UserResponse } from '../../@types/response';
+import { SendEmailResponse, User, UserDto, UserResponse, TAuthTokens } from '@/types';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { queryOptions } from '@tanstack/react-query';
@@ -53,6 +52,8 @@ export const getMeQueryOptions = () => {
     staleTime: 1 * 60 * 1000,
     retry: false,
     refetchOnWindowFocus: false,
+    gcTime: 0,
+    // gcTime: 300000,
   });
 };
 

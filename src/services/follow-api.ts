@@ -1,10 +1,8 @@
 import { ApiRouter } from './constants';
-import { Follows } from '../../@types/dto';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { InfinityResponse } from '../../@types/response';
-import { Friend } from '../../@types/dto';
+import { InfinityResponse, Friend, Follows } from '@/types';
 
 export const followUser = async (data: { followingId: string }): Promise<Follows> => {
   return (await instance.post<Follows>(ApiRouter.FOLLOW, data)).data;

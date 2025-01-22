@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Api } from '@/services/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { UserResponse } from '../../../../@types/response';
+import { UserResponse } from '../../../types/response';
 import { EditBlock } from './edit-block';
 
 interface Props {

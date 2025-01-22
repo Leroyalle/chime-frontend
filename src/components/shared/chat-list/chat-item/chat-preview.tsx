@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { MessageDto } from '../../../../../@types/dto';
-import { getRelativeTime } from '@/lib';
+import { MessageDto } from '@/types';
+import { getRelativeTime } from '@/lib/utils';
 import { messageTypeData } from './constants';
 
 interface Props {
@@ -22,8 +22,8 @@ export const ChatPreview: React.FC<Props> = ({
 }) => {
   const messageType = lastMessage && messageTypeData[lastMessage.type];
   const messageContent =
-    lastMessage?.content && lastMessage?.content?.length > 4
-      ? `${lastMessage?.content?.slice(0, 4)}...`
+    lastMessage?.content && lastMessage?.content?.length > 10
+      ? `${lastMessage?.content?.slice(0, 10)}...`
       : lastMessage?.content;
 
   return (

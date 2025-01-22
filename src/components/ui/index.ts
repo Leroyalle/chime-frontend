@@ -12,3 +12,4 @@ export * from './dialog';
 export { Checkbox } from './checkbox';
 export * from './form';
 export { Button } from './button';
+export * from './shadcn-expendsions';

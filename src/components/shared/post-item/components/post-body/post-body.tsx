@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { PostContent } from './post-content';
 import { PostImages } from './post-images';
 import { PostTags } from './post-tags';
-import { Image, Tag } from '../../../../../../@types/dto';
+import { Image, Tag } from '../../../../../types/dto';
 import { PostGallery } from './post-gallery';
 
 interface Props {

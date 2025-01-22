@@ -5,11 +5,11 @@ import { Send } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSocket } from '@/lib/hooks';
 import { EditableMessage } from '@/components/ui';
-import { Message, MessageTypeEnum } from '../../../../../../@types/dto';
+import { MessageDto, MessageTypeEnum } from '@/types';
 
 interface Props {
   chatId: string;
-  editableMessage: Message | null;
+  editableMessage: MessageDto | null;
   cancelEdit: () => void;
   className?: string;
 }

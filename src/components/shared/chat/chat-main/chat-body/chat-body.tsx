@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from './message';
-import { MessageDto } from '../../../../../../@types/dto';
+import { MessageDto } from '@/types';
 import { useGetMe } from '@/lib/hooks';
 import { EmptyState } from '../../../empty-state';
 
@@ -23,13 +23,12 @@ export const ChatBody: React.FC<Props> = ({
   className,
 }) => {
   const { data: userData } = useGetMe();
-  
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, []);
-
 
   if (!messages || messages.length === 0) {
     return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;

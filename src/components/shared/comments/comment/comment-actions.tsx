@@ -4,7 +4,7 @@ import { Ellipsis } from 'lucide-react';
 import { useDeleteComment } from '@/lib/hooks';
 import { PageType } from '../comments-list';
 import { useRouter } from 'next/navigation';
-import { RoutesEnum } from '../../../../../@types';
+import { RoutesEnum } from '../../../../types';
 
 interface Props {
   postId: string;

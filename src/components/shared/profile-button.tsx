@@ -3,7 +3,7 @@ import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { CircleHelp, LogOut, Palette, Settings, User } from 'lucide-react';
 import { Avatar } from '../ui';
-import { RoutesEnum, TokensEnum } from '../../../@types';
+import { RoutesEnum, TokensEnum } from '../../types';
 import { useGetMe } from '@/lib/hooks';
 import Link from 'next/link';
 import Cookies from 'js-cookie';

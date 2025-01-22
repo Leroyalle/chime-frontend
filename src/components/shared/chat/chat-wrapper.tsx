@@ -5,7 +5,7 @@ import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
 import { useInfinityScrollMessages } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
-import { ChatWithMembers } from '../../../../@types/chat';
+import { ChatWithMembers } from '../../../types/chat';
 import { ChatMain as Main } from './chat-main';
 
 interface Props {

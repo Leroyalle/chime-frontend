@@ -2,7 +2,7 @@
 import React from 'react';
 import { SidebarItem } from './sidebar-item';
 import { Bookmark, Flame, Heart, MessageCircle, Newspaper, UserRoundCheck } from 'lucide-react';
-import { RoutesEnum } from '../../../../@types';
+import { RoutesEnum } from '../../../types';
 import { useGetMe } from '@/lib/hooks';
 import { DarkLightBlock } from '@/components/ui';
 import { useNewMarkSlice } from '@/store';

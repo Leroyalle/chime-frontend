@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { ContentTabs } from './content-tabs';
-import { RoutesEnum } from '../../../../../@types';
+import { RoutesEnum } from '../../../../types';
 import dayjs from 'dayjs';
 
 interface Props {

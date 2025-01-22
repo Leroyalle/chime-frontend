@@ -1,9 +1,9 @@
 import { Api } from '@/services/api-client';
+import { Friend, InfinityResponse } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
+
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { InfinityResponse } from '../../../../@types/newResponse';
-import { Friend } from '../../../../@types/newDto';
 
 export const useInfinityScrollUserFriends = ({
   userId,

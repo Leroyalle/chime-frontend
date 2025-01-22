@@ -2,9 +2,9 @@
 import { InputOtp } from '@nextui-org/react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
-import { hasErrorField } from '@/lib';
+import { hasErrorField } from '@/lib/utils';
 import { Api } from '@/services/api-client';
-import { saveAuthCookies } from '@/lib/save-auth-cookies';
+import { saveAuthCookies } from '@/lib/utils/save-auth-cookies';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 interface Props {

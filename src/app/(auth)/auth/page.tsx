@@ -1,6 +1,6 @@
 import { AuthModal } from '@/components/shared/modals';
 import { cookies } from 'next/headers';
-import { TokensEnum } from '../../../../@types';
+import { TokensEnum } from '@/types';
 import { redirect } from 'next/navigation';
 
 export default async function Auth() {

@@ -3,3 +3,4 @@ export { hasErrorField } from './has-error-field';
 export { handleApiError } from './handle-api-error';
 export { getAbsoluteUrl } from './get-absolute-url';
 export { getRelativeTime } from './get-relative-time';
+export { cn } from './utils';

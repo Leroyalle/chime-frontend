@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Friend } from './friend';
 import { DarkLightBlock } from '@/components/ui';
-import { Friend as TFriend } from '../../../../@types/dto';
+import { Friend as TFriend } from '../../../types/dto';
 
 interface Props {
   items: TFriend[];

@@ -4,9 +4,8 @@ import { cn } from '@/lib/utils';
 import { useInfinityScrollUserFollowers } from '@/lib/hooks';
 import { FollowersList } from './followers-list';
 import { Spinner } from '@nextui-org/react';
-import { InfinityResponse } from '../../../../../@types/response';
 import { EmptyState } from '../../empty-state';
-import { Follows } from '../../../../../@types/dto';
+import { InfinityResponse, Follows } from '@/types';
 
 interface Props {
   userId: string;

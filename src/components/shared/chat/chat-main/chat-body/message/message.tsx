@@ -4,7 +4,7 @@ import { Avatar } from '../../../../../ui';
 import dayjs from 'dayjs';
 import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
 import { useSocket } from '@/lib/hooks';
-import { Author, MessageTypeEnum } from '../../../../../../../@types/dto';
+import { Author, MessageTypeEnum } from '../../../../../../types/dto';
 import { MainContent, SharedContent } from './components';
 
 interface Props {

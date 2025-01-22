@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as NextUiLink, User } from '@nextui-org/react';
 import { CommentActions } from './comment-actions';
 import Link from 'next/link';
-import { RoutesEnum } from '../../../../../@types';
+import { RoutesEnum } from '../../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { DarkLightBlock, OpacityAnimateBlock } from '@/components/ui';

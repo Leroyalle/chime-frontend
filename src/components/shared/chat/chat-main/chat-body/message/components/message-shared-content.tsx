@@ -2,9 +2,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
-import { getAbsoluteUrl, getRelativeTime } from '@/lib';
-import { RoutesEnum } from '../../../../../../../../@types';
-import { Author } from '../../../../../../../../@types/dto';
+import { getAbsoluteUrl, getRelativeTime } from '@/lib/utils';
+import { Author, RoutesEnum } from '@/types';
 
 interface Props {
   contentPost: string | null;

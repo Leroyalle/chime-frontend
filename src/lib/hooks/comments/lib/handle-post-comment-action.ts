@@ -1,6 +1,6 @@
 import { InfiniteData } from '@tanstack/react-query';
-import { Post } from '../../../../../@types/dto';
-import { InfinityResponse } from '../../../../../@types/response';
+import { Post } from '../../../../types/dto';
+import { InfinityResponse } from '../../../../types/response';
 
 type TData = InfiniteData<InfinityResponse<Post[]>, unknown> | undefined;
 

@@ -1,4 +1,4 @@
-import { Post } from '../../../../../@types/dto';
+import { Post } from '@/types';
 
 type TData = Post | undefined;
 
@@ -9,14 +9,16 @@ export const handleUpdateCommentOnPostPage = (commentId: string, data: TData, co
 
   return {
     ...data,
-    comments: data.comments.map((comment) => {
-      if (comment.id === commentId) {
-        return {
-          ...comment,
-          content: content,
-        };
-      }
-      return comment;
-    }),
+    comments:
+      data.comments &&
+      data.comments.map((comment) => {
+        if (comment.id === commentId) {
+          return {
+            ...comment,
+            content: content,
+          };
+        }
+        return comment;
+      }),
   };
 };

@@ -1,4 +1,4 @@
-import { MessageTypeEnum } from '../../../../../../@types';
+import { MessageTypeEnum } from '@/types';
 
 export const messageTypeData = {
   [MessageTypeEnum.POST]: 'Запись',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Comment } from '../../../../@types/dto';
+import { Comment } from '@/types';
 import { CommentItem } from './comment';
 import { useGetMe } from '@/lib/hooks';
 

@@ -23,7 +23,6 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
     isFetching: isFetchingChats,
   } = useQuery({
     ...Api.chat.getUserChatsQueryOptions(searchQuery),
-    gcTime: Infinity,
   });
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Tag } from '../../../../../../@types/dto';
+import { Tag } from '../../../../../types/dto';
 
 interface Props {
   tags: Tag[];

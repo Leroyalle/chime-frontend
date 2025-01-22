@@ -1,6 +1,6 @@
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { Post } from '../../@types/dto';
-import { InfinityResponse } from '../../@types/response';
+import { Post } from '../types/dto';
+import { InfinityResponse } from '../types/response';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';

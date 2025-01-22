@@ -6,10 +6,9 @@ import { PostBottomActionsItem } from './post-bottom-actions-item';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAddBookmark, useLikePost, useRemoveBookmark, useUnlikePost } from '@/lib/hooks';
-import { RoutesEnum } from '../../../../../../@types';
 import { SharedBody } from './shared-body';
 import { useSharedPostSlice } from '@/store';
-import { Image } from '../../../../../../@types/dto';
+import { Image, RoutesEnum } from '@/types';
 
 interface Props {
   userId: string;

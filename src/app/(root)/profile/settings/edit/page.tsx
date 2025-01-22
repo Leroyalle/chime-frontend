@@ -2,9 +2,9 @@ import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { TokensEnum } from '../../../../../../@types/constants';
+import { TokensEnum } from '../../../../../types/constants';
 import { EditWrapper } from '@/components/shared';
-import { handleApiError } from '@/lib';
+import { handleApiError } from '@/lib/utils';
 
 export default async function Edit() {
   const cookiesStore = await cookies();

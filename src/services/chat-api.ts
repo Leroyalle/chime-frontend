@@ -1,9 +1,7 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { MessageDto } from '../../@types/dto';
+import { InfinityResponse, MessageDto, ChatWithMembers, UserChat } from '@/types';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
-import { InfinityResponse } from '../../@types/response';
-import { ChatWithMembers, UserChat } from '../../@types/chat';
 import { AxiosRequestHeaders } from 'axios';
 
 export const getMessagesByChatId = async ({
@@ -63,7 +61,7 @@ export const getUserChatsQueryOptions = (query: string = '') => {
     queryKey: ['user-chats', query],
     queryFn: () => getUserChats(query),
     refetchOnWindowFocus: false,
-    gcTime: Infinity,
+    gcTime: 0,
     staleTime: 1 * 60 * 1000,
   });
 };

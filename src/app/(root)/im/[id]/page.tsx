@@ -1,9 +1,9 @@
 import { ChatWrapper } from '@/components/shared';
 import { Api } from '@/services/api-client';
-import { TokensEnum } from '../../../../../@types';
+import { TokensEnum } from '../../../../types';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { handleApiError } from '@/lib';
+import { handleApiError } from '@/lib/utils';
 
 export default async function InstantMessagingCurrent({
   params,

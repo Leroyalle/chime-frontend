@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
 import { DarkLightBlock } from '../../ui/dark-light-block';
-import { UserChat } from '../../../../@types/chat';
+import { UserChat } from '@/types';
 
 interface Props {
   hasActions?: boolean;

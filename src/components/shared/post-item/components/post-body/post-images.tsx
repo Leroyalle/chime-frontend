@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { getAbsoluteUrl } from '@/lib';
-import { Image } from '../../../../../../@types/dto';
+import { getAbsoluteUrl } from '@/lib/utils';
+import { Image } from '../../../../../types/dto';
 
 interface Props {
   items: Image[] | null;

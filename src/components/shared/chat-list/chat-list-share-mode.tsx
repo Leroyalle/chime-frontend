@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
 import { DarkLightBlock } from '../../ui/dark-light-block';
-import { UserChat } from '../../../../@types/chat';
+import { UserChat } from '@/types';
 import {
   Button,
   Checkbox,
@@ -17,7 +17,7 @@ import { ChatListShareModeSchema, ChatListShareModeSchemaType } from './schemas'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSocket } from '@/lib/hooks';
 import { useSharedPostSlice } from '@/store';
-import { MessageTypeEnum } from '../../../../@types';
+import { MessageTypeEnum } from '../../../types';
 import { toast } from 'react-toastify';
 import { Input } from '@nextui-org/react';
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { WriteComment } from '../write-comment';
 import { CommentsList, PageType } from '../comments/comments-list';
-import { Comment } from '../../../../@types/dto';
+import { Comment } from '@/types';
 
 interface Props {
   userId: string;

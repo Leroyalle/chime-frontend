@@ -124,3 +124,26 @@ export type Friend = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Follows = {
+  following: UserBaseInfo;
+  follower: UserBaseInfo;
+  id: string;
+  followerId: string;
+  followingId: string;
+};
+
+export type UserBaseInfo = {
+  id: string;
+  banned: boolean;
+  role: string;
+  avatar: string;
+  about: string;
+  age: number;
+  location: string;
+  status: string;
+  name: string;
+  alias: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

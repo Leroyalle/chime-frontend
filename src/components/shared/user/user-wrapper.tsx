@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { DarkLightBlock, Avatar } from '../../ui';
 import { UserActions, UserInfo } from './profile';
-import { UserResponse } from '../../../../@types/response';
+import { UserResponse } from '../../../types/response';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
 import { useCreateChat } from '@/lib/hooks';

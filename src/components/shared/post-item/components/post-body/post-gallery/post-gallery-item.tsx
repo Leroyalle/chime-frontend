@@ -1,9 +1,9 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { getAbsoluteUrl } from '@/lib';
+import { getAbsoluteUrl } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PostGalleryButton } from './post-gallery-button';
-import { Image } from '../../../../../../../@types/dto';
+import { Image } from '../../../../../../types/dto';
 
 interface Props extends React.HTMLAttributes<HTMLImageElement> {
   currentIndex: number;

@@ -1,14 +1,20 @@
 import Cookies from 'js-cookie';
 import { Api } from '@/services/api-client';
-import { ChatUpdate, MessageRequest, UserChat } from '../../../@types/chat';
 import { createContext, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
-import { RoutesEnum, SocketEventsEnum, TokensEnum } from '../../../@types';
 import { toast } from 'react-toastify';
 import { ToastMessage } from './chat/toast-message';
+import {
+  ChatUpdate,
+  MessageRequest,
+  UserChat,
+  RoutesEnum,
+  SocketEventsEnum,
+  TokensEnum,
+} from '@/types';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;

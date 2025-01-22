@@ -3,9 +3,9 @@ import { cn } from '@/lib/utils';
 import { Button, Input } from '@nextui-org/react';
 import { Mail } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import { hasErrorField } from '@/lib';
+import { hasErrorField } from '@/lib/utils';
 import { Api } from '@/services/api-client';
-import { TRegister } from '../../../../../@types/auth';
+import { TRegister } from '../../../../types/auth';
 import { toast } from 'react-toastify';
 
 interface Props {

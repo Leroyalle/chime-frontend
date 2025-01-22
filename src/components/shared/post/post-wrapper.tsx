@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { PostItem } from '../post-item';
-import { Post } from '../../../../@types/dto';
+import { Post } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
 import { CommentSection } from './comment-section';

@@ -2,8 +2,8 @@ import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
 import { PostWrapper } from '@/components/shared/post';
 import { Api } from '@/services/api-client';
-import { TokensEnum } from '../../../../../@types';
-import { handleApiError } from '@/lib';
+import { TokensEnum } from '../../../../types';
+import { handleApiError } from '@/lib/utils';
 
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;

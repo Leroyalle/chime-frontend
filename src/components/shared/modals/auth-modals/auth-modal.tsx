@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Modal, ModalContent, ModalBody } from '@nextui-org/react';
 import { AuthTabs } from './auth-tabs';
 import Cookies from 'js-cookie';
-import { TokensEnum } from '../../../../../@types';
+import { TokensEnum } from '@/types';
 
 export const AuthModal: React.FC = () => {
   useEffect(() => {

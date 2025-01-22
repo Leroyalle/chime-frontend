@@ -1,7 +1,7 @@
 import { BookmarksWrapper } from '@/components/shared';
 import { AxiosError, AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { TokensEnum } from '../../../../@types';
+import { TokensEnum } from '../../../types';
 import { Api } from '@/services/api-client';
 
 export default async function Bookmarks() {

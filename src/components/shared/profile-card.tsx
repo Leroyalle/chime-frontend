@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useGetMe } from '@/lib/hooks';
 import { Avatar } from '../ui';
 import Link from 'next/link';
-import { RoutesEnum } from '../../../@types';
+import { RoutesEnum } from '../../types';
 
 interface Props {
   className?: string;

@@ -3,8 +3,8 @@ import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { TokensEnum } from '../../../../../@types/constants';
-import { handleApiError } from '@/lib';
+import { TokensEnum } from '../../../../types/constants';
+import { handleApiError } from '@/lib/utils';
 
 export default async function User({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;

@@ -2,8 +2,8 @@ import { PopularFeedWrapper } from '@/components/shared/feed';
 import { Api } from '@/services/api-client';
 import { AxiosHeaders } from 'axios';
 import { cookies } from 'next/headers';
-import { TokensEnum } from '../../../@types';
-import { handleApiError } from '@/lib';
+import { TokensEnum } from '../../types';
+import { handleApiError } from '@/lib/utils';
 
 export default async function Popular() {
   const cookiesStore = await cookies();

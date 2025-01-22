@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
-import { Image, Tag } from '../../../../@types/dto';
+import { Image, Tag } from '@/types';
 import { TopActions, BottomActions, PostBody } from './components';
-import { getRelativeTime } from '@/lib';
+import { getRelativeTime } from '@/lib/utils';
 
 interface Props {
   userId: string;
