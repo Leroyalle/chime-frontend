@@ -8,8 +8,6 @@ export const useUnFollowUser = (unFollowingId: string) => {
   const unFollowUserMutation = useMutation({
     mutationFn: () => Api.follow.unFollowUser(unFollowingId),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['followers'] });
-
       const previousData = queryClient.getQueryData(
         Api.users.getUserQueryOptions(unFollowingId).queryKey,
       );
@@ -30,8 +28,8 @@ export const useUnFollowUser = (unFollowingId: string) => {
     },
 
     onSettled: () => {
-      queryClient.resetQueries(Api.follow.getFollowersInfinityQueryOptions(unFollowingId));
-      queryClient.resetQueries(Api.follow.getFriendsInfinityQueryOptions(unFollowingId));
+      queryClient.invalidateQueries(Api.follow.getFollowersInfinityQueryOptions(unFollowingId));
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
       queryClient.invalidateQueries(Api.users.getMeQueryOptions());
     },
   });

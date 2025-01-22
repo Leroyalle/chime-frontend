@@ -49,11 +49,12 @@ export const getMeQueryOptions = () => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => current(),
-    staleTime: 1 * 60 * 1000,
-    retry: false,
+    // staleTime: Infinity,
+    gcTime: Infinity,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
-    gcTime: 0,
-    // gcTime: 300000,
+    refetchOnReconnect: false,
+    retry: false,
   });
 };
 

@@ -37,7 +37,7 @@ export const FriendsWrapper: React.FC<Props> = ({ userId, initialData, className
       <h2 className="text-2xl text-start mb-4">Друзья</h2>
       <FriendsList items={data} />
       {/* FIXME: багается инвалидация друзей при курсоре */}
-      {data.length > 10 && cursor}
+      {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </section>
   );
