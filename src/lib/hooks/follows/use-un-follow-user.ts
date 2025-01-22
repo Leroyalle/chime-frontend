@@ -1,6 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { toggleUserFollow } from './lib';
 
 export const useUnFollowUser = (unFollowingId: string) => {
@@ -26,7 +26,7 @@ export const useUnFollowUser = (unFollowingId: string) => {
         Api.users.getUserQueryOptions(unFollowingId).queryKey,
         context?.previousData,
       );
-      toast.error('Не удалось отписаться');
+      toast.error('Не удалось отписаться', { description: 'Попробуйте позже' });
     },
 
     onSettled: () => {

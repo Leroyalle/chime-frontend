@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib/utils';
 import { useCreatePost } from '@/lib/hooks';
 import { DarkLightBlock, MultipleSelectorCreatable, Option } from '../../ui';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { SelectedImages } from './selected-images';
 import { WritePostActions } from './write-post-actions';
 
@@ -25,7 +25,9 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
 
     if (files) {
       if (selectedFiles.length + files.length > 4) {
-        toast.error('Вы можете загрузить не более 4 файлов');
+        toast.error('Можно загрузить не более 4 файлов', {
+          description: 'Удалите на свой вкус',
+        });
         return;
       }
 
@@ -60,7 +62,9 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
     } catch (error) {
       if (hasErrorField(error)) {
         console.error(error.data.error);
-        toast.error('Не удалось создать пост! Попробуйте еще раз');
+        toast.error('Не удалось создать пост!', {
+          description: 'Попробуйте еще раз',
+        });
       }
     }
   };

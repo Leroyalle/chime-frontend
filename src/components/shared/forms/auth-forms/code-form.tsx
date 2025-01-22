@@ -2,10 +2,9 @@
 import { InputOtp } from '@nextui-org/react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
-import { hasErrorField } from '@/lib/utils';
 import { Api } from '@/services/api-client';
 import { saveAuthCookies } from '@/lib/utils/save-auth-cookies';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 interface Props {
   title?: string;
@@ -20,31 +19,24 @@ export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
     control,
     formState: { errors },
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: {
       code: '',
     },
   });
 
   const onSubmit = async (data: { code: string }) => {
-    const res = Api.users.verifyCode({ userId, code: data.code });
-    toast
-      .promise(res, {
-        pending: 'Подождите, идет регистрация...',
-        success: 'Успешная регистрация, удачи!',
-        error: 'Что-то пошло не так! Попробуйте отправить еще раз',
-      })
-      .then((res) => {
+    toast.promise(Api.users.verifyCode({ userId, code: data.code }), {
+      loading: 'Подождите, идет регистрация...',
+      success: (res) => {
         saveAuthCookies(res.token);
         // FIXME: временно /
         router.push('/');
         if (onChangeTab) onChangeTab();
-      })
-      .catch((error) => {
-        if (hasErrorField(error)) {
-          console.error(error.data.message);
-        }
-      });
+        return 'Добро пожаловать! Перевожу...';
+      },
+      error: 'Что-то пошло не так! Попробуйте отправить еще раз',
+    });
   };
 
   return (

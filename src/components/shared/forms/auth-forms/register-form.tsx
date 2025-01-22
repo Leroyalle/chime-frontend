@@ -3,10 +3,9 @@ import { cn } from '@/lib/utils';
 import { Button, Input } from '@nextui-org/react';
 import { Mail } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import { hasErrorField } from '@/lib/utils';
 import { Api } from '@/services/api-client';
 import { TRegister } from '../../../../types/auth';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 interface Props {
   onSuccess: (userId: string) => void;
@@ -30,22 +29,16 @@ export const RegisterForm: React.FC<Props> = ({ className, onSuccess, onChangeAc
 
   const onSubmit = (data: { email: string }) => {
     const promise = Api.users.register(data);
-    toast
-      .promise(promise, {
-        pending: 'Подождите, идет отправка кода на почту...',
-        success: 'Письмо отправлено! Проверьте указанную почту',
-        error: 'Что-то пошло не так! Попробуйте еще раз',
-      })
-      .then((res) => {
+    toast.promise(promise, {
+      loading: 'Подождите, идет отправка кода на почту...',
+      success: (res) => {
         onSuccess(res.userId);
         onChangeAction();
         setValue('email', '');
-      })
-      .catch((error) => {
-        if (hasErrorField(error)) {
-          console.error(error.data.error);
-        }
-      });
+        return 'Письмо отправлено! Проверьте указанную почту';
+      },
+      error: 'Что-то пошло не так! Попробуйте еще раз',
+    });
   };
 
   return (

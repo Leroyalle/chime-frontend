@@ -2,7 +2,7 @@ import { Api } from '@/services/api-client';
 import { useRouter } from 'next/navigation';
 import { RoutesEnum } from '../../../types';
 import { hasErrorField } from '@/lib/utils/has-error-field';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { useState } from 'react';
 
 export const useCreateChat = () => {
@@ -15,7 +15,9 @@ export const useCreateChat = () => {
       router.push(`${RoutesEnum.MESSAGES}/${chatId}`);
     } catch (error) {
       if (hasErrorField(error)) {
-        toast.error('Не удалось найти чат');
+        toast.error('Не удалось найти чат', {
+          description: 'Попробуйте еще раз',
+        });
       }
     } finally {
       setIsLoading(false);

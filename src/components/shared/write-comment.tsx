@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib/utils';
 import { useCreateComment, useUpdateComment } from '@/lib/hooks';
 import { Loader, Send } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { Comment } from '../../types/dto';
 import { DarkLightBlock, EditableMessage } from '../ui';
 

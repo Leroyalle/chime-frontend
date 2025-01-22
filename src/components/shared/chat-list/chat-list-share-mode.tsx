@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSocket } from '@/lib/hooks';
 import { useSharedPostSlice } from '@/store';
 import { MessageTypeEnum } from '../../../types';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { Input } from '@nextui-org/react';
 
 interface Props {
@@ -63,7 +63,7 @@ export const ChatListShareMode: React.FC<Props> = ({
         content: data.message || null,
       },
     });
-    toast.success('Пост отправлен');
+    toast.success('Отправлено');
     onCloseModal?.();
   };
 

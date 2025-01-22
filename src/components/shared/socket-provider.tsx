@@ -5,8 +5,7 @@ import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
-import { toast } from 'react-toastify';
-import { ToastMessage } from './chat/toast-message';
+import { toast } from 'sonner';
 import {
   ChatUpdate,
   MessageRequest,
@@ -76,9 +75,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     const handleNewMessage = (data: ChatUpdate) => {
       if (me?.user.id !== data.message.UserBase.id) {
-        toast.info(<ToastMessage chatId={data.chat.id} senderName={data.message.UserBase.name} />, {
-          onClick() {
-            router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`);
+        toast(data.message.UserBase.name, {
+          description: data.message.content,
+          action: {
+            label: 'Читать',
+            onClick: () => router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`),
           },
         });
       }

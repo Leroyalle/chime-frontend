@@ -1,6 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { toggleUserFollow } from './lib';
 
 export const useFollowUser = (followingId: string) => {
@@ -33,7 +33,7 @@ export const useFollowUser = (followingId: string) => {
         Api.users.getUserQueryOptions(followingId).queryKey,
         context?.previousData,
       );
-      toast.error('Не удалось подписаться');
+      toast.error('Не удалось подписаться', { description: 'Попробуйте позже' });
     },
   });
 
