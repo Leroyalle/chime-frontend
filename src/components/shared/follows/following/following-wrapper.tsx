@@ -33,7 +33,7 @@ export const FollowingWrapper: React.FC<Props> = ({ userId, initialData, classNa
       <h2 className="mb-2">Подписки</h2>
       {data && <FollowingList items={data} className="w-full" />}
       {/* FIXME: багается инвалидация подписок при курсоре */}
-      {data.length > 9 && cursor}
+      {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </section>
   );

@@ -21,7 +21,8 @@ export const useFollowUser = (followingId: string) => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries(Api.follow.getFollowersInfinityQueryOptions(followingId));
+      queryClient.invalidateQueries({ queryKey: ['followers'] });
+      queryClient.invalidateQueries({ queryKey: ['following'] });
       queryClient.invalidateQueries({ queryKey: ['friends'] });
       queryClient.invalidateQueries(Api.users.getMeQueryOptions());
     },
