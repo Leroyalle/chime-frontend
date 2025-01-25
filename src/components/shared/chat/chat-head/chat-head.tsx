@@ -36,7 +36,9 @@ export const ChatHead: React.FC<Props> = ({ name, members, avatar, className }) 
           className="flex flex-row gap-3 w-full left-0 justify-start items-center">
           <Avatar src={avatar} size="md" />
           <h3 className="text-large m-0 h-min text-blue-700 font-semibold">
-            <Link href={`${RoutesEnum.USER}/${member.id}`}>{name}</Link>
+            <Link className="break-words break-all" href={`${RoutesEnum.USER}/${member.id}`}>
+              {name}
+            </Link>
           </h3>
         </div>
       ))}

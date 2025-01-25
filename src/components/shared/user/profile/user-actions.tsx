@@ -45,7 +45,7 @@ export const UserActions: React.FC<Props> = ({
         <Button
           color={isFollowing ? 'success' : 'danger'}
           onPress={onClickFollowUser}
-          disabled={isPendingFollow || isPendingUnFollow}>
+          isLoading={isPendingFollow || isPendingUnFollow}>
           {isFollowing ? 'Отписаться' : 'Подписаться'}
         </Button>
       )}

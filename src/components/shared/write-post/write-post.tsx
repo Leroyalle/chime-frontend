@@ -8,6 +8,7 @@ import { DarkLightBlock, MultipleSelectorCreatable, Option } from '../../ui';
 import { toast } from 'sonner';
 import { SelectedImages } from './selected-images';
 import { WritePostActions } from './write-post-actions';
+import { SelectImage } from '../select-image';
 
 interface Props {
   avatarUrl: string | null;
@@ -96,15 +97,7 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
                 />
               )}
             />
-            <input
-              id="postImage"
-              type="file"
-              name="postImage"
-              className="hidden"
-              onChange={onChangeFile}
-              accept=".png, .jpg, .jpeg"
-              multiple
-            />
+            <SelectImage id="postImage" name="postImage" onChange={onChangeFile} multiple />
             {tagsIsOpen && <MultipleSelectorCreatable value={tags} setValue={setTags} />}
           </div>
         </div>

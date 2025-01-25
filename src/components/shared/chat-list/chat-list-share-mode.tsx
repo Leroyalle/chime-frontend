@@ -54,7 +54,6 @@ export const ChatListShareMode: React.FC<Props> = ({
   }
 
   const onSubmit = (data: ChatListShareModeSchemaType) => {
-    console.log(data);
     sendMessage({
       body: {
         chatIds: data.chats,

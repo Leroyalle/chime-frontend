@@ -16,7 +16,12 @@ interface Props {
 
 export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage, cancelEdit }) => {
   const { sendMessage, updateMessage } = useSocket();
-  const { control, handleSubmit, setValue } = useForm<{ message: string }>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<{ message: string }>({
     defaultValues: {
       message: '',
     },
@@ -69,6 +74,8 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
             variant="faded"
             name="message"
             autoComplete="off"
+            errorMessage={errors.message?.message}
+            isInvalid={!!errors.message}
           />
         )}
         rules={{
@@ -76,6 +83,10 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
           minLength: {
             value: 1,
             message: 'Не меньше 1 символа',
+          },
+          maxLength: {
+            value: 1000,
+            message: 'Не больше 1000 символов',
           },
         }}
         name="message"

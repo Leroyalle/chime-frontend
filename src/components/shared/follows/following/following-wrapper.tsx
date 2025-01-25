@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { InfinityResponse } from '../../../../types/response';
 import { useInfinityScrollUserFollowing } from '@/lib/hooks';
@@ -20,11 +20,15 @@ export const FollowingWrapper: React.FC<Props> = ({ userId, initialData, classNa
     initialData,
   });
 
+  useEffect(() => {
+    console.log('mount');
+  }, []);
+
   if (isPending) {
     return <div>Загрузка...</div>;
   }
 
-  if (data.length === 0) {
+  if (data && data.length === 0) {
     return <EmptyState title="Нет подписок" text="Сделайте первый шаг!" />;
   }
 

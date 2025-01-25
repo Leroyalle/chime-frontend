@@ -9,7 +9,7 @@ interface Props {
 export const PostContent: React.FC<Props> = ({ content, className }) => {
   return (
     <div className={cn('', className)}>
-      <p>{content}</p>
+      <p className="break-words break-all">{content}</p>
     </div>
   );
 };

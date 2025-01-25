@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { useInfinityScrollUserFollowers } from '@/lib/hooks';
 import { FollowersList } from './followers-list';
@@ -18,12 +18,15 @@ export const FollowersWrapper: React.FC<Props> = ({ userId, initialData, classNa
     userId,
     initialData,
   });
+  useEffect(() => {
+    console.log('mount');
+  }, []);
 
   if (isPending) {
     return <div>Loading...</div>;
   }
 
-  if (data.length === 0) {
+  if (data && data.length === 0) {
     return (
       <EmptyState
         title="Пока нет подписчиков"

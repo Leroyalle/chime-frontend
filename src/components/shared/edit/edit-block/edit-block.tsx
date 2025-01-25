@@ -10,10 +10,11 @@ interface Props {
   name: string;
   email: string;
   about: string;
+  avatar: string;
   className?: string;
 }
 
-export const EditBlock: React.FC<Props> = ({ id, name, email, about, className }) => {
+export const EditBlock: React.FC<Props> = ({ id, name, email, about, avatar, className }) => {
   const router = useRouter();
 
   return (
@@ -21,7 +22,7 @@ export const EditBlock: React.FC<Props> = ({ id, name, email, about, className }
       <div className="flex gap-x-2 mb-4">
         <ArrowLeft onClick={() => router.back()} /> Блог
       </div>
-      <UpdateUserForm id={id} name={name} email={email} about={about} />
+      <UpdateUserForm id={id} name={name} email={email} about={about} avatar={avatar} />
     </DarkLightBlock>
   );
 };

@@ -21,7 +21,7 @@ export type User = {
   role: string;
   alias: string;
   name: string;
-  avatarUrl: string | null;
+  avatar: string | null;
   location: string | null;
   age: number | null;
   status: string | null;

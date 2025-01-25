@@ -25,6 +25,7 @@ export const EditWrapper: React.FC<Props> = ({ initialData, className }) => {
         name={data.user.name}
         email={data.user.EmailUser.email}
         about={data.user.about ?? ''}
+        avatar={data.user.avatar || ''}
       />
     </section>
   );

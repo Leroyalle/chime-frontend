@@ -18,7 +18,7 @@ export const PostTopActions: React.FC<Props> = ({ postId, userId, isOwner }) => 
         <Ellipsis />
       </DropdownTrigger>
       <DropdownMenu aria-label="Post actions">
-        <DropdownItem key="share">Поделиться</DropdownItem>
+        <DropdownItem key="share">Пожаловаться</DropdownItem>
         {isOwner ? (
           <DropdownItem
             key="delete"
@@ -27,9 +27,7 @@ export const PostTopActions: React.FC<Props> = ({ postId, userId, isOwner }) => 
             onPress={() => deletePost()}>
             Удалить
           </DropdownItem>
-        ) : (
-          <DropdownItem key="report">Пожаловаться</DropdownItem>
-        )}
+        ) : null}
       </DropdownMenu>
     </Dropdown>
   );

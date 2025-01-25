@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { useGetMe } from '@/lib/hooks';
 import { Avatar } from '../ui';
 import Link from 'next/link';
@@ -15,11 +15,8 @@ export const ProfileCard: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn('p-4 w-full', className)}>
       <div className="flex flex-col w-full items-center">
-        <Avatar
-          src={me?.user.avatarUrl || 'https://avatars.githubusercontent.com/u/158848927?v=4'}
-          size="lg"
-        />
-        <span className="font-semibold text-lg">{me?.user.name}</span>
+        <Avatar src={me?.user.avatar ? getAbsoluteUrl(me?.user.avatar) : ''} size="lg" />
+        <span className="font-semibold text-lg break-words break-all">{me?.user.name}</span>
         <Link
           href={`${RoutesEnum.USER}/${me?.user.id}`}
           className="text-blue-500 transition-all hover:opacity-80 text-sm">
