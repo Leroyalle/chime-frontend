@@ -9,6 +9,7 @@ import { useNewMarkSlice } from '@/store';
 import { ListNavElement } from '../../ui';
 import { cn } from '@/lib/utils';
 import { SectionTitle } from './section-title';
+import { LogoutButton } from '../logout-button';
 
 interface Props {
   className?: string;
@@ -19,7 +20,7 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
   const { newMark, setNewMark } = useNewMarkSlice();
 
   return (
-    <DarkLightBlock className={cn('bg-background', className)}>
+    <DarkLightBlock className={cn('bg-background overscroll-contain', className)}>
       <aside>
         <SectionTitle title="Основное" className="mt-0" />
         <ListNavElement>
@@ -73,6 +74,8 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
             </SidebarItem>
           </li>
         </ListNavElement>
+
+        <LogoutButton className="my-4" />
       </aside>
     </DarkLightBlock>
   );

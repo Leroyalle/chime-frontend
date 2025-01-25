@@ -19,7 +19,6 @@ type TUpdateProfile = {
   name: string;
   email: string;
   about: string;
-  avatar: string;
 };
 export const UpdateUserForm: React.FC<Props> = ({ id, name, email, about, avatar, className }) => {
   const { updateProfile, isPending: isPendingUpdate } = useUpdateProfile(id);
@@ -36,20 +35,18 @@ export const UpdateUserForm: React.FC<Props> = ({ id, name, email, about, avatar
       name,
       email,
       about: about ?? '',
-      avatar: avatar,
     },
   });
 
   const onSubmit = (data: TUpdateProfile) => {
     const formdata = new FormData();
     formdata.append('name', data.name);
-    formdata.append('about', data.about ?? '');
+    formdata.append('about', data.about);
     if (selectedFile) formdata.append('avatar', selectedFile);
     updateProfile(formdata);
     setValue('name', data.name);
     setValue('email', data.email);
     setValue('about', data.about);
-    setValue('avatar', data.avatar);
   };
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +60,13 @@ export const UpdateUserForm: React.FC<Props> = ({ id, name, email, about, avatar
         <div>
           <label htmlFor="avatar">
             <Avatar
-              src={selectedFile ? URL.createObjectURL(selectedFile) : getAbsoluteUrl(avatar)}
+              src={
+                selectedFile
+                  ? URL.createObjectURL(selectedFile)
+                  : avatar
+                  ? getAbsoluteUrl(avatar)
+                  : undefined
+              }
             />
           </label>
           <SelectImage id="avatar" name="avatar" onChange={onChangeFile} multiple />

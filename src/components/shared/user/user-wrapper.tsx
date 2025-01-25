@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { DarkLightBlock, Avatar } from '../../ui';
 import { UserActions, UserInfo } from './profile';
 import { UserResponse } from '../../../types/response';
@@ -21,8 +21,6 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
     initialData,
   });
 
-  console.log(initialData);
-
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
       <h2 className="sr-only">Профиль пользователя</h2>
@@ -38,7 +36,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               isBordered
               size="lg"
               className="w-20 h-20 text-large"
-              src="https://avatars.githubusercontent.com/u/158848927?v=4"
+              src={data.user.avatar ? getAbsoluteUrl(data.user.avatar) : undefined}
             />
             <UserActions
               userId={data.user.id}

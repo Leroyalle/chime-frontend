@@ -1,6 +1,6 @@
 'use client';
 import React, { memo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { DarkLightBlock } from '../../ui';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
@@ -14,6 +14,7 @@ interface Props {
   fullName: string;
   createdAt: Date;
   content: string;
+  avatar: string | null;
   images: Image[] | null;
   likeCount: number;
   commentCount: number;
@@ -31,6 +32,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
   fullName,
   createdAt,
   content,
+  avatar,
   images,
   likeCount,
   commentCount,
@@ -50,7 +52,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
               name={fullName}
               description={getRelativeTime(createdAt)}
               avatarProps={{
-                src: 'https://avatars.githubusercontent.com/u/158848927?v=4',
+                src: avatar ? getAbsoluteUrl(avatar) : undefined,
               }}
             />
           </Link>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { Avatar, Input } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib/utils';
@@ -11,11 +11,11 @@ import { WritePostActions } from './write-post-actions';
 import { SelectImage } from '../select-image';
 
 interface Props {
-  avatarUrl: string | null;
+  avatar: string | null;
   className?: string;
 }
 
-export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
+export const WritePost: React.FC<Props> = ({ avatar, className }) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [tagsIsOpen, setTagsIsOpen] = useState(false);
   const [tags, setTags] = useState<Option[]>([]);
@@ -75,7 +75,7 @@ export const WritePost: React.FC<Props> = ({ avatarUrl, className }) => {
       <form className={'flex flex-col gap-y-2'} onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center gap-x-3">
           <Avatar
-            src={avatarUrl || 'https://avatars.githubusercontent.com/u/158848927?v=4'}
+            src={avatar ? getAbsoluteUrl(avatar) : ''}
             size="md"
             className="self-start flex-shrink-0"
           />

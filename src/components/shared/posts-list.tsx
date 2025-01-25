@@ -26,6 +26,7 @@ export const PostsList: React.FC<Props> = ({ items, className }) => {
           fullName={item.author.name}
           createdAt={item.createdAt}
           content={item.content}
+          avatar={item.author.avatar}
           images={item.images}
           likeCount={item.likesCount}
           commentCount={item.commentsCount}

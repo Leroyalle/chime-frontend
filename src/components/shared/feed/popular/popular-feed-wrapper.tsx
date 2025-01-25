@@ -2,7 +2,7 @@
 import React from 'react';
 import { InfinityResponse } from '../../../../types/response';
 import { Post } from '../../../../types/dto';
-import { useInfinityScrollPopularPosts } from '@/lib/hooks';
+import { useGetMeData, useInfinityScrollPopularPosts } from '@/lib/hooks';
 import { WritePost } from '../../write-post';
 import { PostsList } from '../../posts-list';
 import { Spinner } from '@nextui-org/react';
@@ -19,10 +19,10 @@ export const PopularFeedWrapper: React.FC<Props> = ({ initialPosts, className })
     cursor,
     isFetchingNextPage,
   } = useInfinityScrollPopularPosts({ initialPosts });
-
+  const me = useGetMeData();
   return (
     <div className={className}>
-      <WritePost className="mb-10" avatarUrl={''} />
+      <WritePost className="mb-10" avatar={me?.user.avatar || null} />
       {posts ? (
         <>
           <PostsList items={posts} />
