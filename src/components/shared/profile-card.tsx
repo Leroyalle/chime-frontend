@@ -11,7 +11,10 @@ interface Props {
 }
 export const ProfileCard: React.FC<Props> = ({ className }) => {
   const { data: me } = useGetMe();
-  console.log('me data in profile:', me);
+
+  if (!me) {
+    return null;
+  }
   return (
     <div className={cn('p-4 w-full', className)}>
       <div className="flex flex-col w-full items-center">

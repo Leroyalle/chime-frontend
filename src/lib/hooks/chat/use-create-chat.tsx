@@ -3,26 +3,27 @@ import { useRouter } from 'next/navigation';
 import { RoutesEnum } from '../../../types';
 import { hasErrorField } from '@/lib/utils/has-error-field';
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 export const useCreateChat = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const handleCreateChat = async ({ recipientId }: { recipientId: string }) => {
-    try {
-      setIsLoading(true);
-      const { chatId } = await Api.chat.getChatId(recipientId);
+  const createChatMutation = useMutation({
+    mutationFn: ({ recipientId }: { recipientId: string }) => Api.chat.getChatId(recipientId),
+    onSuccess: ({ chatId }) => {
       router.push(`${RoutesEnum.MESSAGES}/${chatId}`);
-    } catch (error) {
+    },
+    onError: (error) => {
       if (hasErrorField(error)) {
         toast.error('Не удалось найти чат', {
           description: 'Попробуйте еще раз',
         });
       }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+  });
 
-  return { createChat: handleCreateChat, isLoading };
+  return {
+    createChat: createChatMutation.mutate,
+    isPending: createChatMutation.isPending,
+    isError: createChatMutation.isError,
+  };
 };

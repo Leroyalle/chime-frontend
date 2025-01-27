@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { Avatar } from '../../../../../ui';
 import dayjs from 'dayjs';
 import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
@@ -11,7 +11,7 @@ interface Props {
   userId: string;
   messageId: string;
   author: string;
-  avatar?: string;
+  avatar: string | null;
   content: string | null;
   contentPost: string | null;
   imagePreview: string | null;
@@ -56,7 +56,11 @@ export const Message: React.FC<Props> = memo(function Message({
               className,
             )}>
             <div className="grid [grid-template-columns:auto_1fr] flex-1 gap-x-3">
-              <Avatar src={avatar} size="md" className="justify-self-start" />
+              <Avatar
+                src={avatar ? getAbsoluteUrl(avatar) : undefined}
+                size="md"
+                className="justify-self-start"
+              />
               <div className="flex flex-1 flex-col gap-y-3">
                 <MainContent userId={userId} author={author} content={content} />
                 {messageType === MessageTypeEnum.POST && (

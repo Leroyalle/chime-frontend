@@ -18,7 +18,7 @@ export const FollowersList: React.FC<Props> = ({ items, className }) => {
             friendId={item.followerId}
             name={item.follower.name}
             alias={item.follower.alias}
-            avatarUrl={item.follower.avatar || ''}
+            avatar={item.follower.avatar}
           />
         </DarkLightBlock>
       ))}

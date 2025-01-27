@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
 import { DarkLightBlock } from '../../ui/dark-light-block';
-import { UserChat } from '@/types';
+import { ChatWithMembers } from '@/types';
 import {
   Button,
   Checkbox,
@@ -22,7 +22,7 @@ import { toast } from 'sonner';
 import { Input } from '@nextui-org/react';
 
 interface Props {
-  items?: UserChat[];
+  items?: ChatWithMembers[];
   onCloseModal?: VoidFunction;
   hasActions?: boolean;
   itemsStyles?: string;
@@ -98,10 +98,7 @@ export const ChatListShareMode: React.FC<Props> = ({
                           </FormControl>
                           <FormLabel className="flex-1 text-current">
                             <ChatItem
-                              chatId={item.id}
-                              imageUrl={item.imageUrl}
-                              name={item.name}
-                              lastMessage={item.lastMessage}
+                              chat={item}
                               hasActions={hasActions}
                               className="pointer-events-none"
                             />

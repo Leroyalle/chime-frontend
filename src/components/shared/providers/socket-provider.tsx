@@ -1,3 +1,4 @@
+'use client';
 import Cookies from 'js-cookie';
 import { Api } from '@/services/api-client';
 import { createContext, useEffect, useRef, ReactNode, useCallback } from 'react';
@@ -13,7 +14,9 @@ import {
   RoutesEnum,
   SocketEventsEnum,
   TokensEnum,
+  ChatWithMembers,
 } from '@/types';
+import { useGetMe } from '@/lib/hooks';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;
@@ -26,8 +29,7 @@ export const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
-  const me = queryClient.getQueryData(Api.users.getMeQueryOptions().queryKey);
-  console.log(me);
+  const { data: me } = useGetMe();
   const router = useRouter();
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
@@ -52,7 +54,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       setNewMark(value);
     });
 
-    socket.current.on(SocketEventsEnum.CHECK_DATA, (data: UserChat[]) => {
+    socket.current.on(SocketEventsEnum.CHECK_DATA, (data: ChatWithMembers[]) => {
       queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
         if (!old) {
           return undefined;
@@ -74,6 +76,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const handleNewMessage = (data: ChatUpdate) => {
+      console.log('new message', data);
       if (me?.user.id !== data.message.UserBase.id) {
         toast(data.message.UserBase.name, {
           description: data.message.content,
@@ -83,11 +86,12 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
-      console.log(me);
 
       queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
+        console.log(old);
         if (!old) {
-          return undefined;
+          queryClient.invalidateQueries(Api.chat.getUserChatsQueryOptions());
+          return old;
         }
 
         const updatedChats = old.map((chat) => {
@@ -102,11 +106,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           updatedChats.push({ ...data.chat, lastMessage: data.message });
         }
 
-        return updatedChats.sort(
-          (a, b) =>
-            new Date(b.lastMessage.createdAt).getTime() -
-            new Date(a.lastMessage.createdAt).getTime(),
-        );
+        return updatedChats.sort((a, b) => {
+          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
+          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
+          return bDate - aDate;
+        });
       });
 
       queryClient.setQueryData(
@@ -168,16 +172,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           updatedChats.push({ ...data.chat, lastMessage: data.message });
         }
 
-        return updatedChats.sort(
-          (a, b) =>
-            new Date(b.lastMessage.createdAt).getTime() -
-            new Date(a.lastMessage.createdAt).getTime(),
-        );
+        return updatedChats.sort((a, b) => {
+          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
+          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
+          return bDate - aDate;
+        });
       });
     };
 
     const handleDeleteMessage = (data: ChatUpdate) => {
-      console.log('DELETED:', data);
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
@@ -219,11 +222,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           updatedChats.push({ ...data.chat, lastMessage: data.chat.lastMessage });
         }
 
-        return updatedChats.sort(
-          (a, b) =>
-            new Date(b.lastMessage.createdAt).getTime() -
-            new Date(a.lastMessage.createdAt).getTime(),
-        );
+        return updatedChats.sort((a, b) => {
+          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
+          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
+          return bDate - aDate;
+        });
       });
     };
 

@@ -1,24 +1,22 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { Avatar } from '@/components/ui';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { User, RoutesEnum } from '@/types';
-import { useGetMe } from '@/lib/hooks';
+import { RoutesEnum, User } from '@/types';
 import Link from 'next/link';
 
 interface Props {
-  name: string;
-  members: User[];
-  avatar?: string;
+  correspondent?: User;
   className?: string;
 }
 
-export const ChatHead: React.FC<Props> = ({ name, members, avatar, className }) => {
+export const ChatHead: React.FC<Props> = ({ correspondent, className }) => {
   const router = useRouter();
-  const { data: userData } = useGetMe();
 
-  const membersExcludeUser = members.filter((member) => member.id != userData?.user.id);
+  if (!correspondent) {
+    return null;
+  }
 
   return (
     <div
@@ -30,18 +28,17 @@ export const ChatHead: React.FC<Props> = ({ name, members, avatar, className }) 
         <ArrowLeft />
       </button>
 
-      {membersExcludeUser.map((member) => (
-        <div
-          key={member.id}
-          className="flex flex-row gap-3 w-full left-0 justify-start items-center">
-          <Avatar src={avatar} size="md" />
-          <h3 className="text-large m-0 h-min text-blue-700 font-semibold">
-            <Link className="break-words break-all" href={`${RoutesEnum.USER}/${member.id}`}>
-              {name}
-            </Link>
-          </h3>
-        </div>
-      ))}
+      <div className="flex flex-row gap-3 w-full left-0 justify-start items-center">
+        <Avatar
+          src={correspondent.avatar ? getAbsoluteUrl(correspondent.avatar) : undefined}
+          size="md"
+        />
+        <h3 className="text-large m-0 h-min text-blue-700 font-semibold">
+          <Link className="break-words break-all" href={`${RoutesEnum.USER}/${correspondent.id}`}>
+            {correspondent.name}
+          </Link>
+        </h3>
+      </div>
 
       <button onClick={() => {}}>
         <MoreVertical />

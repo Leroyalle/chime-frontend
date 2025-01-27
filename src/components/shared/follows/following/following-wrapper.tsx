@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import { InfinityResponse } from '../../../../types/response';
 import { useInfinityScrollUserFollowing } from '@/lib/hooks';
@@ -19,10 +19,6 @@ export const FollowingWrapper: React.FC<Props> = ({ userId, initialData, classNa
     userId,
     initialData,
   });
-
-  useEffect(() => {
-    console.log('mount');
-  }, []);
 
   if (isPending) {
     return <div>Загрузка...</div>;

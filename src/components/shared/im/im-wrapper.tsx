@@ -18,7 +18,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
   const isMounted = React.useRef(false);
   const [searchValue, setSearchValue] = useState('');
   const searchQuery = useDebounce(searchValue, 500);
-  const { data, isPending } = useQuery({
+  const { data: chats, isPending } = useQuery({
     ...Api.chat.getUserChatsQueryOptions(searchQuery),
   });
 
@@ -38,7 +38,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
     );
   }
 
-  if ((!data || data.length === 0) && !isMounted.current) {
+  if ((!chats || chats.length === 0) && !isMounted.current) {
     return <EmptyState title={'Нет чатов ;('} text={'Заводите друзей и общайтейсь!'} />;
   }
 
@@ -47,7 +47,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
       <h2 className="sr-only">Ваши чаты</h2>
       <Header className="mb-4" />
       <SearchChats value={searchValue} onChange={setSearchValue} className="mb-2 max-w-80" />
-      <ChatList items={data} />
+      <ChatList items={chats} itemsStyles="hover:bg-background" />
     </section>
   );
 };

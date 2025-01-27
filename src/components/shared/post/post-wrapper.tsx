@@ -30,6 +30,7 @@ export const PostWrapper: React.FC<Props> = ({ initialData, className }) => {
         userId={postItem.authorId}
         postId={postItem.id}
         fullName={postItem.author.name}
+        avatar={postItem.author.avatar}
         createdAt={postItem.createdAt}
         content={postItem.content}
         images={postItem.images}

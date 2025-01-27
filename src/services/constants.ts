@@ -13,6 +13,7 @@ export enum ApiRouter {
   FRIENDS = '/follow/friends',
   REFRESH = '/refresh',
   REGISTER = '/auth/email/sendCode',
+  LOGIN = '/auth/email/login',
   VERIFY = '/auth/email/verify',
   CHAT = '/chat',
   CHAT_INFO = '/chat/info',

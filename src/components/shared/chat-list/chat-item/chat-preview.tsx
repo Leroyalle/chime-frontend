@@ -1,12 +1,13 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { MessageDto } from '@/types';
 import { getRelativeTime } from '@/lib/utils';
 import { messageTypeData } from './constants';
+import { Avatar } from '@/components/ui';
 
 interface Props {
-  imageUrl?: string;
-  name: string;
+  avatar?: string | null;
+  name?: string;
   // FIXME:  убрать optional
   lastMessage?: MessageDto;
   lastMessageAuthor: string | null;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export const ChatPreview: React.FC<Props> = ({
-  imageUrl,
+  avatar,
   name,
   lastMessage,
   lastMessageAuthor,
@@ -26,10 +27,16 @@ export const ChatPreview: React.FC<Props> = ({
       ? `${lastMessage?.content?.slice(0, 10)}...`
       : lastMessage?.content;
 
+  console.log(avatar);
+
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>
       <div className="w-[52px] h-[52px] rounded-full overflow-hidden flex-shrink-0">
-        <img className="object-cover w-full h-full" src={imageUrl} alt={name + 'avatar'} />
+        <Avatar
+          className="object-cover w-full h-full"
+          src={avatar ? getAbsoluteUrl(avatar) : undefined}
+          alt=""
+        />
       </div>
       <div className="flex flex-col w-full">
         <div className="flex items-center justify-between gap-x-2">

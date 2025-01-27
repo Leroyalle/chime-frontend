@@ -20,9 +20,9 @@ export const getMessagesByChatId = async ({
   ).data;
 };
 
-export const getUserChats = async (query: string = ''): Promise<UserChat[]> => {
+export const getUserChats = async (query: string = ''): Promise<ChatWithMembers[]> => {
   const hasQuery = query ? `?query=${query}` : '';
-  return (await instance.get<UserChat[]>(`${ApiRouter.CHAT}${hasQuery}`)).data;
+  return (await instance.get<ChatWithMembers[]>(`${ApiRouter.CHAT}${hasQuery}`)).data;
 };
 
 export const getChatById = async ({
@@ -61,7 +61,7 @@ export const getUserChatsQueryOptions = (query: string = '') => {
     queryKey: ['user-chats', query],
     queryFn: () => getUserChats(query),
     refetchOnWindowFocus: false,
-    gcTime: 0,
     staleTime: 1 * 60 * 1000,
+    retry: false,
   });
 };

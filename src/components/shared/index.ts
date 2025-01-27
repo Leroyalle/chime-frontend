@@ -1,5 +1,5 @@
 export { Container } from '../ui/container';
-export { Providers } from './providers';
+export { Providers, RootProviders } from './providers';
 export { ProfileCard } from './profile-card';
 export { Sidebar } from './sidebar';
 export { ProfileButton } from './profile-button';

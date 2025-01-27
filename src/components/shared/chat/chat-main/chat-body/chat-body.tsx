@@ -50,7 +50,7 @@ export const ChatBody: React.FC<Props> = ({
           contentPost={message.post?.content ?? null}
           postCreatedAt={message.post?.createdAt || null}
           imagePreview={message.post?.images ? message.post.images[0]?.url : null}
-          avatar="https://avatars.githubusercontent.com/u/158848927?v=4"
+          avatar={message.UserBase.avatar}
           isSender={message.UserBase.id == userData?.user.id}
           messageType={message.type}
           createdAt={message.createdAt}

@@ -1,4 +1,4 @@
-import { SocketContext } from '@/components/shared/socket-provider';
+import { SocketContext } from '@/components/shared/providers/socket-provider';
 import { useContext } from 'react';
 
 export const useSocket = () => {

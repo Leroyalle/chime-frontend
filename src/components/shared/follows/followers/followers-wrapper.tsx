@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import { useInfinityScrollUserFollowers } from '@/lib/hooks';
 import { FollowersList } from './followers-list';
@@ -18,9 +18,6 @@ export const FollowersWrapper: React.FC<Props> = ({ userId, initialData, classNa
     userId,
     initialData,
   });
-  useEffect(() => {
-    console.log('mount');
-  }, []);
 
   if (isPending) {
     return <div>Loading...</div>;

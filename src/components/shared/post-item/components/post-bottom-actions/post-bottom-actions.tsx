@@ -35,7 +35,6 @@ export const PostBottomActions: React.FC<Props> = ({
   isBookmarked,
   className,
 }) => {
-  console.log('IMAGES:', images);
   const pathName = usePathname();
   const { likePost, isPending: isPendingLike } = useLikePost(postId, userId);
   const { unlikePost, isPending: isPendingUnlike } = useUnlikePost(postId, userId);

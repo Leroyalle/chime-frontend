@@ -5,7 +5,9 @@ import { instance } from './instance';
 import { queryOptions } from '@tanstack/react-query';
 
 type TRegister = {
+  name: string;
   email: string;
+  password: string;
 };
 
 export const register = async (userData: TRegister): Promise<SendEmailResponse> => {
@@ -20,7 +22,7 @@ export const verifyCode = async (data: {
 };
 
 export const login = async (userData: Omit<TRegister, 'name'>): Promise<TAuthTokens> => {
-  return (await instance.post<TAuthTokens>(`/login`, userData)).data;
+  return (await instance.post<TAuthTokens>(ApiRouter.LOGIN, userData)).data;
 };
 
 export const current = async (headers?: AxiosRequestHeaders): Promise<UserResponse> => {
@@ -49,11 +51,8 @@ export const getMeQueryOptions = () => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => current(),
-    // staleTime: Infinity,
-    gcTime: Infinity,
-    refetchOnMount: false,
+    staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
     retry: false,
   });
 };
@@ -62,6 +61,7 @@ export const getUserQueryOptions = (id: string) => {
   return queryOptions({
     queryKey: ['user', id],
     queryFn: () => getUserById({ id }),
-    gcTime: Infinity,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 };

@@ -4,6 +4,7 @@ import { User } from './response';
 export type ChatUpdate = {
   chat: UserChat;
   message: MessageDto;
+  recipient: User;
 };
 
 export type MessageRequest = {
@@ -13,8 +14,9 @@ export type MessageRequest = {
 export type UserChat = {
   id: string;
   name: string;
+  avatar: string | null;
   imageUrl: string;
-  lastMessage: MessageDto;
+  lastMessage: MessageDto | null;
   createdAt: Date;
 };
 

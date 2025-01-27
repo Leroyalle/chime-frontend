@@ -4,7 +4,6 @@ import { Post } from '../../../../types/dto';
 
 type TData = InfiniteData<InfinityResponse<Post[]>, unknown> | undefined;
 export const toggleBookmark = (postId: string, data: TData, action: 'add' | 'remove') => {
-  console.log(data);
   if (!data) {
     return undefined;
   }

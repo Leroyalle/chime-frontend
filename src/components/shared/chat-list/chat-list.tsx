@@ -2,11 +2,11 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
 import { DarkLightBlock } from '../../ui/dark-light-block';
-import { UserChat } from '@/types';
+import { ChatWithMembers } from '@/types';
 
 interface Props {
   hasActions?: boolean;
-  items?: UserChat[];
+  items?: ChatWithMembers[];
   itemsStyles?: string;
   className?: string;
 }
@@ -18,16 +18,8 @@ export const ChatList: React.FC<Props> = ({ items, itemsStyles, hasActions, clas
 
   return (
     <DarkLightBlock className={cn('flex flex-col gap-y-2 p-2 w-full overflow-y-auto', className)}>
-      {items.map((item) => (
-        <ChatItem
-          key={item.id}
-          chatId={item.id}
-          imageUrl={item.imageUrl}
-          name={item.name}
-          lastMessage={item.lastMessage}
-          hasActions={hasActions}
-          className={itemsStyles}
-        />
+      {items.map((chat) => (
+        <ChatItem key={chat.id} chat={chat} hasActions={hasActions} className={itemsStyles} />
       ))}
     </DarkLightBlock>
   );

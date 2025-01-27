@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '@nextui-org/react';
@@ -20,7 +21,7 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
     }
   }, [isError]);
 
-  if (isPending) {
+  if (isPending || isError) {
     return (
       <Spinner
         color="warning"

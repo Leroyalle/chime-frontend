@@ -153,13 +153,11 @@ export const getUserLikedPostsInfinityQueryOptions = () => {
       if (!response || !response.data) {
         throw new Error('Failed to fetch liked posts');
       }
-      console.log('RESPONSE', response, 'pageParam:', pageParam);
       return response;
     },
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      console.log('lastPage:', lastPage, 'allPages:', allPages);
       if (lastPage.data.length === 0) {
         return undefined;
       }

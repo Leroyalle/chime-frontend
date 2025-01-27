@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { User } from '@nextui-org/react';
 import { FriendActions } from './friend-actions';
 import { RoutesEnum } from '../../../types';
@@ -9,11 +9,11 @@ interface Props {
   friendId: string;
   name: string;
   alias: string;
-  avatarUrl: string;
+  avatar: string | null;
   className?: string;
 }
 
-export const Friend: React.FC<Props> = ({ friendId, name, alias, avatarUrl, className }) => {
+export const Friend: React.FC<Props> = ({ friendId, name, alias, avatar, className }) => {
   return (
     <div className={cn('flex justify-between items-center', className)}>
       <User
@@ -24,7 +24,7 @@ export const Friend: React.FC<Props> = ({ friendId, name, alias, avatarUrl, clas
           </Link>
         }
         avatarProps={{
-          src: avatarUrl,
+          src: avatar ? getAbsoluteUrl(avatar) : undefined,
         }}
       />
       <FriendActions />

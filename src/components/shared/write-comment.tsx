@@ -5,7 +5,7 @@ import { Textarea } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib/utils';
 import { useCreateComment, useUpdateComment } from '@/lib/hooks';
-import { Loader, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 import { Comment } from '../../types/dto';
 import { DarkLightBlock, EditableMessage } from '../ui';
@@ -77,19 +77,16 @@ export const WriteComment: React.FC<Props> = ({
           }}
           render={({ field }) => (
             <Textarea
+              {...field}
               placeholder="Комментарий..."
               variant="faded"
+              isDisabled={isPendingCreateComment || isPendingUpdateComment}
               color="primary"
               endContent={
                 <button color="warning" type="submit" className="max-w-32">
-                  {!isPendingCreateComment || !isPendingUpdateComment ? (
-                    <Send />
-                  ) : (
-                    <Loader className="animate-spin" />
-                  )}
+                  <Send />
                 </button>
               }
-              {...field}
             />
           )}
         />

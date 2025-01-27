@@ -3,38 +3,28 @@ import { cn } from '@/lib/utils';
 import { ChatPreview as Preview } from './chat-preview';
 import Link from 'next/link';
 import { ChatActions as Actions } from './chat-actions';
-import { MessageDto, RoutesEnum } from '@/types';
+import { ChatWithMembers, RoutesEnum } from '@/types';
 import { useGetMeData } from '@/lib/hooks';
 
 interface Props {
-  chatId: string;
-  imageUrl?: string;
-  name: string;
-  lastMessage: MessageDto;
+  chat: ChatWithMembers;
   hasActions?: boolean;
-  isShareMode?: boolean;
   className?: string;
 }
 
-export const ChatItem: React.FC<Props> = ({
-  chatId,
-  imageUrl,
-  name,
-  lastMessage,
-  hasActions = true,
-  className,
-}) => {
+export const ChatItem: React.FC<Props> = ({ chat, hasActions = true, className }) => {
   const me = useGetMeData();
-  const messageAuthor = lastMessage?.UserBase?.name === me?.user.name ? 'Вы:' : null;
+  const correspondent = chat.members.find((member) => member.id !== me?.user.id);
+  const messageAuthor = chat.lastMessage?.UserBase?.name === me?.user.name ? 'Вы:' : null;
 
   return (
-    <div className={cn('relative', className)}>
-      <Link href={`${RoutesEnum.MESSAGES}/${chatId}`} className="w-full select-none">
-        <div className={'p-2 rounded-xl transition-all hover:bg-primary-light'}>
+    <div className={cn('relative rounded-xl transition-all hover:bg-primary-light', className)}>
+      <Link href={`${RoutesEnum.MESSAGES}/${chat.id}`} className="w-full select-none">
+        <div className="p-2">
           <Preview
-            imageUrl={imageUrl}
-            name={name}
-            lastMessage={lastMessage}
+            avatar={correspondent?.avatar}
+            name={correspondent?.name}
+            lastMessage={chat.lastMessage}
             lastMessageAuthor={messageAuthor}
           />
         </div>

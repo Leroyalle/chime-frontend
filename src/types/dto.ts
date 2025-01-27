@@ -78,6 +78,7 @@ export interface MessageDto {
   UserBase: {
     id: string;
     name: string;
+    avatar: string | null;
   };
   post: Post | null;
 }
@@ -116,7 +117,7 @@ export type Friend = {
   role: string;
   alias: string;
   name: string;
-  avatarUrl: string | null;
+  avatar: string | null;
   location: string | null;
   age: number | null;
   status: string | null;

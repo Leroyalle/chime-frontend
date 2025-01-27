@@ -19,6 +19,10 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
   const { data: me } = useGetMe();
   const { newMark, setNewMark } = useNewMarkSlice();
 
+  if (!me) {
+    return null;
+  }
+
   return (
     <DarkLightBlock className={cn('bg-background overscroll-contain', className)}>
       <aside>

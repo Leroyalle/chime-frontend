@@ -14,8 +14,7 @@ interface Props {
 }
 
 export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
-  // const { createChat } = useSocket();
-  const { createChat, isLoading } = useCreateChat();
+  const { createChat, isPending: isPendingChat } = useCreateChat();
   const { data } = useQuery({
     ...Api.users.getUserQueryOptions(initialData.user.id),
     initialData,
@@ -43,7 +42,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               isOwner={data.isOwner}
               isFollowing={data.user.isFollowing}
               onClickChat={createChat}
-              onClickChatLoading={isLoading}
+              onClickChatLoading={isPendingChat}
             />
           </div>
           <UserInfo
