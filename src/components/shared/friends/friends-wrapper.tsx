@@ -15,13 +15,14 @@ interface Props {
 }
 
 export const FriendsWrapper: React.FC<Props> = ({ userId, initialData, className }) => {
-  const { data, cursor, isPending, isError, isFetchingNextPage } = useInfinityScrollUserFriends({
-    userId,
-    initialData,
-  });
+  const { data, cursor, isFetching, isPending, isError, isFetchingNextPage } =
+    useInfinityScrollUserFriends({
+      userId,
+      initialData,
+    });
 
-  if (isPending) {
-    return <div>Loading...</div>;
+  if (isPending || isFetching) {
+    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
   }
 
   if (isError) {
@@ -36,7 +37,6 @@ export const FriendsWrapper: React.FC<Props> = ({ userId, initialData, className
     <section className={cn('w-full m-auto', className)}>
       <h2 className="text-2xl text-start mb-4">Друзья</h2>
       <FriendsList items={data} />
-      {/* FIXME: багается инвалидация друзей при курсоре */}
       {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </section>

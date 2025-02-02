@@ -14,29 +14,23 @@ interface Props {
 }
 
 export const FollowersWrapper: React.FC<Props> = ({ userId, initialData, className }) => {
-  const { data, isPending, cursor, isFetchingNextPage } = useInfinityScrollUserFollowers({
+  const { data, isFetching, cursor, isFetchingNextPage } = useInfinityScrollUserFollowers({
     userId,
     initialData,
   });
 
-  if (isPending) {
-    return <div>Loading...</div>;
+  if (isFetching) {
+    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
   }
 
-  if (data && data.length === 0) {
-    return (
-      <EmptyState
-        title="Пока нет подписчиков"
-        text="Ищите друзей и общайтесь, слава придет сама!"
-      />
-    );
+  if (!data || data.length === 0) {
+    return <EmptyState title="Пока нет подписчиков" />;
   }
 
   return (
     <section className={cn('w-full m-auto', className)}>
       <h2 className="mb-2">Подписчики</h2>
       <FollowersList items={data} className="w-full" />
-      {/* FIXME: багается инвалидация подписок при курсоре */}
       {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </section>

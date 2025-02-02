@@ -33,16 +33,14 @@ export const removeBookmark = async (postId: string): Promise<void> => {
 };
 
 export const getUserBookmarksInfinityQueryOptions = () => {
+  const perPage = 10;
   return infiniteQueryOptions({
     queryKey: ['bookmark', 'list'],
-    queryFn: () => findAllBookmarks({}),
+    queryFn: (meta) => findAllBookmarks({ page: meta.pageParam, perPage }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.data.length === 0) {
-        return undefined;
-      }
-      return lastPage.data.length + 1;
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.data.length === 0 ? undefined : allPages.length + 1;
     },
     refetchOnWindowFocus: false,
   });

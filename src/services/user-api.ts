@@ -51,7 +51,7 @@ export const getMeQueryOptions = () => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => current(),
-    staleTime: 1 * 60 * 1000,
+    // staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,
   });

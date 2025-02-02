@@ -14,21 +14,24 @@ interface Props {
 export const LikedPostsWrapper: React.FC<Props> = ({ initialData }) => {
   const {
     data: likedPosts,
-    // cursor,
+    isFetching,
+    cursor,
     isFetchingNextPage,
   } = useInfinityScrollUserLikedPosts(initialData);
+
+  if (!likedPosts || likedPosts.length === 0) {
+    return <EmptyState title="К сожалению, тут пусто" />;
+  }
+
+  if (isFetching) {
+    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+  }
+
   return (
     <>
-      {likedPosts ? (
-        <>
-          <PostsList items={likedPosts} />
-          {/* FIXME: при наличии курсора багается инвалидация лайкнутых постов, кэш старый при валидном ответе сервера */}
-          {/* {likedPosts && cursor} */}
-          {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
-        </>
-      ) : (
-        <EmptyState title="К сожалению, тут пусто" />
-      )}
+      <PostsList items={likedPosts} />
+      {cursor}
+      {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </>
   );
 };

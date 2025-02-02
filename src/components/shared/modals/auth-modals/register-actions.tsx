@@ -16,6 +16,7 @@ export const RegisterActions: React.FC<Props> = ({ onChangeTab }) => {
     setCurrentRegisterAction('code');
     setUserId(userId);
   };
+
   return (
     <>
       {currentRegisterAction === 'credentials' ? (

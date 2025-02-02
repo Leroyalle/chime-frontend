@@ -14,7 +14,6 @@ import {
   RoutesEnum,
   SocketEventsEnum,
   TokensEnum,
-  ChatWithMembers,
 } from '@/types';
 import { useGetMe } from '@/lib/hooks';
 
@@ -54,15 +53,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       setNewMark(value);
     });
 
-    socket.current.on(SocketEventsEnum.CHECK_DATA, (data: ChatWithMembers[]) => {
-      queryClient.setQueryData(Api.chat.getUserChatsQueryOptions().queryKey, (old) => {
-        if (!old) {
-          return undefined;
-        }
-        return data;
-      });
-    });
-
     return () => {
       if (socket.current) {
         socket.current.disconnect();
@@ -76,7 +66,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const handleNewMessage = (data: ChatUpdate) => {
-      console.log('new message', data);
       if (me?.user.id !== data.message.UserBase.id) {
         toast(data.message.UserBase.name, {
           description: data.message.content,
@@ -88,7 +77,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
 
       queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        console.log(old);
         if (!old) {
           queryClient.invalidateQueries(Api.chat.getUserChatsQueryOptions());
           return old;

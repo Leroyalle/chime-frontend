@@ -53,8 +53,8 @@ export const WriteComment: React.FC<Props> = ({
       setValue('comment', '');
     } catch (error) {
       if (hasErrorField(error)) {
-        console.error(error.data.error);
-        toast.error('Что-то пошло не так! Попробуйте еще раз');
+        console.error(error);
+        toast.error(`${error.response.data.message}`);
       }
     }
   };

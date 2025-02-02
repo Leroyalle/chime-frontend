@@ -13,22 +13,26 @@ interface Props {
 
 export const BookmarksWrapper: React.FC<Props> = ({ initialData }) => {
   const {
-    data: likedPosts,
-    // cursor,
+    data: bookmarks,
+    isFetching,
+
+    cursor,
     isFetchingNextPage,
   } = useInfinityScrollUserBookmarks(initialData);
+
+  if (isFetching) {
+    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+  }
+
+  if (!bookmarks || bookmarks.length === 0) {
+    return <EmptyState title="Вы пока не добавили закладок" />;
+  }
+
   return (
     <>
-      {likedPosts ? (
-        <>
-          <PostsList items={likedPosts} />
-          {/* FIXME: при наличии курсора багается инвалидация лайкнутых постов, кэш старый при валидном ответе сервера */}
-          {/* {likedPosts && cursor} */}
-          {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
-        </>
-      ) : (
-        <EmptyState title="Вы пока не добавили закладок" />
-      )}
+      <PostsList items={bookmarks} />
+      {cursor}
+      {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </>
   );
 };

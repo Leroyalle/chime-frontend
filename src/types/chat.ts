@@ -4,7 +4,6 @@ import { User } from './response';
 export type ChatUpdate = {
   chat: UserChat;
   message: MessageDto;
-  recipient: User;
 };
 
 export type MessageRequest = {

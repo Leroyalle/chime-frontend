@@ -14,11 +14,12 @@ export const useInfinityScrollUserFriends = ({
 }) => {
   const { ref, inView } = useInView();
 
-  const { data, isPending, isError, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    ...Api.follow.getFriendsInfinityQueryOptions(userId),
-    initialData: { pages: [initialData], pageParams: [1] },
-    enabled: !!userId,
-  });
+  const { data, isPending, isFetching, isError, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      ...Api.follow.getFriendsInfinityQueryOptions(userId),
+      initialData: { pages: [initialData], pageParams: [1] },
+      enabled: !!userId,
+    });
 
   useEffect(() => {
     if (inView) {
@@ -28,5 +29,5 @@ export const useInfinityScrollUserFriends = ({
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, cursor, isPending, isError, isFetchingNextPage };
+  return { data, cursor, isPending, isFetching, isError, isFetchingNextPage };
 };

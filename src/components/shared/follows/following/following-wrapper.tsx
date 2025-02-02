@@ -15,24 +15,23 @@ interface Props {
 }
 
 export const FollowingWrapper: React.FC<Props> = ({ userId, initialData, className }) => {
-  const { data, isPending, cursor, isFetchingNextPage } = useInfinityScrollUserFollowing({
+  const { data, isFetching, cursor, isFetchingNextPage } = useInfinityScrollUserFollowing({
     userId,
     initialData,
   });
 
-  if (isPending) {
-    return <div>Загрузка...</div>;
+  if (isFetching) {
+    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
   }
 
-  if (data && data.length === 0) {
-    return <EmptyState title="Нет подписок" text="Сделайте первый шаг!" />;
+  if (!data || data.length === 0) {
+    return <EmptyState title="Пока нет подписок" />;
   }
 
   return (
     <section className={cn('w-full m-auto', className)}>
       <h2 className="mb-2">Подписки</h2>
-      {data && <FollowingList items={data} className="w-full" />}
-      {/* FIXME: багается инвалидация подписок при курсоре */}
+      <FollowingList items={data} className="w-full" />
       {cursor}
       {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
     </section>

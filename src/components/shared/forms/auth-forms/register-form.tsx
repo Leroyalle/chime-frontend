@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, hasErrorField } from '@/lib/utils';
 import { Button, Input } from '@nextui-org/react';
 import { Mail, Lock, Notebook } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
@@ -37,7 +37,12 @@ export const RegisterForm: React.FC<Props> = ({ className, onSuccess, onChangeAc
         setValue('email', '');
         return 'Письмо отправлено! Проверьте указанную почту';
       },
-      error: 'Что-то пошло не так! Попробуйте еще раз',
+      error: (error) => {
+        if (hasErrorField(error)) {
+          console.error(error);
+          return `${error.response?.data.message}`;
+        }
+      },
     });
   };
 

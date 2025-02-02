@@ -8,10 +8,11 @@ import { InfinityResponse } from '../../../../types/response';
 export const useInfinityScrollUserLikedPosts = (initialData: InfinityResponse<Post[]>) => {
   const { ref, inView } = useInView();
 
-  const { data, isPending, isError, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    ...Api.posts.getUserLikedPostsInfinityQueryOptions(),
-    initialData: { pages: [initialData], pageParams: [1] },
-  });
+  const { data, isPending, isFetching, isError, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      ...Api.posts.getUserLikedPostsInfinityQueryOptions(),
+      initialData: { pages: [initialData], pageParams: [1] },
+    });
 
   useEffect(() => {
     if (inView) {
@@ -21,5 +22,5 @@ export const useInfinityScrollUserLikedPosts = (initialData: InfinityResponse<Po
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, isPending, isError, cursor, isFetchingNextPage };
+  return { data, isPending, isFetching, isError, cursor, isFetchingNextPage };
 };

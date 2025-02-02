@@ -148,20 +148,11 @@ export const getUserLikedPostsInfinityQueryOptions = () => {
   const perPage = 10;
   return infiniteQueryOptions({
     queryKey: ['posts', 'list', 'liked'],
-    queryFn: async ({ pageParam = 1 }) => {
-      const response = await getUserLikedPosts({ page: pageParam, perPage });
-      if (!response || !response.data) {
-        throw new Error('Failed to fetch liked posts');
-      }
-      return response;
-    },
+    queryFn: (meta) => getUserLikedPosts({ page: meta.pageParam, perPage }),
     initialPageParam: 1,
     select: ({ pages }) => pages.flatMap((page) => page.data),
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.data.length === 0) {
-        return undefined;
-      }
-      return lastPageParam + 1;
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.data.length < perPage ? undefined : allPages.length + 1;
     },
     refetchOnWindowFocus: false,
   });
