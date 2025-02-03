@@ -18,9 +18,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
   const isMounted = React.useRef(false);
   const [searchValue, setSearchValue] = useState('');
   const searchQuery = useDebounce(searchValue, 500);
-  const { data: chats, isPending } = useQuery({
-    ...Api.chat.getUserChatsQueryOptions(searchQuery),
-  });
+  const { data: chats, isFetching } = useQuery(Api.chat.getUserChatsQueryOptions(searchQuery));
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -28,7 +26,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
     }
   }, []);
 
-  if (isPending && !isMounted.current) {
+  if (isFetching && !isMounted.current) {
     return (
       <Spinner
         color="warning"

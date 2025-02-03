@@ -17,13 +17,9 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   const isMounted = React.useRef(false);
   const [searchValue, setSearchValue] = useState('');
   const searchQuery = useDebounce(searchValue, 500);
-  const {
-    data: chats,
-    isLoading,
-    isFetching: isFetchingChats,
-  } = useQuery({
-    ...Api.chat.getUserChatsQueryOptions(searchQuery),
-  });
+  const { data: chats, isFetching: isFetchingChats } = useQuery(
+    Api.chat.getUserChatsQueryOptions(searchQuery),
+  );
 
   useEffect(() => {
     // каждый перезапрос при изменении searchValue триггерит загрузку
@@ -32,7 +28,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
     }
   }, []);
 
-  if (isLoading && !isMounted.current) {
+  if (isFetchingChats && !isMounted.current) {
     return <Skeleton className={cn('w-full', className)} />;
   }
 
