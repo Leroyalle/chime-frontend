@@ -5,11 +5,11 @@ import { TokensEnum } from '../../../types';
 import { Api } from '@/services/api-client';
 
 export default async function Bookmarks() {
+  const cookiesStore = await cookies();
+  const headers = new AxiosHeaders({
+    Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
+  });
   try {
-    const cookiesStore = await cookies();
-    const headers = new AxiosHeaders({
-      Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
-    });
     const bookmarks = await Api.bookmark.findAllBookmarks({ headers });
     return <BookmarksWrapper initialData={bookmarks} />;
   } catch (error) {

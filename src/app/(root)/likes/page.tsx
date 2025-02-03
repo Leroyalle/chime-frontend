@@ -5,11 +5,11 @@ import { TokensEnum } from '../../../types';
 import { Api } from '@/services/api-client';
 
 export default async function Likes() {
+  const cookiesStore = await cookies();
+  const headers = new AxiosHeaders({
+    Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
+  });
   try {
-    const cookiesStore = await cookies();
-    const headers = new AxiosHeaders({
-      Authorization: `Bearer ${cookiesStore.get(TokensEnum.JWT)?.value}`,
-    });
     const likedPosts = await Api.posts.getUserLikedPosts({ headers });
     return <LikedPostsWrapper initialData={likedPosts} />;
   } catch (error) {
