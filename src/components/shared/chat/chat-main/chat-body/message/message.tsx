@@ -77,7 +77,9 @@ export const Message: React.FC<Props> = memo(function Message({
           <div className="flex flex-col justify-between items-end">
             <span className="text-sm">{dayjs(createdAt).format('HH:mm')}</span>
             {dayjs(updatedAt).isAfter(createdAt) && (
-              <span className="text-xs text-white/60">изменено</span>
+              <span className={cn('text-xs', isSender ? 'text-white/60' : 'text-black/70')}>
+                изменено
+              </span>
             )}
           </div>
         </div>

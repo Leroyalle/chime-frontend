@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { Avatar } from '@/components/ui';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { RoutesEnum, User } from '@/types';
 import Link from 'next/link';
 
@@ -36,10 +36,6 @@ export const ChatHead: React.FC<Props> = ({ correspondent, className }) => {
           </Link>
         </h3>
       </div>
-
-      <button onClick={() => {}}>
-        <MoreVertical />
-      </button>
     </div>
   );
 };

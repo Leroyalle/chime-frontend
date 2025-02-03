@@ -46,7 +46,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
       <h2 className="sr-only">Ваши чаты</h2>
       <Header className="mb-4" />
       <SearchChats value={searchValue} onChange={setSearchValue} className="mb-2 max-w-80" />
-      <ChatList items={chats} itemsStyles="hover:bg-background" />
+      <ChatList items={chats} hasActions={false} itemsStyles="hover:bg-background" />
     </section>
   );
 };

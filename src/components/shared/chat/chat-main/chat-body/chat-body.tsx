@@ -28,7 +28,7 @@ export const ChatBody: React.FC<Props> = ({
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, []);
+  }, [messages]);
 
   if (!messages || messages.length === 0) {
     return <EmptyState title="Нет сообщений" text="Напишите первое сообщение!" />;

@@ -20,6 +20,7 @@ export const ChatMain: React.FC<Props> = ({
   isFetchingNextPage,
 }) => {
   const [editableMessage, setEditableMessage] = useState<MessageDto | null>(null);
+
   return (
     <>
       <ChatBody

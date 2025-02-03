@@ -54,6 +54,7 @@ export const getMeQueryOptions = () => {
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,
+    gcTime: Infinity,
   });
 };
 
