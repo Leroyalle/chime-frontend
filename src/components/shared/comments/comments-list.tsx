@@ -34,7 +34,7 @@ export const CommentsList: React.FC<Props> = ({
           postId={item.postId}
           authorId={item.user.id}
           author={item.user.name}
-          avatar={item.user.avatarUrl || ''}
+          avatar={item.user.avatar}
           content={item.content}
           createdAt={item.createdAt}
           isOwner={userData?.user.id === item.user.id}

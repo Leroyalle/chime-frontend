@@ -46,15 +46,12 @@ export const WritePost: React.FC<Props> = ({ avatar, className }) => {
   const onSubmit = async (data: { post: string }) => {
     try {
       const formData = new FormData();
-      formData.append('content', data.post);
 
+      formData.append('content', data.post);
       selectedFiles.forEach((file) => {
         formData.append(`postImages`, file);
       });
-
-      if (tags.length > 0) {
-        formData.append('tags', JSON.stringify(tags));
-      }
+      if (tags.length > 0) formData.append('tags', JSON.stringify(tags));
 
       createPost({ postData: formData });
       setSelectedFiles([]);
@@ -62,10 +59,8 @@ export const WritePost: React.FC<Props> = ({ avatar, className }) => {
       setTags([]);
     } catch (error) {
       if (hasErrorField(error)) {
-        console.error(error.data.error);
-        toast.error('Не удалось создать пост!', {
-          description: 'Попробуйте еще раз',
-        });
+        console.error(error);
+        toast.error(`${error.response.data.message}`);
       }
     }
   };

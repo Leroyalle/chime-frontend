@@ -36,7 +36,7 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
   }, [editableMessage, setValue]);
 
   const onSubmit = (data: { message: string }) => {
-    // FIXME: при нажатии на enter при открытом редактировании не сабмитится
+    console.log('submit', data);
     if (editableMessage) {
       updateMessage({ messageId: editableMessage.id, messageBody: data.message });
     } else {

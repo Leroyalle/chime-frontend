@@ -15,7 +15,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { ChatListShareModeSchema, ChatListShareModeSchemaType } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSocket } from '@/lib/hooks';
+import { useGetMe, useSocket } from '@/lib/hooks';
 import { useSharedPostSlice } from '@/store';
 import { MessageTypeEnum } from '../../../types';
 import { toast } from 'sonner';
@@ -36,6 +36,7 @@ export const ChatListShareMode: React.FC<Props> = ({
   className,
 }) => {
   const { sendMessage } = useSocket();
+  const { data: me } = useGetMe();
   const sharedPost = useSharedPostSlice((state) => state.sharedPost);
   const form = useForm<ChatListShareModeSchemaType>({
     resolver: zodResolver(ChatListShareModeSchema),
@@ -49,7 +50,7 @@ export const ChatListShareMode: React.FC<Props> = ({
     return null;
   }
 
-  if (!items || items.length === 0) {
+  if (!items || items.length === 0 || !me) {
     return null;
   }
 
@@ -99,6 +100,7 @@ export const ChatListShareMode: React.FC<Props> = ({
                           <FormLabel className="flex-1 text-current">
                             <ChatItem
                               chat={item}
+                              me={me}
                               hasActions={hasActions}
                               className="pointer-events-none"
                             />

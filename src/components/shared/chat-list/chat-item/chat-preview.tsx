@@ -8,8 +8,7 @@ import { Avatar } from '@/components/ui';
 interface Props {
   avatar?: string | null;
   name?: string;
-  // FIXME:  убрать optional
-  lastMessage?: MessageDto;
+  lastMessage: MessageDto | null;
   lastMessageAuthor: string | null;
   className?: string;
 }
@@ -26,8 +25,6 @@ export const ChatPreview: React.FC<Props> = ({
     lastMessage?.content && lastMessage?.content?.length > 10
       ? `${lastMessage?.content?.slice(0, 10)}...`
       : lastMessage?.content;
-
-  console.log(avatar);
 
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>

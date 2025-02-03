@@ -20,7 +20,7 @@ export const EditableMessage: React.FC<Props> = ({ title, text, onClose, classNa
         <span className="text-blue-500 font-bold select-none">{title}</span>
         <p>{text}</p>
       </div>
-      <button onClick={onClose}>
+      <button type="button" onClick={onClose}>
         <X />
       </button>
     </div>

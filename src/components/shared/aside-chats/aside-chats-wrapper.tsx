@@ -26,7 +26,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   });
 
   useEffect(() => {
-    // FIXME: каждый перезапрос при изменении searchValue триггерит загрузку
+    // каждый перезапрос при изменении searchValue триггерит загрузку
     if (!isMounted.current) {
       isMounted.current = true;
     }

@@ -6,6 +6,7 @@ import { Api } from '@/services/api-client';
 import { saveAuthCookies } from '@/lib/utils/save-auth-cookies';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { hasErrorField } from '@/lib/utils';
 interface Props {
   title?: string;
   userId: string;
@@ -30,12 +31,16 @@ export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
       loading: 'Подождите, идет регистрация...',
       success: (res) => {
         saveAuthCookies(res.token);
-        // FIXME: временно /
         router.push('/');
         if (onChangeTab) onChangeTab();
         return 'Добро пожаловать! Перевожу...';
       },
-      error: 'Что-то пошло не так! Попробуйте отправить еще раз',
+      error: (error) => {
+        if (hasErrorField(error)) {
+          console.error(error);
+          return `${error.response.data.message}`;
+        }
+      },
     });
   };
 

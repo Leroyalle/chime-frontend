@@ -4,14 +4,14 @@ import { Modal, ModalContent, ModalBody } from '@nextui-org/react';
 import { AuthTabs } from './auth-tabs';
 import Cookies from 'js-cookie';
 import { TokensEnum } from '@/types';
-import { QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const AuthModal: React.FC = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     Cookies.remove(TokensEnum.JWT);
-    queryClient.clear();
+    queryClient.removeQueries();
   }, []);
 
   return (

@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { ChatItem } from './chat-item';
 import { DarkLightBlock } from '../../ui/dark-light-block';
 import { ChatWithMembers } from '@/types';
+import { useGetMe } from '@/lib/hooks';
 
 interface Props {
   hasActions?: boolean;
@@ -12,14 +13,22 @@ interface Props {
 }
 
 export const ChatList: React.FC<Props> = ({ items, itemsStyles, hasActions, className }) => {
-  if (!items || items.length === 0) {
+  const { data: me } = useGetMe();
+
+  if (!items || items.length === 0 || !me) {
     return null;
   }
 
   return (
     <DarkLightBlock className={cn('flex flex-col gap-y-2 p-2 w-full overflow-y-auto', className)}>
       {items.map((chat) => (
-        <ChatItem key={chat.id} chat={chat} hasActions={hasActions} className={itemsStyles} />
+        <ChatItem
+          key={chat.id}
+          chat={chat}
+          hasActions={hasActions}
+          className={itemsStyles}
+          me={me}
+        />
       ))}
     </DarkLightBlock>
   );

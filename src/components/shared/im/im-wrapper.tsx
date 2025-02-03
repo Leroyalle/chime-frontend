@@ -23,7 +23,6 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
   });
 
   useEffect(() => {
-    // FIXME: каждый перезапрос при изменении searchValue триггерит загрузку
     if (!isMounted.current) {
       isMounted.current = true;
     }
@@ -39,7 +38,7 @@ export const ImWrapper: React.FC<Props> = ({ className }) => {
   }
 
   if ((!chats || chats.length === 0) && !isMounted.current) {
-    return <EmptyState title={'Нет чатов ;('} text={'Заводите друзей и общайтейсь!'} />;
+    return <EmptyState title={'У вас нет чатов'} />;
   }
 
   return (

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '@nextui-org/react';
 import { useGetMe } from '@/lib/hooks';
@@ -12,24 +12,16 @@ interface Props {
 
 export const AuthGuard: React.FC<Props> = ({ children }) => {
   const router = useRouter();
-  const { isFetching, isError } = useGetMe();
-  const isMounted = useRef(false);
+  const { isPending, isError } = useGetMe();
 
   useEffect(() => {
     if (isError) {
       Cookies.remove(TokensEnum.JWT);
       router.push(RoutesEnum.AUTH);
     }
-    console.log('auth guard effect');
   }, [isError]);
 
-  useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-    }
-  }, []);
-
-  if ((isFetching && !isMounted.current) || isError) {
+  if (isPending || isError) {
     return (
       <Spinner
         color="warning"

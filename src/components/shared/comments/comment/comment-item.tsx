@@ -7,13 +7,14 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { DarkLightBlock, OpacityAnimateBlock } from '@/components/ui';
 import { PageType } from '../comments-list';
+import { getAbsoluteUrl } from '@/lib/utils';
 
 interface Props {
   id: string;
   postId: string;
   authorId: string;
   author: string;
-  avatar?: string;
+  avatar: string | null;
   content: string;
   createdAt: Date;
   isOwner: boolean;
@@ -43,7 +44,7 @@ export const CommentItem: React.FC<Props> = ({
             <User
               name={author}
               avatarProps={{
-                src: avatar,
+                src: avatar ? getAbsoluteUrl(avatar) : undefined,
               }}
             />
           </Link>

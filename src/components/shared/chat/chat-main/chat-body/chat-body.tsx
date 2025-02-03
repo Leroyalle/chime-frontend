@@ -54,6 +54,7 @@ export const ChatBody: React.FC<Props> = ({
           isSender={message.UserBase.id == userData?.user.id}
           messageType={message.type}
           createdAt={message.createdAt}
+          updatedAt={message.updatedAt}
           onUpdate={() => onEditMessage(message)}
         />
       ))}
