@@ -2,7 +2,6 @@ import React from 'react';
 import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { Avatar } from '@/components/ui';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { RoutesEnum, User } from '@/types';
 import Link from 'next/link';
 
@@ -12,8 +11,6 @@ interface Props {
 }
 
 export const ChatHead: React.FC<Props> = ({ correspondent, className }) => {
-  const router = useRouter();
-
   if (!correspondent) {
     return null;
   }
@@ -21,12 +18,12 @@ export const ChatHead: React.FC<Props> = ({ correspondent, className }) => {
   return (
     <div
       className={cn(
-        'relative px-2 py-4 flex justify-between gap-x-2 border-b-gray-300 border-b-1',
+        'relative px-2 py-4 flex items-center gap-x-3 justify-between border-b-gray-300 border-b-1',
         className,
       )}>
-      <button onClick={() => router.push(RoutesEnum.MESSAGES)}>
+      <Link href={RoutesEnum.MESSAGES}>
         <ArrowLeft />
-      </button>
+      </Link>
 
       <div className="flex flex-row gap-3 w-full left-0 justify-start items-center">
         <Avatar

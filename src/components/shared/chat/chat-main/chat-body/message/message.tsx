@@ -50,7 +50,7 @@ export const Message: React.FC<Props> = memo(function Message({
       <DropdownTrigger>
         <div
           className={cn(
-            `text-black lg:w-8/12 bg-gray-200 hover:bg-gray-200/90 w-5/6 flex p-2 duration-100 
+            `text-black lg:w-8/12 bg-gray-200 hover:bg-gray-200/90 w-5/6 flex gap-x-2 p-2 duration-100 
              rounded-lg cursor-pointer
               ${isSender && 'bg-gray-600 text-white p-3 ml-auto hover:bg-gray-600/90'} `,
             className,
