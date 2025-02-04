@@ -6,6 +6,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSocket } from '@/lib/hooks';
 import { EditableMessage } from '@/components/ui';
 import { MessageDto, MessageTypeEnum } from '@/types';
+import { messageSchema, TMessageSchema } from './schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
   chatId: string;
@@ -16,16 +18,24 @@ interface Props {
 
 export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage, cancelEdit }) => {
   const { sendMessage, updateMessage } = useSocket();
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<{ message: string }>({
+  } = useForm<TMessageSchema>({
+    resolver: zodResolver(messageSchema),
     defaultValues: {
       message: '',
     },
   });
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (editableMessage && editableMessage.content) {
@@ -35,7 +45,7 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
     }
   }, [editableMessage, setValue]);
 
-  const onSubmit = (data: { message: string }) => {
+  const onSubmit = (data: TMessageSchema) => {
     if (editableMessage) {
       updateMessage({ messageId: editableMessage.id, messageBody: data.message });
     } else {
@@ -64,6 +74,7 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
         render={({ field }) => (
           <Input
             {...field}
+            ref={inputRef}
             placeholder="Введите сообщение"
             endContent={
               <button type="submit">
@@ -77,17 +88,6 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
             isInvalid={!!errors.message}
           />
         )}
-        rules={{
-          required: 'Сообщение обязательно',
-          minLength: {
-            value: 1,
-            message: 'Не меньше 1 символа',
-          },
-          maxLength: {
-            value: 1000,
-            message: 'Не больше 1000 символов',
-          },
-        }}
         name="message"
         control={control}
       />

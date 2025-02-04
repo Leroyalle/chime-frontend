@@ -12,10 +12,12 @@ export const useInfinityScrollMessages = ({
 }) => {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage, isPending, isFetchingNextPage } = useInfiniteQuery({
-    ...Api.chat.getMessagesByChatIdInfinityQueryOptions(chatId),
-    enabled: !!chatId,
-  });
+  const { data, fetchNextPage, isPending, isFetching, isFetchingNextPage } = useInfiniteQuery(
+    Api.chat.getMessagesByChatIdInfinityQueryOptions(chatId),
+  );
+
+  console.log('HOOKDATA:', data);
+  console.log('HOOKPENDING:', isPending);
 
   useEffect(() => {
     if (inView && chatRef.current) {
@@ -40,6 +42,7 @@ export const useInfinityScrollMessages = ({
     data,
     cursor,
     isPending,
+    isFetching,
     isFetchingNextPage,
   };
 };

@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatHead as Header } from './chat-head';
 import { DarkLightBlock } from '../../ui';
-import { useGetMeData, useInfinityScrollMessages } from '@/lib/hooks';
+import { useGetMe, useInfinityScrollMessages } from '@/lib/hooks';
 import { Spinner } from '@nextui-org/react';
 import { ChatWithMembers } from '../../../types/chat';
 import { ChatMain as Main } from './chat-main';
@@ -16,14 +16,14 @@ interface Props {
 
 export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const me = useGetMeData();
+  const { data: me } = useGetMe();
   const correspondent = chat.members.find((m) => m.id !== me?.user.id);
 
   const {
     data: messages,
-    cursor,
     isPending,
     isFetchingNextPage,
+    cursor,
   } = useInfinityScrollMessages({
     chatId,
     chatRef,
@@ -33,7 +33,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
     return (
       <Spinner
         color="warning"
-        className="absolute bottom-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 "
+        className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
     );
   }

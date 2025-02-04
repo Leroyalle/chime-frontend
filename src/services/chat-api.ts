@@ -1,22 +1,28 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { InfinityResponse, MessageDto, ChatWithMembers, UserChat } from '@/types';
+import { MessageDto, ChatWithMembers, UserChat, CursorInfinityResponse } from '@/types';
 import { ApiRouter } from './constants';
 import { instance } from './instance';
 import { AxiosRequestHeaders } from 'axios';
 
 export const getMessagesByChatId = async ({
-  id,
-  page = 1,
-  perPage = 20,
+  chatId,
+  cursor = null,
+  take = 20,
 }: {
-  id: string;
-  page: number;
-  perPage: number;
-}): Promise<InfinityResponse<MessageDto[]>> => {
+  chatId: string;
+  cursor?: string | null;
+  take?: number;
+}): Promise<CursorInfinityResponse<MessageDto[]>> => {
+  const params = new URLSearchParams();
+  if (cursor) {
+    params.append('cursor', encodeURIComponent(cursor));
+  }
+  params.append('take', take.toString());
+
   return (
-    await instance.get<InfinityResponse<MessageDto[]>>(
-      `${ApiRouter.CHAT}/${id}?page=${page}&perPage=${perPage}`,
-    )
+    await instance.get<CursorInfinityResponse<MessageDto[]>>(`${ApiRouter.CHAT}/${chatId}`, {
+      params,
+    })
   ).data;
 };
 
@@ -42,15 +48,19 @@ export const getChatId = async (recipientId: string): Promise<{ chatId: Pick<Use
 };
 
 export const getMessagesByChatIdInfinityQueryOptions = (chatId: string) => {
-  const perPage = 20;
+  const take = 20;
+
   return infiniteQueryOptions({
     queryKey: ['chat', chatId],
-    queryFn: (meta) => getMessagesByChatId({ id: chatId, page: meta.pageParam, perPage }),
-    initialPageParam: 1,
+    queryFn: ({ pageParam }) =>
+      getMessagesByChatId({
+        chatId,
+        cursor: pageParam,
+        take,
+      }),
+    initialPageParam: null as string | null,
     select: (data) => data.pages.flatMap((data) => data.data).reverse(),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.data.length > 0 ? allPages.length + 1 : undefined;
-    },
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
     refetchOnWindowFocus: false,
     gcTime: Infinity,
   });
@@ -62,6 +72,5 @@ export const getUserChatsQueryOptions = (query: string = '') => {
     queryFn: () => getUserChats(query),
     refetchOnWindowFocus: false,
     staleTime: 1 * 60 * 1000,
-    retry: false,
   });
 };

@@ -2,7 +2,7 @@
 import React from 'react';
 import { InfinityResponse } from '../../../../types/response';
 import { Post } from '../../../../types/dto';
-import { useGetMeData, useInfinityScrollPosts } from '@/lib/hooks';
+import { useGetMe, useInfinityScrollPosts } from '@/lib/hooks';
 import { WritePost } from '../../write-post';
 import { PostsList } from '../../posts-list';
 import { Spinner } from '@nextui-org/react';
@@ -15,7 +15,7 @@ interface Props {
 
 export const NewFeedWrapper: React.FC<Props> = ({ initialPosts, className }) => {
   const { data: posts, cursor, isFetchingNextPage } = useInfinityScrollPosts({ initialPosts });
-  const me = useGetMeData();
+  const { data: me } = useGetMe();
   return (
     <div className={className}>
       <WritePost className="mb-10" avatar={me?.user.avatar || null} />

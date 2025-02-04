@@ -60,3 +60,9 @@ export type InfinityResponse<T> = {
   totalItems: number;
   totalPages: number;
 };
+
+export type CursorInfinityResponse<T> = {
+  data: T;
+  nextCursor: string | null;
+  hasNextPage: boolean;
+};

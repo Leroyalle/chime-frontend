@@ -12,6 +12,8 @@ interface Props {
 export const ProfileCard: React.FC<Props> = ({ className }) => {
   const { data: me } = useGetMe();
 
+  console.log('PROFILE_CARD:', me);
+
   if (!me) {
     return null;
   }

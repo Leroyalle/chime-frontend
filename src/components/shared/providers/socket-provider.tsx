@@ -1,7 +1,7 @@
 'use client';
 import Cookies from 'js-cookie';
 import { Api } from '@/services/api-client';
-import { createContext, useEffect, useRef, ReactNode, useCallback } from 'react';
+import { createContext, useEffect, useRef, ReactNode, useCallback, memo } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ type SocketContextType = {
 
 export const SocketContext = createContext<SocketContextType | null>(null);
 
-export const SocketProvider = ({ children }: { children: ReactNode }) => {
+export const SocketProvider = memo(function SocketProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const { data: me } = useGetMe();
   const router = useRouter();
@@ -35,6 +35,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { setNewMark } = useNewMarkSlice();
 
   useEffect(() => {
+    console.log('SOCKET MOUNT');
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
       auth: { token },
     });
@@ -53,19 +54,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       setNewMark(value);
     });
 
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, [queryClient, token, setNewMark]);
-
-  useEffect(() => {
-    if (!socket.current) {
-      return undefined;
-    }
-
     const handleNewMessage = (data: ChatUpdate) => {
+      console.log('NEW_MESSAGE:', data);
       if (me?.user.id !== data.message.UserBase.id) {
         toast(data.message.UserBase.name, {
           description: data.message.content,
@@ -106,20 +96,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         (old) => {
           if (!old) return undefined;
 
-          const updatedData = { ...old, pages: old.pages.map((page) => ({ ...page })) };
-          const lastPage = updatedData.pages[0];
+          const newPages = old.pages.map((page, index) => {
+            if (index === 0) {
+              return {
+                ...page,
+                data: [data.message, ...page.data],
+              };
+            }
+            return { ...page };
+          });
 
-          if (lastPage) {
-            lastPage.data.unshift(data.message);
-            lastPage.totalItems += 1;
-          } else {
-            updatedData.pages.push({
-              data: [data.message],
-              totalPages: 1,
-              totalItems: 1,
-            });
-          }
-          return updatedData;
+          return {
+            ...old,
+            pages: newPages,
+          };
         },
       );
     };
@@ -172,24 +162,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
+          if (!old) return old;
 
-          const updatedData = {
+          return {
             ...old,
             pages: old.pages.map((page) => ({
               ...page,
               data: page.data.filter((message) => message.id !== data.message.id),
             })),
           };
-
-          updatedData.pages = updatedData.pages.map((page) => ({
-            ...page,
-            totalItems: page.data.length,
-          }));
-
-          return updatedData;
         },
       );
 
@@ -224,11 +205,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     return () => {
       if (socket.current) {
-        socket.current.off(SocketEventsEnum.MESSAGES_GET, handleNewMessage);
-        socket.current.off(SocketEventsEnum.MESSAGES_DELETE, handleDeleteMessage);
+        socket.current.disconnect();
+        console.log('Disconnected from WebSocket');
       }
     };
-  }, [queryClient]);
+  }, [token]);
 
   const sendMessage = useCallback((message: MessageRequest) => {
     socket.current?.emit(SocketEventsEnum.MESSAGES_POST, message);
@@ -251,4 +232,4 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </SocketContext.Provider>
   );
-};
+});

@@ -20,6 +20,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   const { data: chats, isFetching: isFetchingChats } = useQuery(
     Api.chat.getUserChatsQueryOptions(searchQuery),
   );
+  console.log('ASIDE_CHATS:', chats);
 
   useEffect(() => {
     // каждый перезапрос при изменении searchValue триггерит загрузку
