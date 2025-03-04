@@ -9,6 +9,8 @@ export { MultipleSelectorCreatable } from './multiple-selector-creatable';
 export { Checkbox } from './checkbox';
 export { Button } from './button';
 export { Toaster } from './sonner';
+export { Logo } from './logo';
+export { Line } from './line';
 export * from './tabs';
 export * from './sheet';
 export * from './dialog';

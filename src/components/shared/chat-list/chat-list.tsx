@@ -20,7 +20,7 @@ export const ChatList: React.FC<Props> = ({ items, itemsStyles, hasActions, clas
   }
 
   return (
-    <DarkLightBlock className={cn('flex flex-col gap-y-2 p-2 w-full overflow-y-auto', className)}>
+    <DarkLightBlock className={cn('flex flex-col gap-y-2 w-full overflow-y-auto', className)}>
       {items.map((chat) => (
         <ChatItem
           key={chat.id}

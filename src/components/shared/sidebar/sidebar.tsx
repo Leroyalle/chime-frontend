@@ -1,8 +1,7 @@
 'use client';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { SidebarItem } from './sidebar-item';
-import { Bookmark, Flame, Heart, MessageCircle, Newspaper, UserRoundCheck } from 'lucide-react';
-import { RoutesEnum } from '../../../types';
+import {} from 'lucide-react';
 import { useGetMe } from '@/lib/hooks';
 import { DarkLightBlock } from '@/components/ui';
 import { useNewMarkSlice } from '@/store';
@@ -10,6 +9,7 @@ import { ListNavElement } from '../../ui';
 import { cn } from '@/lib/utils';
 import { SectionTitle } from './section-title';
 import { LogoutButton } from '../logout-button';
+import { navCategories } from '@/constants';
 
 interface Props {
   className?: string;
@@ -17,7 +17,7 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ className }) => {
   const { data: me } = useGetMe();
-  const { newMark, setNewMark } = useNewMarkSlice();
+  const { newMark } = useNewMarkSlice();
 
   if (!me) {
     return null;
@@ -26,59 +26,23 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
   return (
     <DarkLightBlock className={cn('bg-background overscroll-contain', className)}>
       <aside>
-        <SectionTitle title="Основное" className="mt-0" />
-        <ListNavElement>
-          <li>
-            <SidebarItem
-              icon={<Newspaper size={20} className="text-green-500" />}
-              href={RoutesEnum.HOME}>
-              Популярное
-            </SidebarItem>
-          </li>
-          <li onClick={() => setNewMark(false)}>
-            <SidebarItem
-              icon={<Flame size={20} className="text-yellow-500" />}
-              href={RoutesEnum.NEW}
-              mark={newMark}>
-              Свежее
-            </SidebarItem>
-          </li>
-        </ListNavElement>
-
-        <SectionTitle title="Общение" />
-        <ListNavElement>
-          <li>
-            <SidebarItem
-              icon={<UserRoundCheck size={20} className="text-blue-500" />}
-              href={`${RoutesEnum.FRIENDS}/${me?.user.id}`}>
-              Друзья
-            </SidebarItem>
-          </li>
-          <li>
-            <SidebarItem icon={<MessageCircle size={20} />} href={RoutesEnum.MESSAGES}>
-              Сообщения
-            </SidebarItem>
-          </li>
-        </ListNavElement>
-
-        <SectionTitle title="Любимое" />
-        <ListNavElement>
-          <li>
-            <SidebarItem
-              icon={<Heart size={20} className="text-red-500" />}
-              href={RoutesEnum.LIKES}>
-              Ваши лайки
-            </SidebarItem>
-          </li>
-          <li>
-            <SidebarItem
-              icon={<Bookmark size={20} className="text-purple-500" />}
-              href={RoutesEnum.BOOKMARKS}>
-              Закладки
-            </SidebarItem>
-          </li>
-        </ListNavElement>
-
+        {navCategories.map(({ title, items }, i) => (
+          <Fragment key={i}>
+            <SectionTitle title={title} className={cn(i === 0 && 'mt-0')} />
+            <ListNavElement>
+              {items.map((item, i) => (
+                <li key={i}>
+                  <SidebarItem
+                    mark={newMark}
+                    icon={<item.icon size={20} className={item.color} />}
+                    href={item.appendUserId ? `${item.href}/${me.user.id}` : item.href}>
+                    {item.title}
+                  </SidebarItem>
+                </li>
+              ))}
+            </ListNavElement>
+          </Fragment>
+        ))}
         <LogoutButton className="my-4" />
       </aside>
     </DarkLightBlock>

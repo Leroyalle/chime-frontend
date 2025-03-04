@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link as NextUiLink, User } from '@nextui-org/react';
+import { User } from '@nextui-org/react';
 import { CommentActions } from './comment-actions';
 import Link from 'next/link';
-import { RoutesEnum } from '../../../../types';
+import { RoutesEnum, User as TUser } from '../../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { DarkLightBlock, OpacityAnimateBlock } from '@/components/ui';
@@ -12,9 +12,7 @@ import { getAbsoluteUrl } from '@/lib/utils';
 interface Props {
   id: string;
   postId: string;
-  authorId: string;
-  author: string;
-  avatar: string | null;
+  author: TUser;
   content: string;
   createdAt: Date;
   isOwner: boolean;
@@ -26,9 +24,7 @@ interface Props {
 export const CommentItem: React.FC<Props> = ({
   id,
   postId,
-  authorId,
   author,
-  avatar,
   content,
   createdAt,
   isOwner,
@@ -40,11 +36,11 @@ export const CommentItem: React.FC<Props> = ({
     <OpacityAnimateBlock className={className}>
       <DarkLightBlock className="flex bg-primary-light flex-col gap-y-2 p-4 rounded-xl">
         <div className="flex justify-between items-center">
-          <Link href={`${RoutesEnum.USER}/${authorId}`}>
+          <Link href={`${RoutesEnum.USER}/${author.id}`}>
             <User
-              name={author}
+              name={author.name}
               avatarProps={{
-                src: avatar ? getAbsoluteUrl(avatar) : undefined,
+                src: author?.avatar ? getAbsoluteUrl(author.avatar) : undefined,
               }}
             />
           </Link>
@@ -52,15 +48,14 @@ export const CommentItem: React.FC<Props> = ({
             pageType={pageType}
             postId={postId}
             commentId={id}
-            userId={authorId}
+            userId={author.id}
             isOwner={isOwner}
             onUpdate={onUpdate}
           />
         </div>
-        <p>{content}</p>
-        <div className="flex w-full justify-between items-center">
-          <NextUiLink className="text-blue-700 text-xs cursor-pointer">Ответить</NextUiLink>
-          <span className="text-xs">
+        <div className="flex w-full justify-between items-center gap-x-3">
+          <p>{content}</p>
+          <span className="text-xs text-foreground/20">
             {(dayjs.extend(relativeTime), dayjs(createdAt).fromNow())}
           </span>
         </div>

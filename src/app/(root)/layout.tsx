@@ -1,12 +1,12 @@
 import {
   Container,
-  Header,
   ProfileCard,
   Sidebar,
   AsideChatsWrapper,
   RootProviders,
+  Header,
 } from '@/components/shared';
-import { cn } from '@/lib/utils';
+import { Line } from '@/components/ui';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -22,15 +22,15 @@ export default function HomeLayout({
   return (
     <RootProviders>
       <div className="flex flex-col min-h-screen">
-        <Container className="flex relative w-full h-full">
-          <div className="flex py-4 flex-col max-w-[300px] w-full sticky top-0 h-screen border-r-1">
-            <Header />
+        <Header />
+        <Container className="flex relative w-full gap-x-3">
+          <div className="hidden lg:flex py-4 h-[calc(100vh-70px)] flex-col max-w-[300px] w-full sticky top-[70px] border-r-1">
             <ProfileCard className="pb-2" />
-            <div className={cn('my-2 w-full h-[1px] bg-primary-light')} />
-            <Sidebar className="flex-shrink-0 flex-1 pt-2 hidden md:block rounded-none overflow-y-auto" />
+            <Line />
+            <Sidebar className="flex-shrink-0 flex-1 pt-2 hidden md:block overflow-y-auto" />
           </div>
-          <main className="flex-1 w-full max-w-[640px] mx-auto py-4">{children}</main>
-          <AsideChatsWrapper className="hidden flex-shrink-0 lg:block h-screen max-w-[300px] min-w-[300px] sticky p-4 top-0 rounded-none border-l-1" />
+          <main className="flex-1 w-full h-full max-w-[640px] mx-auto py-4">{children}</main>
+          <AsideChatsWrapper className="hidden flex-shrink-0 lg:block max-w-[300px] min-w-[300px] sticky top-[70px] rounded-none border-l-1 h-[calc(100vh-70px)]" />
         </Container>
       </div>
     </RootProviders>

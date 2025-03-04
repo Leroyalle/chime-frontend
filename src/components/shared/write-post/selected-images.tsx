@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const SelectedImages: React.FC<Props> = ({ selectedFiles, onDelete, className }) => {
-  if (!selectedFiles) {
+  if (!selectedFiles || selectedFiles.length === 0) {
     return null;
   }
 

@@ -1,7 +1,7 @@
 'use client';
 import React, { memo } from 'react';
 import { cn, getAbsoluteUrl } from '@/lib/utils';
-import { DarkLightBlock } from '../../ui';
+import { DarkLightBlock, Line } from '../../ui';
 import { User } from '@nextui-org/react';
 import Link from 'next/link';
 import { Image, Tag } from '@/types';
@@ -59,7 +59,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           <TopActions postId={postId} userId={userId} isOwner={isOwner} />
         </header>
         <PostBody content={content} images={images} tags={tags} className="mb-3" />
-        <div className="my-2 w-full h-[0.1px] bg-gray-700" />
+        <Line />
         <BottomActions
           userId={userId}
           postId={postId}

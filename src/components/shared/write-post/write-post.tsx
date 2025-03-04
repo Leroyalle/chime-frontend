@@ -4,7 +4,7 @@ import { Avatar, Input } from '@nextui-org/react';
 import { Controller, useForm } from 'react-hook-form';
 import { hasErrorField } from '@/lib/utils';
 import { useCreatePost } from '@/lib/hooks';
-import { DarkLightBlock, MultipleSelectorCreatable, Option } from '../../ui';
+import { DarkLightBlock, Line, MultipleSelectorCreatable, Option } from '../../ui';
 import { toast } from 'sonner';
 import { SelectedImages } from './selected-images';
 import { WritePostActions } from './write-post-actions';
@@ -96,6 +96,7 @@ export const WritePost: React.FC<Props> = ({ avatar, className }) => {
             {tagsIsOpen && <MultipleSelectorCreatable value={tags} setValue={setTags} />}
           </div>
         </div>
+        <Line />
         <SelectedImages selectedFiles={selectedFiles} onDelete={setSelectedFiles} />
         <WritePostActions
           isPendingCreate={isPendingCreate}

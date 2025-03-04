@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { DarkLightBlock } from '../../ui';
+import { DarkLightBlock, Line } from '../../ui';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '@/services/api-client';
@@ -20,7 +20,6 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   const { data: chats, isFetching: isFetchingChats } = useQuery(
     Api.chat.getUserChatsQueryOptions(searchQuery),
   );
-  console.log('ASIDE_CHATS:', chats);
 
   useEffect(() => {
     // каждый перезапрос при изменении searchValue триггерит загрузку
@@ -34,7 +33,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
   }
 
   return (
-    <DarkLightBlock className={cn('bg-background', className)}>
+    <DarkLightBlock className={cn('bg-background p-4', className)}>
       <section>
         <h2 className="text-xl mb-2">Сообщения</h2>
         <SearchChats
@@ -43,7 +42,7 @@ export const AsideChatsWrapper: React.FC<Props> = ({ className }) => {
           onChange={setSearchValue}
           isLoading={isFetchingChats}
         />
-        <div className="w-full h-[2px] bg-primary-light" />
+        <Line />
         {chats && chats.length ? (
           <ChatList items={chats.slice(0, 5)} className="bg-background" hasActions={false} />
         ) : (

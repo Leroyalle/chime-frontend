@@ -1,7 +1,7 @@
+'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@nextui-org/react';
-import { LogOut } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { TokensEnum } from '@/types';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,6 @@ export const LogoutButton: React.FC<Props> = ({ className }) => {
 
   return (
     <Button
-      startContent={<LogOut size={20} />}
       color="danger"
       variant="flat"
       className={cn('text-xs', className)}
