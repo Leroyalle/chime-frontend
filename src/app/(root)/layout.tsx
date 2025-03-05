@@ -27,7 +27,7 @@ export default function HomeLayout({
         <Container className="flex relative w-full gap-x-3">
           <div
             className={cn(
-              'hidden lg:flex py-4 h-[calc(100vh-70px)] flex-col max-w-[230px] w-full sticky top-[70px] border-r-1',
+              'hidden lg:flex py-4 h-[calc(100dvh-70px)] flex-col max-w-[230px] w-full sticky top-[70px] border-r-1',
               'xl:max-w-[300px]',
             )}>
             <ProfileCard className="pb-2" />
@@ -37,7 +37,7 @@ export default function HomeLayout({
           <main className="flex-1 w-full h-full max-w-[640px] mx-auto py-4">{children}</main>
           <AsideChatsWrapper
             className={cn(
-              'hidden flex-shrink-0 lg:block max-w-[230px] w-full sticky top-[70px] rounded-none border-l-1 h-[calc(100vh-70px)]',
+              'hidden flex-shrink-0 lg:block max-w-[230px] w-full sticky top-[70px] rounded-none border-l-1 h-[calc(100dvh-70px)]',
               'xl:max-w-[300px]',
             )}
           />
