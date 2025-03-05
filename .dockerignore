@@ -1,0 +1,25 @@
+node_modules
+
+
+# Игнорируем локальные env файлы
+.env.local
+.env.*.local
+.env.development
+.env.test
+
+# НЕ игнорируем production env
+!.env.production
+!.env
+
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+*.pem
+
+# Version control
+.git
+.gitignore
