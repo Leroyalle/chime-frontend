@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '@nextui-org/react';
 import { Send } from 'lucide-react';
@@ -18,11 +18,12 @@ interface Props {
 
 export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage, cancelEdit }) => {
   const { sendMessage, updateMessage } = useSocket();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const {
     control,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<TMessageSchema>({
     resolver: zodResolver(messageSchema),
@@ -30,6 +31,8 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
       message: '',
     },
   });
+
+  const message = watch('message');
 
   useEffect(() => {
     if (inputRef.current) {
@@ -75,13 +78,16 @@ export const ChatInput: React.FC<Props> = ({ chatId, className, editableMessage,
           <Input
             {...field}
             ref={inputRef}
-            placeholder="Введите сообщение"
+            placeholder="Сообщение"
             endContent={
-              <button type="submit">
-                <Send size={20} />
-              </button>
+              message ? (
+                <button type="submit">
+                  <Send size={20} />
+                </button>
+              ) : undefined
             }
             variant="faded"
+            type="text"
             name="message"
             autoComplete="off"
             errorMessage={errors.message?.message}
