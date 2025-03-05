@@ -15,7 +15,7 @@ export const AuthModal: React.FC = () => {
   }, []);
 
   return (
-    <Modal isOpen placement="top-center" hideCloseButton>
+    <Modal isOpen placement="center" hideCloseButton>
       <ModalContent className="py-4">
         <ModalBody>
           <AuthTabs />

@@ -7,7 +7,7 @@ export const AuthTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('login');
 
   return (
-    <Tabs defaultValue={activeTab} className="w-[400px]">
+    <Tabs defaultValue={activeTab} className="max-w-[400px]">
       <TabsList className="flex">
         <TabsTrigger className="w-full" value="login">
           Вход
