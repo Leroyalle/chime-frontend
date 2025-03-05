@@ -24,11 +24,11 @@ export const WritePostActions: React.FC<Props> = ({
           startContent={<Camera size={15} />}
           variant="ghost"
           size="sm"
+          as="label"
+          htmlFor="postImage"
           className="border-none"
           disabled={isPendingCreate}>
-          <label className="grid place-items-center w-full h-full" htmlFor="postImage">
-            Добавить фото
-          </label>
+          Добавить фото
         </Button>
         <Button
           onPress={() => setTagsIsOpen(!tagsIsOpen)}
