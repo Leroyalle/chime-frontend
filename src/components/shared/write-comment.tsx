@@ -27,11 +27,13 @@ export const WriteComment: React.FC<Props> = ({
 }) => {
   const { createComment, isPending: isPendingCreateComment } = useCreateComment(postId, userId);
   const { updateComment, isPending: isPendingUpdateComment } = useUpdateComment(userId, postId);
-  const { handleSubmit, control, setValue } = useForm<{ comment: string }>({
+  const { handleSubmit, control, watch, setValue } = useForm<{ comment: string }>({
     defaultValues: {
       comment: '',
     },
   });
+
+  const comment = watch('comment');
 
   useEffect(() => {
     if (editableComment) {
@@ -83,9 +85,11 @@ export const WriteComment: React.FC<Props> = ({
               isDisabled={isPendingCreateComment || isPendingUpdateComment}
               color="primary"
               endContent={
-                <button color="warning" type="submit" className="max-w-32">
-                  <Send />
-                </button>
+                comment ? (
+                  <button color="warning" type="submit" className="max-w-32">
+                    <Send />
+                  </button>
+                ) : undefined
               }
             />
           )}
