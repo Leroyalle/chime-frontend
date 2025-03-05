@@ -1,7 +1,8 @@
 import React from 'react';
 import { cn, getAbsoluteUrl } from '@/lib/utils';
 import { RoutesEnum, User } from '@/types';
-import { Avatar, Link } from '@nextui-org/react';
+import { Avatar } from '@nextui-org/react';
+import Link from 'next/link';
 
 interface Props {
   users: User[];
@@ -14,7 +15,7 @@ export const SearchedUsersList: React.FC<Props> = ({ users, onClickItem, classNa
     <p className="px-3 py-2 font-medium">Люди</p>
     {users.map((user) => (
       <Link
-        onPress={onClickItem}
+        onClick={onClickItem}
         key={user.id}
         className={cn(
           'px-3 py-4 cursor-pointer flex gap-3 items-center hover:bg-secondary text-foreground',
