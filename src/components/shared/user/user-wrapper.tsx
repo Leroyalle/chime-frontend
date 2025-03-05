@@ -23,9 +23,9 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
   return (
     <section className={cn('w-full rounded-xl overflow-hidden', className)}>
       <h2 className="sr-only">Профиль пользователя</h2>
-      <DarkLightBlock className="p-4">
-        <div className="px-8 flex flex-col gap-y-4">
-          <div className="flex justify-between items-center flex-wrap gap-y-3">
+      <DarkLightBlock className={cn('p-4', 'lg:p-3 xl:p-8')}>
+        <div className="flex flex-col gap-y-4">
+          <div className="flex justify-between gap-x-2 items-center flex-wrap gap-y-3">
             <Avatar
               isBordered
               size="lg"
