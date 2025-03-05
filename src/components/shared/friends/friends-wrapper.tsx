@@ -7,6 +7,7 @@ import { Spinner } from '@nextui-org/react';
 import { InfinityResponse } from '../../../types/response';
 import { EmptyState } from '../empty-state';
 import { Friend } from '../../../types/dto';
+import { Loader } from '@/components/ui';
 
 interface Props {
   userId: string;
@@ -22,7 +23,7 @@ export const FriendsWrapper: React.FC<Props> = ({ userId, initialData, className
     });
 
   if (isPending || isFetching) {
-    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+    return <Loader />;
   }
 
   if (isError) {

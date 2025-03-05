@@ -12,9 +12,7 @@ export const CommentsTab: React.FC<Props> = ({ userId }) => {
   const { data: comments, cursor, isFetchingNextPage } = useInfinityScrollUserComments({ userId });
 
   if (!comments || comments.length === 0) {
-    return (
-      <EmptyState title="У пользователя нет комментариев" text="Напишите ему, спросите почему?" />
-    );
+    return <EmptyState title="У пользователя нет комментариев" />;
   }
 
   return (

@@ -11,6 +11,7 @@ export { Button } from './button';
 export { Toaster } from './sonner';
 export { Logo } from './logo';
 export { Line } from './line';
+export { Loader } from './loader';
 export * from './tabs';
 export * from './sheet';
 export * from './dialog';

@@ -6,6 +6,7 @@ import { Spinner } from '@nextui-org/react';
 import { EmptyState } from '../empty-state';
 import { InfinityResponse } from '../../../types/response';
 import { Post } from '../../../types/dto';
+import { Loader } from '@/components/ui';
 
 interface Props {
   initialData: InfinityResponse<Post[]>;
@@ -21,7 +22,7 @@ export const BookmarksWrapper: React.FC<Props> = ({ initialData }) => {
   } = useInfinityScrollUserBookmarks(initialData);
 
   if (isFetching) {
-    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+    return <Loader />;
   }
 
   if (!bookmarks || bookmarks.length === 0) {

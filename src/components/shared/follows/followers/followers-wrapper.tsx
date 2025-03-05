@@ -6,6 +6,7 @@ import { FollowersList } from './followers-list';
 import { Spinner } from '@nextui-org/react';
 import { EmptyState } from '../../empty-state';
 import { InfinityResponse, Follows } from '@/types';
+import { Loader } from '@/components/ui';
 
 interface Props {
   userId: string;
@@ -20,7 +21,7 @@ export const FollowersWrapper: React.FC<Props> = ({ userId, initialData, classNa
   });
 
   if (isFetching) {
-    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+    return <Loader />;
   }
 
   if (!data || data.length === 0) {

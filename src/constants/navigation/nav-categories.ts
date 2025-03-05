@@ -51,7 +51,7 @@ export const navCategories: NavCategory[] = [
         appendUserId: true,
       },
       {
-        title: 'Сообщения',
+        title: 'Мессенджер',
         href: RoutesEnum.MESSAGES,
         icon: MessageCircle,
       },

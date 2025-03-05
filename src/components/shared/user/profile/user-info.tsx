@@ -26,7 +26,7 @@ export const UserInfo: React.FC<Props> = ({
 }) => {
   return (
     <div className={cn('flex flex-col gap-y-2', className)}>
-      <p className="font-bold text-2xl">{name}</p>
+      <p className={cn('font-bold text-xl', 'lg:text-2xl')}>{name}</p>
       <p className="text-gray-500">На сайте с {dayjs(date).format('DD.MM.YYYY')}</p>
       {about && <p>{about}</p>}
       <div className="flex flex-wrap gap-x-2">

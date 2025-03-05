@@ -24,7 +24,11 @@ export const LikedPostsWrapper: React.FC<Props> = ({ initialData }) => {
   }
 
   if (isFetching) {
-    return <Spinner color="warning" className="w-full mx-auto mb-2" />;
+    return (
+      <div className="flex items-center justify-center min-h-[200px]">
+        <Spinner color="warning" className="mx-auto" />
+      </div>
+    );
   }
 
   return (
