@@ -36,7 +36,7 @@ export const UserActions: React.FC<Props> = ({
   };
 
   return (
-    <div className={cn('flex items-center gap-x-2', className)}>
+    <div className={cn('flex items-center gap-2 flex-wrap', className)}>
       {isOwner ? (
         <Link href={RoutesEnum.EDIT} className="py-2 px-3 bg-warning rounded-xl">
           Редактировать

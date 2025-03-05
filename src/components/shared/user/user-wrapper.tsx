@@ -25,7 +25,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
       <h2 className="sr-only">Профиль пользователя</h2>
       <DarkLightBlock className="p-4">
         <div className="px-8 flex flex-col gap-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-y-3">
             <Avatar
               isBordered
               size="lg"

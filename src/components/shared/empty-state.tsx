@@ -10,8 +10,8 @@ interface Props {
 export const EmptyState: React.FC<Props> = ({ title, text, className }) => {
   return (
     <div className={cn('w-full h-full flex flex-col items-center justify-center', className)}>
-      <h3 className="font-bold text-lg">{title}</h3>
-      <p>{text}</p>
+      <h3 className={cn('font-bold text-xs', 'lg:text-lg')}>{title}</h3>
+      <p className={cn('text-xs', 'lg:text-sm')}>{text}</p>
     </div>
   );
 };
