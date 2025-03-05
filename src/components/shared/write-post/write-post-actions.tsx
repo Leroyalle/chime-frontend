@@ -18,8 +18,8 @@ export const WritePostActions: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={cn('flex items-center justify-between', className)}>
-      <div className="flex items-center gap-x-3">
+    <div className={cn('flex items-center justify-between flex-wrap gap-y-1', className)}>
+      <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
         <Button
           startContent={<Camera size={15} />}
           variant="ghost"

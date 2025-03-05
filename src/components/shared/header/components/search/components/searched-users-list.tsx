@@ -11,6 +11,7 @@ interface Props {
 
 export const SearchedUsersList: React.FC<Props> = ({ users, onClickItem, className }) => (
   <>
+    <p className="px-3 py-2 font-medium">Люди</p>
     {users.map((user) => (
       <Link
         onPress={onClickItem}

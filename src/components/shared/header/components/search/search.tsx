@@ -30,7 +30,11 @@ export const Search: React.FC<Props> = ({ className }) => {
   return (
     <div
       ref={ref}
-      className={cn('flex rounded-2xl flex-1 justify-between relative h-11 z-30', className)}>
+      className={cn(
+        'flex rounded-2xl flex-1 justify-between h-11',
+        'static lg:relative',
+        className,
+      )}>
       <Input
         placeholder="Поиск по имени..."
         size="md"
@@ -47,7 +51,8 @@ export const Search: React.FC<Props> = ({ className }) => {
       {searchQuery && (
         <div
           className={cn(
-            'absolute w-full bg-primary-light rounded-xl top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30',
+            'absolute w-[90%] lg:w-full bg-primary-light rounded-xl shadow-md transition-all duration-200 invisible opacity-0',
+            'top-14 left-1/2 -translate-x-1/2',
             focused && 'visible opacity-100 top-12',
             'flex flex-col p-3',
           )}>

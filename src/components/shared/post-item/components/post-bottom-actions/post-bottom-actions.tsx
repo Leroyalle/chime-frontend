@@ -68,7 +68,7 @@ export const PostBottomActions: React.FC<Props> = ({
 
   return (
     <div className={cn('flex items-center justify-between', className)}>
-      <div className={'flex items-center gap-x-3 w-full'}>
+      <div className={'flex items-center gap-x-3 w-full  flex-wrap'}>
         <PostBottomActionsItem
           count={likes}
           onClick={handleLikePost}
