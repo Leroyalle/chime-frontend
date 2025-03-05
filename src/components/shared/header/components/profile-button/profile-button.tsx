@@ -22,7 +22,7 @@ export const ProfileButton: React.FC<Props> = ({ userId, name, avatar, email }) 
           color="secondary"
           name={name}
           size="md"
-          src={avatar ? getAbsoluteUrl(avatar) : undefined}
+          src={getAbsoluteUrl(avatar)}
         />
       </DropdownTrigger>
       <ProfileButtonMenu userId={userId} email={email} />

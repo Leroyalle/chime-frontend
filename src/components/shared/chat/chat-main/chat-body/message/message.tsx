@@ -56,11 +56,7 @@ export const Message: React.FC<Props> = memo(function Message({
             className,
           )}>
           <div className="grid [grid-template-columns:auto_1fr] flex-1 gap-x-3">
-            <Avatar
-              src={avatar ? getAbsoluteUrl(avatar) : undefined}
-              size="md"
-              className="justify-self-start"
-            />
+            <Avatar src={getAbsoluteUrl(avatar)} size="md" className="justify-self-start" />
             <div className="flex flex-1 flex-col gap-y-3">
               <MainContent userId={userId} author={author} content={content} />
               {messageType === MessageTypeEnum.POST && (

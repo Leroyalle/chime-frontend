@@ -60,13 +60,7 @@ export const UpdateUserForm: React.FC<Props> = ({ id, name, email, about, avatar
         <div>
           <label htmlFor="avatar">
             <Avatar
-              src={
-                selectedFile
-                  ? URL.createObjectURL(selectedFile)
-                  : avatar
-                  ? getAbsoluteUrl(avatar)
-                  : undefined
-              }
+              src={selectedFile ? URL.createObjectURL(selectedFile) : getAbsoluteUrl(avatar)}
             />
           </label>
           <SelectImage id="avatar" name="avatar" onChange={onChangeFile} multiple />

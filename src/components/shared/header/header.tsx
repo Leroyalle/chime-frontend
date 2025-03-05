@@ -1,11 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { Input } from '@nextui-org/input';
 import { Navbar, NavbarBrand, NavbarContent, NavbarMenuToggle } from '@nextui-org/react';
-import { SearchIcon } from 'lucide-react';
 import { useGetMe } from '@/lib/hooks';
 import { Logo } from '@/components/ui';
-import { HeaderMenu, ProfileButton } from './components';
+import { HeaderMenu, ProfileButton, Search } from './components';
 
 interface Props {
   className?: string;
@@ -37,12 +35,7 @@ export const Header: React.FC<Props> = ({ className }) => {
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
-        <Input
-          placeholder="Поиск по Chime..."
-          size="md"
-          startContent={<SearchIcon size={18} />}
-          type="search"
-        />
+        <Search />
         <ProfileButton
           userId={me.user.id}
           email={me.user.EmailUser.email}

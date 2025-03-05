@@ -30,7 +30,7 @@ export const UserWrapper: React.FC<Props> = ({ initialData, className }) => {
               isBordered
               size="lg"
               className="w-20 h-20 text-large"
-              src={data.user.avatar ? getAbsoluteUrl(data.user.avatar) : undefined}
+              src={getAbsoluteUrl(data.user.avatar)}
             />
             <UserActions
               userId={data.user.id}

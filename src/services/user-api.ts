@@ -29,6 +29,10 @@ export const current = async (headers?: AxiosRequestHeaders): Promise<UserRespon
   return (await instance.get<UserResponse>(ApiRouter.ME, { headers })).data;
 };
 
+export const findAll = async (query: string) => {
+  return (await instance.get<User[]>(`${ApiRouter.USER}?query=${query}`)).data;
+};
+
 export const getUserById = async ({
   id,
   headers,
@@ -43,17 +47,12 @@ export const updateUser = async (userData: FormData): Promise<User> => {
   return (await instance.patch<User>(ApiRouter.ME, userData)).data;
 };
 
-export const refreshAccessToken = async (refreshToken: string): Promise<TAuthTokens | null> => {
-  return (await instance.post<TAuthTokens | null>(`${ApiRouter.REFRESH}`, { refreshToken })).data;
-};
-
 export const getMeQueryOptions = () => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => current(),
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
-    retry: false,
     gcTime: Infinity,
   });
 };
@@ -63,6 +62,13 @@ export const getUserQueryOptions = (id: string) => {
     queryKey: ['user', id],
     queryFn: () => getUserById({ id }),
     refetchOnWindowFocus: false,
-    retry: false,
+  });
+};
+
+export const finAllQueryOptions = (query: string) => {
+  return queryOptions({
+    queryKey: ['users', query],
+    queryFn: () => findAll(query),
+    refetchOnWindowFocus: false,
   });
 };

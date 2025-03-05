@@ -29,11 +29,7 @@ export const ChatPreview: React.FC<Props> = ({
   return (
     <div className={cn('flex items-center w-full gap-x-2', className)}>
       <div className="w-[52px] h-[52px] rounded-full overflow-hidden flex-shrink-0">
-        <Avatar
-          className="object-cover w-full h-full"
-          src={avatar ? getAbsoluteUrl(avatar) : undefined}
-          alt=""
-        />
+        <Avatar className="object-cover w-full h-full" src={getAbsoluteUrl(avatar)} alt="" />
       </div>
       <div className="flex flex-col w-full">
         <div className="flex items-center justify-between gap-x-2">

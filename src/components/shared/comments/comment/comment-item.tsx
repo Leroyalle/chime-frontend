@@ -40,7 +40,7 @@ export const CommentItem: React.FC<Props> = ({
             <User
               name={author.name}
               avatarProps={{
-                src: author?.avatar ? getAbsoluteUrl(author.avatar) : undefined,
+                src: getAbsoluteUrl(author?.avatar),
               }}
             />
           </Link>

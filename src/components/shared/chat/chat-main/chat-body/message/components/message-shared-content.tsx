@@ -33,7 +33,7 @@ export const MessageSharedContent: React.FC<Props> = ({
         name={<Link href={`${RoutesEnum.POST}/${postId}`}>{postAuthor?.name}</Link>}
         description={getRelativeTime(postCreatedAt)}
         avatarProps={{
-          src: postAuthor?.avatar ? getAbsoluteUrl(postAuthor?.avatar) : undefined,
+          src: getAbsoluteUrl(postAuthor?.avatar),
           size: 'sm',
         }}
         className="justify-start"

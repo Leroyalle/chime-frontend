@@ -20,7 +20,7 @@ export const ProfileCard: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn('p-4 w-full', className)}>
       <div className="flex flex-col w-full items-center">
-        <Avatar src={me.user.avatar ? getAbsoluteUrl(me.user.avatar) : undefined} size="lg" />
+        <Avatar src={getAbsoluteUrl(me.user.avatar)} size="lg" />
         <span className="font-semibold text-lg break-words break-all">{me.user.name}</span>
         <Link
           href={`${RoutesEnum.USER}/${me.user.id}`}

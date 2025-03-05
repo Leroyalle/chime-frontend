@@ -18,7 +18,7 @@ export const PostsTab: React.FC<Props> = ({ userId }) => {
   });
 
   if (!posts || posts.length === 0) {
-    return <EmptyState title="У пользователя нет постов" text="Он явно ждет своего часа..." />;
+    return <EmptyState title="У пользователя нет постов" />;
   }
 
   return (

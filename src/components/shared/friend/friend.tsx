@@ -24,7 +24,7 @@ export const Friend: React.FC<Props> = ({ friendId, name, alias, avatar, classNa
           </Link>
         }
         avatarProps={{
-          src: avatar ? getAbsoluteUrl(avatar) : undefined,
+          src: getAbsoluteUrl(avatar),
         }}
       />
       <FriendActions />

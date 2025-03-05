@@ -52,7 +52,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
               name={fullName}
               description={getRelativeTime(createdAt)}
               avatarProps={{
-                src: avatar ? getAbsoluteUrl(avatar) : undefined,
+                src: getAbsoluteUrl(avatar),
               }}
             />
           </Link>
