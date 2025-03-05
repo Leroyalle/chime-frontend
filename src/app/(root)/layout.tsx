@@ -22,7 +22,7 @@ export default function HomeLayout({
 }>) {
   return (
     <RootProviders>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-dvh">
         <Header />
         <Container className="flex relative w-full gap-x-3">
           <div
