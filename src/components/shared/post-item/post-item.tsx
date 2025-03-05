@@ -45,8 +45,8 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
 }) {
   return (
     <DarkLightBlock className={cn('p-4', className)}>
-      <div>
-        <header className="flex justify-between items-center mb-2">
+      <article>
+        <div className="flex justify-between items-center mb-2">
           <Link href={`/user/${userId}`} className="text-lg font-bold hover:underline">
             <User
               name={fullName}
@@ -57,7 +57,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
             />
           </Link>
           <TopActions postId={postId} userId={userId} isOwner={isOwner} />
-        </header>
+        </div>
         <PostBody content={content} images={images} tags={tags} className="mb-3" />
         <Line />
         <BottomActions
@@ -71,7 +71,7 @@ export const PostItem: React.FC<Props> = memo(function PostItem({
           isLiked={isLiked}
           isBookmarked={isBookmarked}
         />
-      </div>
+      </article>
     </DarkLightBlock>
   );
 });

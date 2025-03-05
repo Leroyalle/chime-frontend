@@ -1,6 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toggleBookmark } from './lib';
+import { toast } from 'sonner';
 
 export const useAddBookmark = (postId: string, userId: string) => {
   const queryClient = useQueryClient();
@@ -76,7 +77,14 @@ export const useAddBookmark = (postId: string, userId: string) => {
         Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
         context?.previousLikedPostsData,
       );
+
+      toast.error('Не удалось сохранить в закладки', { description: 'Попробуйте еще раз' });
     },
+
+    onSuccess: () => {
+      toast.success('Запись сохранена в закладках');
+    },
+
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
     },

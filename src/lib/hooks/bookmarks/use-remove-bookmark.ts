@@ -1,6 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toggleBookmark } from './lib';
+import { toast } from 'sonner';
 
 export const useRemoveBookmark = (postId: string, userId: string) => {
   const queryClient = useQueryClient();
@@ -77,7 +78,13 @@ export const useRemoveBookmark = (postId: string, userId: string) => {
         Api.posts.getUserLikedPostsInfinityQueryOptions().queryKey,
         context?.previousLikedPostsData,
       );
+      toast.error('Не удалось удалить из закладок', { description: 'Попробуйте еще раз' });
     },
+
+    onSuccess: () => {
+      toast.success('Запись удалена из закладок');
+    },
+
     onSettled: () => {
       queryClient.invalidateQueries(Api.posts.getPostByIdQueryOptions(postId));
     },

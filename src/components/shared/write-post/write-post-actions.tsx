@@ -2,12 +2,13 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@nextui-org/react';
 import { Camera, Hash } from 'lucide-react';
+import { SelectImage } from '../select-image';
 
 interface Props {
   isPendingCreate?: boolean;
   tagsIsOpen: boolean;
   setTagsIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
+  onChangeFile: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
@@ -15,6 +16,7 @@ export const WritePostActions: React.FC<Props> = ({
   isPendingCreate,
   tagsIsOpen,
   setTagsIsOpen,
+  onChangeFile,
   className,
 }) => {
   return (
@@ -25,10 +27,10 @@ export const WritePostActions: React.FC<Props> = ({
           variant="ghost"
           size="sm"
           as="label"
-          htmlFor="postImage"
           className="border-none"
           disabled={isPendingCreate}>
           Добавить фото
+          <SelectImage name="postImage" onChange={onChangeFile} multiple />
         </Button>
         <Button
           onPress={() => setTagsIsOpen(!tagsIsOpen)}

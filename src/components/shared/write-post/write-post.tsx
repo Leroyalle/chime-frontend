@@ -8,7 +8,6 @@ import { DarkLightBlock, Line, MultipleSelectorCreatable, Option } from '../../u
 import { toast } from 'sonner';
 import { SelectedImages } from './selected-images';
 import { WritePostActions } from './write-post-actions';
-import { SelectImage } from '../select-image';
 
 interface Props {
   avatar: string | null;
@@ -92,7 +91,6 @@ export const WritePost: React.FC<Props> = ({ avatar, className }) => {
                 />
               )}
             />
-            <SelectImage id="postImage" name="postImage" onChange={onChangeFile} multiple />
             {tagsIsOpen && <MultipleSelectorCreatable value={tags} setValue={setTags} />}
           </div>
         </div>
@@ -102,6 +100,7 @@ export const WritePost: React.FC<Props> = ({ avatar, className }) => {
           isPendingCreate={isPendingCreate}
           tagsIsOpen={tagsIsOpen}
           setTagsIsOpen={setTagsIsOpen}
+          onChangeFile={onChangeFile}
         />
       </form>
     </DarkLightBlock>
