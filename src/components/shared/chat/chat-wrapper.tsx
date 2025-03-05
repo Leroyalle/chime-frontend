@@ -41,7 +41,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   return (
     <DarkLightBlock
       className={cn(
-        'min-h-[calc(100vh-100px)] max-h-[calc(100vh-100px)] py-2 pt-0 flex flex-col justify-between overflow-y-auto w-auto',
+        'min-h-[calc(100dvh-100px)] max-h-[calc(100dvh-100px)] py-2 pt-0 flex flex-col justify-between overflow-y-auto w-auto',
         className,
       )}>
       <Header className="px-6" correspondent={correspondent} />
