@@ -32,7 +32,7 @@ export const Search: React.FC<Props> = ({ className }) => {
       ref={ref}
       className={cn('flex rounded-2xl flex-1 justify-between relative h-11 z-30', className)}>
       <Input
-        placeholder="Никол..."
+        placeholder="Поиск по имени..."
         size="md"
         startContent={<SearchIcon size={18} />}
         type="search"
@@ -54,7 +54,7 @@ export const Search: React.FC<Props> = ({ className }) => {
           <SearchResults
             isFetching={isFetchingUsers}
             searchQuery={searchQuery}
-            users={users}
+            users={users?.slice(0, 5)}
             onClickItem={onClickItem}
           />
         </div>
