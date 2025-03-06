@@ -7,7 +7,7 @@
 - Посты с медиа
 - Личные интерактивные чаты
 - Лайки и комментарии
-- Система хэштегов
+- Подписчики и друзья
 - Репосты и закладки
 
 ## Технологии
@@ -51,14 +51,14 @@ npm install --legacy-peer-deps
 4. Запустите сервер разработки:
 
 ```bash
-npm run dev
+npm dev dev --turbopack
 ```
 
 ### Продакшн:
 
 ```bash
 npm run build
-npm start
+npm run start
 ```
 
 ### Docker:
