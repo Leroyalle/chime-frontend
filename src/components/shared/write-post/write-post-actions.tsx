@@ -22,7 +22,7 @@ export const WritePostActions: React.FC<Props> = ({
 }) => {
   return (
     <div className={cn('flex items-center justify-between flex-wrap gap-y-1', className)}>
-      <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
+      <div className="flex items-center flex-wrap gap-x-1 gap-y-1">
         <Button
           variant="ghost"
           size="sm"
