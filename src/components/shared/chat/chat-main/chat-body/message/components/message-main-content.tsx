@@ -16,7 +16,9 @@ export const MessageMainContent: React.FC<Props> = ({ userId, author, content, c
       <Link href={`${RoutesEnum.USER}/${userId}`} className="text-blue-700 font-semibold w-fit">
         {author}
       </Link>
-      <p className="break-words break-all">{content}</p>
+      <p className="break-words whitespace-pre-wrap hyphens-auto [word-break:break-word]">
+        {content}
+      </p>
     </div>
   );
 };
