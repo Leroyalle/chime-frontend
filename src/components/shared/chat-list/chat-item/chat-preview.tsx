@@ -34,7 +34,7 @@ export const ChatPreview: React.FC<Props> = ({
         <div className="flex items-center justify-between gap-x-2 w-full">
           <div className="flex items-center gap-x-1 text-gray-400 text-[14px] min-w-0 flex-1">
             {lastMessageAuthor && <span className="flex-shrink-0">{lastMessageAuthor}</span>}
-            <p className="truncate overflow-hidden">{lastMessage?.content}</p>
+            <p className="w-0 flex-1 truncate overflow-hidden">{lastMessage?.content}</p>
             {messageType && <span className="text-blue-500 flex-shrink-0">{messageType}</span>}
           </div>
           <span className="text-gray-600 text-[14px] flex-shrink-0 ml-2">
