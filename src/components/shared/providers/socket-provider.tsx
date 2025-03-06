@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { Api } from '@/services/api-client';
 import { createContext, useEffect, useRef, ReactNode, useCallback, memo } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNewMarkSlice } from '@/store';
 import { toast } from 'sonner';
@@ -33,6 +33,72 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
   const socket = useRef<Socket | null>(null);
   const token = Cookies.get(TokensEnum.JWT);
   const { setNewMark } = useNewMarkSlice();
+  const pathName = usePathname();
+  const pathNameRef = useRef(pathName);
+
+  useEffect(() => {
+    pathNameRef.current = pathName;
+  }, [pathName]);
+
+  const handleNewMessage = (data: ChatUpdate) => {
+    const isPathMatch = pathNameRef.current === `${RoutesEnum.MESSAGES}/${data.chat.id}`;
+    if (me?.user.id !== data.message.UserBase.id && !isPathMatch) {
+      toast(data.message.UserBase.name, {
+        description: data.message.content,
+        action: {
+          label: 'Читать',
+          onClick: () => router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`),
+        },
+      });
+    }
+
+    queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
+      if (!old) {
+        queryClient.invalidateQueries(Api.chat.getUserChatsQueryOptions());
+        return old;
+      }
+
+      const updatedChats = old.map((chat) => {
+        if (chat.id === data.chat.id) {
+          return { ...chat, lastMessage: data.message };
+        }
+        return chat;
+      });
+
+      const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
+      if (!existingChat) {
+        updatedChats.push({ ...data.chat, lastMessage: data.message });
+      }
+
+      return updatedChats.sort((a, b) => {
+        const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
+        const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
+        return bDate - aDate;
+      });
+    });
+
+    queryClient.setQueryData(
+      Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
+      (old) => {
+        if (!old) return undefined;
+
+        const newPages = old.pages.map((page, index) => {
+          if (index === 0) {
+            return {
+              ...page,
+              data: [data.message, ...page.data],
+            };
+          }
+          return { ...page };
+        });
+
+        return {
+          ...old,
+          pages: newPages,
+        };
+      },
+    );
+  };
 
   useEffect(() => {
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
@@ -52,72 +118,11 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
       setNewMark(value);
     });
 
-    const handleNewMessage = (data: ChatUpdate) => {
-      if (me?.user.id !== data.message.UserBase.id) {
-        toast(data.message.UserBase.name, {
-          description: data.message.content,
-          action: {
-            label: 'Читать',
-            onClick: () => router.push(`${RoutesEnum.MESSAGES}/${data.chat.id}`),
-          },
-        });
-      }
-
-      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        if (!old) {
-          queryClient.invalidateQueries(Api.chat.getUserChatsQueryOptions());
-          return old;
-        }
-
-        const updatedChats = old.map((chat) => {
-          if (chat.id === data.chat.id) {
-            return { ...chat, lastMessage: data.message };
-          }
-          return chat;
-        });
-
-        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
-        if (!existingChat) {
-          updatedChats.push({ ...data.chat, lastMessage: data.message });
-        }
-
-        return updatedChats.sort((a, b) => {
-          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
-          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
-          return bDate - aDate;
-        });
-      });
-
-      queryClient.setQueryData(
-        Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
-        (old) => {
-          if (!old) return undefined;
-
-          const newPages = old.pages.map((page, index) => {
-            if (index === 0) {
-              return {
-                ...page,
-                data: [data.message, ...page.data],
-              };
-            }
-            return { ...page };
-          });
-
-          return {
-            ...old,
-            pages: newPages,
-          };
-        },
-      );
-    };
-
     const handleUpdateMessage = (data: ChatUpdate) => {
       queryClient.setQueryData(
         Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
         (old) => {
-          if (!old) {
-            return undefined;
-          }
+          if (!old) return undefined;
           const updatedData = {
             ...old,
             pages: old.pages.map((page) => ({
@@ -125,15 +130,12 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
               data: page.data.map((m) => (m.id === data.message.id ? data.message : m)),
             })),
           };
-
           return updatedData;
         },
       );
 
       queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        if (!old) {
-          return undefined;
-        }
+        if (!old) return undefined;
 
         const updatedChats = old.map((chat) => {
           if (chat.id === data.chat.id) {
@@ -172,9 +174,7 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
       );
 
       queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        if (!old) {
-          return undefined;
-        }
+        if (!old) return undefined;
 
         const updatedChats = old.map((chat) => {
           if (chat.id === data.chat.id) {
