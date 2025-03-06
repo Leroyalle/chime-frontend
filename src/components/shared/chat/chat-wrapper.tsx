@@ -2,9 +2,8 @@
 import React, { useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatHead as Header } from './chat-head';
-import { DarkLightBlock } from '../../ui';
+import { DarkLightBlock, Loader } from '../../ui';
 import { useGetMe, useInfinityScrollMessages } from '@/lib/hooks';
-import { Spinner } from '@nextui-org/react';
 import { ChatWithMembers } from '../../../types/chat';
 import { ChatMain as Main } from './chat-main';
 
@@ -30,12 +29,7 @@ export const ChatWrapper: React.FC<Props> = ({ chatId, chat, className }) => {
   });
 
   if (isPending) {
-    return (
-      <Spinner
-        color="warning"
-        className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      />
-    );
+    return <Loader />;
   }
 
   return (
