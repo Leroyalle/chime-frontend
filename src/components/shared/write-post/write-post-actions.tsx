@@ -27,6 +27,7 @@ export const WritePostActions: React.FC<Props> = ({
           variant="ghost"
           size="sm"
           asChild
+          type="button"
           className="border-none"
           disabled={isPendingCreate}>
           <label className="flex items-center gap-x-2" htmlFor="postImage">
@@ -38,6 +39,7 @@ export const WritePostActions: React.FC<Props> = ({
           onClick={() => setTagsIsOpen(!tagsIsOpen)}
           variant="ghost"
           size="sm"
+          type="button"
           className="border-none flex items-center gap-x-2">
           <Hash size={15} /> Хэштег
         </Button>
