@@ -27,7 +27,7 @@ export const SelectedImages: React.FC<Props> = ({ selectedFiles, onDelete, class
             src={URL.createObjectURL(file)}
             alt={file?.name}
           />
-          <button onClick={() => onDelete(selectedFiles.filter((f) => f !== file))}>
+          <button type="button" onClick={() => onDelete(selectedFiles.filter((f) => f !== file))}>
             <X className="absolute top-2 right-2 text-danger" />
           </button>
         </div>
