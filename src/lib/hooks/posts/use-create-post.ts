@@ -1,6 +1,6 @@
 import { Api } from '@/services/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSocket } from '../use-socket';
+import { useSocket } from '../socket/use-socket';
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
