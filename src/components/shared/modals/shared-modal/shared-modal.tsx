@@ -23,7 +23,7 @@ interface Props {
 export const SharedModal: React.FC<Props> = ({ isOpen, onClose, className }) => {
   const [searchValue, setSearchValue] = useState('');
   const searchQuery = useDebounce(searchValue, 500);
-  const { data: chats } = useQuery({
+  const { data: chats, isFetching } = useQuery({
     ...Api.chat.getUserChatsQueryOptions(searchQuery),
   });
 
@@ -35,7 +35,12 @@ export const SharedModal: React.FC<Props> = ({ isOpen, onClose, className }) => 
           <DialogDescription className="sr-only">Send to friends</DialogDescription>
         </DialogHeader>
         <SearchChats value={searchValue} onChange={setSearchValue} />
-        <ChatListShareMode items={chats} onCloseModal={onClose} hasActions={false} />
+        <ChatListShareMode
+          items={chats}
+          onCloseModal={onClose}
+          isLoading={isFetching}
+          hasActions={false}
+        />
       </DialogContent>
     </Dialog>
   );

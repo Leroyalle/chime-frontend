@@ -19,11 +19,13 @@ import { useGetMe, useSocket } from '@/lib/hooks';
 import { useSharedPostSlice } from '@/store';
 import { MessageTypeEnum } from '../../../types';
 import { toast } from 'sonner';
-import { Input } from '@nextui-org/react';
+import { Input, Skeleton } from '@nextui-org/react';
+import { EmptyState } from '../empty-state';
 
 interface Props {
   items?: ChatWithMembers[];
   onCloseModal?: VoidFunction;
+  isLoading: boolean;
   hasActions?: boolean;
   itemsStyles?: string;
   className?: string;
@@ -32,6 +34,7 @@ interface Props {
 export const ChatListShareMode: React.FC<Props> = ({
   items,
   onCloseModal,
+  isLoading,
   hasActions,
   className,
 }) => {
@@ -50,8 +53,12 @@ export const ChatListShareMode: React.FC<Props> = ({
     return null;
   }
 
+  if (isLoading) {
+    return <Skeleton className={cn('w-full h-32', className)} />;
+  }
+
   if (!items || items.length === 0 || !me) {
-    return null;
+    return <EmptyState title="Ничего не найдено" />;
   }
 
   const onSubmit = (data: ChatListShareModeSchemaType) => {
@@ -68,14 +75,14 @@ export const ChatListShareMode: React.FC<Props> = ({
   };
 
   return (
-    <DarkLightBlock className={cn('p-2 w-full overflow-y-auto', className)}>
+    <DarkLightBlock className={cn('p-2 w-full', className)}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-2">
           <FormField
             control={form.control}
             name="chats"
             render={() => (
-              <FormItem>
+              <FormItem className="max-h-[calc(100dvh-400px)] overflow-y-auto flex-1">
                 {items.map((item) => (
                   <FormField
                     key={item.id}
@@ -113,25 +120,27 @@ export const ChatListShareMode: React.FC<Props> = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="select-none">Ваше сообщение</FormLabel>
-                <FormControl>
-                  <Input variant="bordered" placeholder="Введите сообщение..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            variant={'outline'}
-            className="ml-auto"
-            disabled={!form.formState.isValid}>
-            Отправить
-          </Button>
+          <div className="flex flex-col gap-y-2">
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="select-none">Ваше сообщение</FormLabel>
+                  <FormControl>
+                    <Input variant="bordered" placeholder="Введите сообщение..." {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              variant={'outline'}
+              className="ml-auto"
+              disabled={!form.formState.isValid}>
+              Отправить
+            </Button>
+          </div>
         </form>
       </Form>
     </DarkLightBlock>
