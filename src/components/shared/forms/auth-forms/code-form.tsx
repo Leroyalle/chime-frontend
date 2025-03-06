@@ -3,7 +3,7 @@ import { InputOtp } from '@nextui-org/react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@nextui-org/react';
 import { Api } from '@/services/api-client';
-import { saveAuthCookies } from '@/lib/utils/save-auth-cookies';
+import { saveAuthCookies } from '@/lib/utils/auth/save-auth-cookies';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { hasErrorField } from '@/lib/utils';

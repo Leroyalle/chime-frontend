@@ -16,6 +16,7 @@ import {
   TokensEnum,
 } from '@/types';
 import { useGetMe } from '@/lib/hooks';
+import { updateAndSortChats } from '@/lib/utils';
 
 type SocketContextType = {
   sendMessage: (message: MessageRequest) => void;
@@ -52,30 +53,9 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
       });
     }
 
-    queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-      if (!old) {
-        queryClient.invalidateQueries(Api.chat.getUserChatsQueryOptions());
-        return old;
-      }
-
-      const updatedChats = old.map((chat) => {
-        if (chat.id === data.chat.id) {
-          return { ...chat, lastMessage: data.message };
-        }
-        return chat;
-      });
-
-      const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
-      if (!existingChat) {
-        updatedChats.push({ ...data.chat, lastMessage: data.message });
-      }
-
-      return updatedChats.sort((a, b) => {
-        const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
-        const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
-        return bDate - aDate;
-      });
-    });
+    queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) =>
+      updateAndSortChats(old, data.chat, data.message),
+    );
 
     queryClient.setQueryData(
       Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
@@ -134,27 +114,9 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
         },
       );
 
-      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        if (!old) return undefined;
-
-        const updatedChats = old.map((chat) => {
-          if (chat.id === data.chat.id) {
-            return { ...chat, lastMessage: data.chat.lastMessage };
-          }
-          return chat;
-        });
-
-        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
-        if (!existingChat) {
-          updatedChats.push({ ...data.chat, lastMessage: data.message });
-        }
-
-        return updatedChats.sort((a, b) => {
-          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
-          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
-          return bDate - aDate;
-        });
-      });
+      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) =>
+        updateAndSortChats(old, data.chat, data.message, 'updated', data.chat.lastMessage),
+      );
     };
 
     const handleDeleteMessage = (data: ChatUpdate) => {
@@ -173,27 +135,9 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
         },
       );
 
-      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
-        if (!old) return undefined;
-
-        const updatedChats = old.map((chat) => {
-          if (chat.id === data.chat.id) {
-            return { ...chat, lastMessage: data.chat.lastMessage };
-          }
-          return chat;
-        });
-
-        const existingChat = updatedChats.find((chat) => chat.id === data.chat.id);
-        if (!existingChat) {
-          updatedChats.push({ ...data.chat, lastMessage: data.chat.lastMessage });
-        }
-
-        return updatedChats.sort((a, b) => {
-          const aDate = a.lastMessage ? new Date(a.lastMessage.createdAt).getTime() : 0;
-          const bDate = b.lastMessage ? new Date(b.lastMessage.createdAt).getTime() : 0;
-          return bDate - aDate;
-        });
-      });
+      queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) =>
+        updateAndSortChats(old, data.chat, data.chat.lastMessage),
+      );
     };
 
     socket.current.on(SocketEventsEnum.MESSAGES_GET, handleNewMessage);

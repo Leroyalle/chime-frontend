@@ -1,6 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { AxiosError } from 'axios';
-import { RoutesEnum, TokensEnum } from '../../types';
+import { RoutesEnum, TokensEnum } from '../../../types';
 import Cookies from 'js-cookie';
 
 export function handleApiError(error: AxiosError) {

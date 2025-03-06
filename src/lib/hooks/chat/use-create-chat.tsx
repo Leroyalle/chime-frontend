@@ -1,7 +1,7 @@
 import { Api } from '@/services/api-client';
 import { useRouter } from 'next/navigation';
 import { RoutesEnum } from '../../../types';
-import { hasErrorField } from '@/lib/utils/has-error-field';
+import { hasErrorField } from '@/lib/utils/shared/has-error-field';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 
