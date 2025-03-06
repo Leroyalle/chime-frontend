@@ -35,14 +35,12 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
   const { setNewMark } = useNewMarkSlice();
 
   useEffect(() => {
-    console.log('SOCKET MOUNT');
     socket.current = io(process.env.NEXT_PUBLIC_SOCKET_API_URL, {
       auth: { token },
     });
 
     socket.current.on(SocketEventsEnum.CONNECT, () => {
       console.log('Connected to WebSocket');
-      console.log('Socket ID:', socket.current?.id);
     });
 
     socket.current.on(SocketEventsEnum.UNAUTHORIZED, (message) => {
@@ -55,7 +53,6 @@ export const SocketProvider = memo(function SocketProvider({ children }: { child
     });
 
     const handleNewMessage = (data: ChatUpdate) => {
-      console.log('NEW_MESSAGE:', data);
       if (me?.user.id !== data.message.UserBase.id) {
         toast(data.message.UserBase.name, {
           description: data.message.content,

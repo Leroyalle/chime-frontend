@@ -13,7 +13,7 @@ interface Props {
 
 export const SidebarItem: FC<Props> = ({ icon, href, children, mark }) => {
   const pathName = usePathname();
-  const isPathMatch = new RegExp(`^${href}(?:\\/\\d+)?$`).test(pathName);
+  const isPathMatch = new RegExp(`^${href}(?:\\/[^/]+)?$`).test(pathName);
   const newMark = pathName === '/news' ? mark : false;
 
   return (
