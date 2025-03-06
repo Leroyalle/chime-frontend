@@ -15,9 +15,12 @@ export const useMessageHandlers = (
   const handleNewMessage = (data: ChatUpdate) => {
     showNewMessageNotification(data);
 
-    queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) =>
-      updateAndSortChats(old, data.chat, data.message),
-    );
+    queryClient.setQueriesData({ queryKey: ['user-chats'] }, (old?: UserChat[]) => {
+      if (!old) {
+        queryClient.invalidateQueries({ queryKey: ['user-chats'] });
+      }
+      return updateAndSortChats(old, data.chat, data.message);
+    });
 
     queryClient.setQueryData(
       Api.chat.getMessagesByChatIdInfinityQueryOptions(data.chat.id).queryKey,
